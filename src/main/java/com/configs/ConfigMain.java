@@ -4,10 +4,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import java.io.IOException;
+import org.slf4j.*;
 
 //Stores default configs
 // Acts as a core for .configs(handles exceptions, connects ConfigConnection and FileConnection etc)
 public class ConfigMain {
+    static private final Logger logger = LoggerFactory.getLogger(ConfigMain.class);
     static private final JSONObject defaultConfigs = createDefaultConfigs();
     private JSONObject configsFromFile;
 
@@ -26,7 +28,7 @@ public class ConfigMain {
             }
             configsFromFile = (JSONObject) JSONValue.parse(fileConnection.readFile());
         } catch (IOException e) {
-            //Write exception to log
+
         }
     }
 

@@ -1,5 +1,8 @@
 package com.configs;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -8,6 +11,7 @@ import java.nio.file.Files;
 //Provides connection to text file - writing/reading
 //If file doesn't exist, creates it or throws FileNotFoundException - depending on createFile variable
 public class FileConnection {
+    static private final Logger logger = LoggerFactory.getLogger(FileConnection.class);
     private boolean newFileCreated; // Is set true if new file was created
     Path configFilePath;
 
@@ -18,7 +22,7 @@ public class FileConnection {
             try {
                 Files.createFile(configFilePath);
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("Failed to create file {}, {}", configFilePath, e.toString());
             }
             newFileCreated = true;
         }
