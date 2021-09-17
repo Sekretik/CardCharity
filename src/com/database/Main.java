@@ -5,13 +5,17 @@ import org.json.simple.JSONValue;
 
 public class Main {
 
+    //String url = "jdbc:postgresql://localhost:5432/cardcharity";
+    //String user = "postgres";
+    //String password = "postgres";
+
     public static void main(String[] args) {
-        new DataBaseConnectivity();
-        
-        for (int i = 0;i < DataBaseConnectivity.getStringCount("cards");i++) {
-            String data = DataBaseConnectivity.selectAllWhereId("cards", i+1);
-            JSONObject json = (JSONObject) JSONValue.parse(data);
-            System.out.println(json.toString());
-        }
+        String url = "jdbc:postgresql://localhost:5432/cardcharity";
+        String user = "postgres";
+        String password = "postgres";
+
+        DataBaseConnectivity db = new DataBaseConnectivity(url,user,password);
+
+        db.addCard(1234567890,1,2);
     }
 }
