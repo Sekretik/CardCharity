@@ -1,8 +1,5 @@
 package com.database;
 
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-
 public class Main {
 
     //String url = "jdbc:postgresql://localhost:5432/cardcharity";
@@ -16,6 +13,9 @@ public class Main {
 
         DataBaseConnectivity db = new DataBaseConnectivity(url,user,password);
 
-        db.addCard(1234567890,1,2);
+        String[] s = db.getOwnersCards(123);
+        for (String ss : s) {
+            System.out.println(ss);
+        }
     }
 }
