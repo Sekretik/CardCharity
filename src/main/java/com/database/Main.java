@@ -13,9 +13,6 @@ public class Main {
 
         DataBaseConnectivity db = new DataBaseConnectivity(url,user,password);
 
-        String[] s = db.getOwnersCards(123);
-        for (String ss : s) {
-            System.out.println(ss);
-        }
+        System.out.println(db.getCard(1,2));
     }
 }

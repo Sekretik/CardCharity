@@ -11,6 +11,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="CardCharity" target="16" />
+      <module name="CardCharity (1)" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
