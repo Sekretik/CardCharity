@@ -2,6 +2,7 @@ package com.core;
 
 import com.configs.ConfigConnection;
 import com.database.DataBaseConnectivity;
+import com.web.WebServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +27,6 @@ public class Core {
     }
 
     public static void main(String[] args) {
-        new Core();
+        Core core = new Core();
     }
 }
