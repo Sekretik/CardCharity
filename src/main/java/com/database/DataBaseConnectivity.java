@@ -15,7 +15,7 @@ public class DataBaseConnectivity {
     PreparedStatement prSt;
     private final Logger logger = LoggerFactory.getLogger(DataBaseConnectivity.class);
 
-    public DataBaseConnectivity(String url, String user, String password){
+    public DataBaseConnectivity(String url, String user, String password) {
 
         try {
             conn = DriverManager.getConnection(url,user,password);
@@ -27,14 +27,16 @@ public class DataBaseConnectivity {
     }
 
     //region Add (shop, owner, card)
-    public void addShop(String name){
+    public void addShop(String name) throws Exception {
         String sql = "INSERT INTO shops(name) VALUES (?);";
         try {
             prSt = conn.prepareStatement(sql);
             prSt.setString(1,name);
             prSt.executeUpdate();
+            logger.trace("Shop was added");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Can not add shop to data base: {}", e.toString());
+            throw new Exception("serverException");
         }
     }
 
@@ -47,13 +49,14 @@ public class DataBaseConnectivity {
             prSt.setString(3,patronymic);
             prSt.setString(4,passportNumber);
             prSt.executeUpdate();
+            logger.trace("Owner was added");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Can not add owner to data base: {}", e.toString());
             throw new Exception("serverException");
         }
     }
 
-    public void addCard(String number,String owner,int shop ){
+    public void addCard(String number,String owner,int shop ) throws Exception {
         String sql = "INSERT INTO cards(number, owner, shop) VALUES (?, ?, ?);";
         try {
             prSt = conn.prepareStatement(sql);
@@ -61,60 +64,70 @@ public class DataBaseConnectivity {
             prSt.setString(2,owner);
             prSt.setInt(3,shop);
             prSt.executeUpdate();
+            logger.trace("Card was added");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Can not add card to data base: {}", e.toString());
+            throw new Exception("serverException");
         }
     }
     //endregion
 
     //region Delete (shop, owner, card)
-    public void deleteShop(int id){
+    public void deleteShop(int id) throws Exception {
         String sql = "DELETE FROM shops WHERE id = ?;";
         try {
             prSt = conn.prepareStatement(sql);
             prSt.setInt(1,id);
             prSt.executeUpdate();
+            logger.trace("Shop was deleted");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Can not delete shop from data base: {}", e.toString());
+            throw new Exception("serverException");
         }
     }
 
-    public void deleteShop(String name){
+    public void deleteShop(String name) throws Exception {
         String sql = "DELETE FROM shops WHERE name = ?;";
         try {
             prSt = conn.prepareStatement(sql);
             prSt.setString(1,name);
             prSt.executeUpdate();
+            logger.trace("Shop was deleted");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Can not delete shop from data base: {}", e.toString());
+            throw new Exception("serverException");
         }
     }
 
-    public void deleteOwner(int number){
+    public void deleteOwner(int number) throws Exception {
         String sql = "DELETE FROM owners WHERE passport_number = ?;";
         try {
             prSt = conn.prepareStatement(sql);
             prSt.setInt(1,number);
             prSt.executeUpdate();
+            logger.trace("Owner was deleted");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Can not delete owner from data base: {}", e.toString());
+            throw new Exception("serverException");
         }
     }
 
-    public void deleteCard(int id){
+    public void deleteCard(int id) throws Exception {
         String sql = "DELETE FROM cards WHERE id = ?;";
         try {
             prSt = conn.prepareStatement(sql);
             prSt.setInt(1,id);
             prSt.executeUpdate();
+            logger.trace("Card was deleted");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Can not delete card from data base: {}", e.toString());
+            throw new Exception("serverException");
         }
     }
     //endregion
 
     //region Get shop
-    public String getShop(int id){
+    public String getShop(int id) throws Exception {
         String sql = "SELECT * FROM shops WHERE id = ?;";
         String resultReturn = "";
         JSONArray jsons = new JSONArray();
@@ -133,8 +146,10 @@ public class DataBaseConnectivity {
                 }
                 jsons.add(json);
             }
+            logger.trace("Shop was received");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Can not get shop from data base: {}", e.toString());
+            throw new Exception("serverException");
         }
 
         resultReturn = jsons.toJSONString();
@@ -142,7 +157,7 @@ public class DataBaseConnectivity {
         return  resultReturn;
     }
 
-    public String getShop(String name){
+    public String getShop(String name) throws Exception {
         String sql = "SELECT * FROM shops WHERE name = ?;";
         String resultReturn = "";
         JSONArray jsons = new JSONArray();
@@ -161,8 +176,10 @@ public class DataBaseConnectivity {
                 }
                 jsons.add(json);
             }
+            logger.trace("Shop was received");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Can not get shop from data base: {}", e.toString());
+            throw new Exception("serverException");
         }
 
         resultReturn = jsons.toJSONString();
@@ -172,7 +189,7 @@ public class DataBaseConnectivity {
     //endregion
 
     //region Get owners
-    public String getOwners(String passportNumber){
+    public String getOwners(String passportNumber) throws Exception {
         String sql = "SELECT * FROM owners WHERE passport_number = ?;";
         String resultReturn = "";
         JSONArray jsons = new JSONArray();
@@ -191,8 +208,10 @@ public class DataBaseConnectivity {
                 }
                 jsons.add(json);
             }
+            logger.trace("Owner was received");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Can not get owner from data base: {}", e.toString());
+            throw new Exception("serverException");
         }
 
         resultReturn = jsons.toJSONString();
@@ -200,7 +219,7 @@ public class DataBaseConnectivity {
         return  resultReturn;
     }
 
-    public String getOwners(String name, String surname, String patronymic){
+    public String getOwners(String name, String surname, String patronymic) throws Exception {
         String sql = "SELECT * FROM owners WHERE name = ? AND surname = ? AND patronymic = ?;";
         JSONArray jsons = new JSONArray();
         String resultReturn = "";
@@ -221,8 +240,10 @@ public class DataBaseConnectivity {
                 }
                 jsons.add(json);
             }
+            logger.trace("Owners was received");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Can not get owner from data base: {}", e.toString());
+            throw new Exception("serverException");
         }
 
         resultReturn = jsons.toJSONString();
@@ -232,7 +253,7 @@ public class DataBaseConnectivity {
     //endregion
 
     //region Get use count / increase use count
-    public String getOwnersWithMinUse(){
+    public String getOwnersWithMinUse() throws Exception {
         String sql = "SELECT * FROM owners WHERE use_count = (SELECT MIN (use_count) FROM owners);";
         JSONArray jsons = new JSONArray();
         String resultReturn = "";
@@ -250,8 +271,10 @@ public class DataBaseConnectivity {
                 }
                 jsons.add(json);
             }
+            logger.trace("Owners with MIN use count was received");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Can not get owner's use count from data base: {}", e.toString());
+            throw new Exception("serverException");
         }
 
         resultReturn = jsons.toJSONString();
@@ -259,20 +282,22 @@ public class DataBaseConnectivity {
         return  resultReturn;
     }
 
-    void increaseUseCount(String passportNumber){
+    void increaseUseCount(String passportNumber) throws Exception {
         String sql = "UPDATE owners SET use_count=use_count+1 WHERE passport_number = ?";
         try {
             prSt = conn.prepareStatement(sql);
             prSt.setString(1,passportNumber);
             prSt.executeUpdate();
+            logger.trace("use count for owner was increased");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Can not increase use count for owner from data base: {}", e.toString());
+            throw new Exception("serverException");
         }
     }
     //endregion
 
     //region Get cards
-    public String getCards(int id, int idOrShop){
+    public String getCards(int id, int idOrShop) throws Exception {
         String resultReturn = "";
         ResultSet resultSet;
         JSONArray jsons = new JSONArray();
@@ -298,15 +323,17 @@ public class DataBaseConnectivity {
                 }
                 jsons.add(json);
             }
+            logger.trace("Cards was received");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Can not get cads from data base: {}", e.toString());
+            throw new Exception("serverException");
         }
         resultReturn = jsons.toJSONString();
 
         return resultReturn;
     }
 
-    public String getCards(String number, int cardOrPassport){
+    public String getCards(String number, int cardOrPassport) throws Exception {
         String resultReturn = "";
         JSONArray jsons = new JSONArray();
         ResultSet resultSet;
@@ -332,8 +359,10 @@ public class DataBaseConnectivity {
                 }
                 jsons.add(json);
             }
+            logger.trace("Cards was received");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Can not get cards from data base: {}", e.toString());
+            throw new Exception("serverException");
         }
 
         resultReturn = jsons.toJSONString();
@@ -341,7 +370,7 @@ public class DataBaseConnectivity {
         return resultReturn;
     }
 
-    public String getCard(String number, int shop){
+    public String getCard(String number, int shop) throws Exception {
         String resultReturn = "";
         JSONArray jsons = new JSONArray();
         ResultSet resultSet;
@@ -361,8 +390,10 @@ public class DataBaseConnectivity {
                 }
                 jsons.add(json);
             }
+            logger.trace("Card was received");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Can not get cards from data base: {}", e.toString());
+            throw new Exception("serverException");
         }
 
         resultReturn = jsons.toJSONString();
@@ -373,7 +404,7 @@ public class DataBaseConnectivity {
     //endregion
 
     //region Get all
-    public String getAllFromTable(String table){
+    public String getAllFromTable(String table) throws Exception {
         String resultReturn = "";
         String sql = "SELECT * FROM " + table +";";
         JSONArray jsons = new JSONArray();
@@ -391,8 +422,10 @@ public class DataBaseConnectivity {
                 }
                 jsons.add(json);
             }
+            logger.trace(table + " was received");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Can not get " + table + " from data base: {}", e.toString());
+            throw new Exception("serverException");
         }
 
         resultReturn = jsons.toJSONString();

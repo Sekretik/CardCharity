@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 public class Core {
 
     ConfigConnection conf = new ConfigConnection();
-    DataBaseConnectivity db;
+    static DataBaseConnectivity db;
 
     public Core(){
         String url = "";
