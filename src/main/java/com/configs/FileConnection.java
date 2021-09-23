@@ -11,7 +11,7 @@ import java.nio.file.Files;
 //Provides connection to text file - writing/reading
 //If file doesn't exist, creates it or throws FileNotFoundException - depending on createFile variable
 public class FileConnection {
-    static private final Logger logger = LoggerFactory.getLogger(FileConnection.class);
+    private final Logger logger = LoggerFactory.getLogger(FileConnection.class);
     private boolean newFileCreated; // Is set true if new file was created
     Path configFilePath;
 

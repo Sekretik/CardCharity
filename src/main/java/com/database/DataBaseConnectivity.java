@@ -1,7 +1,10 @@
 package com.database;
 
+import com.configs.ConfigMain;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 
@@ -10,13 +13,16 @@ public class DataBaseConnectivity {
     Connection conn;
     Statement st;
     PreparedStatement prSt;
+    private final Logger logger = LoggerFactory.getLogger(DataBaseConnectivity.class);
 
     public DataBaseConnectivity(String url, String user, String password){
+
         try {
             conn = DriverManager.getConnection(url,user,password);
             st = conn.createStatement();
+            logger.info("Connection successful");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Failed connect to data base: {}", e.toString());
         }
     }
 

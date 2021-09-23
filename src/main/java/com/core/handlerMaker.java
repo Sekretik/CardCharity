@@ -14,20 +14,20 @@ public class handlerMaker {
 
 }
 
-class personHandler extends AbstractHandler {
+class ownerHandler extends AbstractHandler {
 
     @Override
-    public void handle(String s, Request request, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException, ServletException {
+    public void handle(String url, Request request, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException, ServletException {
         switch (request.getMethod()) {
             case "GET":
                 int requestUriLength = request.getRequestURI().length();
-                if(requestUriLength > 7) {
+                if(requestUriLength > 6) {
                     String passport = request.getRequestURI().substring(7);
                     //Calls DB and asks for person
-                    //puts person in request and sends back
+                    //puts person in response and sends back
                 }
                 else {
-                    request.get
+                    //request.get
                 }
         }
     }

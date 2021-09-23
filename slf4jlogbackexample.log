@@ -1,0 +1,5 @@
+23.09.2021 14:52:44.135 [main] INFO   c.d.DataBaseConnectivity - Connection successful
+23.09.2021 14:53:08.855 [main] INFO   c.d.DataBaseConnectivity - Connection successful
+23.09.2021 14:53:30.726 [main] INFO   c.d.DataBaseConnectivity - Connection successful
+23.09.2021 14:53:48.257 [main] INFO   c.d.DataBaseConnectivity - Connection successful
+23.09.2021 14:54:05.700 [main] ERROR  c.d.DataBaseConnectivity - Failed to connect to data base: java.sql.SQLException: No suitable driver found for 

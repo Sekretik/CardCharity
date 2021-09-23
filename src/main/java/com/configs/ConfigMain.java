@@ -9,7 +9,7 @@ import org.slf4j.*;
 //Stores default configs
 // Acts as a core for .configs(handles exceptions, connects ConfigConnection and FileConnection etc)
 public class ConfigMain {
-    static private final Logger logger = LoggerFactory.getLogger(ConfigMain.class);
+    private final Logger logger = LoggerFactory.getLogger(ConfigMain.class);
     static private final JSONObject defaultConfigs = createDefaultConfigs();
     private JSONObject configsFromFile;
 
@@ -54,6 +54,9 @@ public class ConfigMain {
         JSONObject defaultConfigs = new JSONObject();
         defaultConfigs.put("webServerIP", "127.0.0.1");
         defaultConfigs.put("webServerPort", 8080);
+        defaultConfigs.put("dbServerURL","jdbc:postgresql://localhost:5432/cardcharity");
+        defaultConfigs.put("dbLogin","postgres");
+        defaultConfigs.put("dbPassword","postgres");
         return defaultConfigs;
     }
 }
