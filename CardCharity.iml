@@ -16,6 +16,11 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="libs" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-server:11.0.6" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty.toolchain:jetty-jakarta-servlet-api:5.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-http:11.0.6" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-util:11.0.6" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-io:11.0.6" level="project" />
     <orderEntry type="library" name="Maven: com.googlecode.json-simple:json-simple:1.1.1" level="project" />
     <orderEntry type="library" name="Maven: junit:junit:4.10" level="project" />
     <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.1" level="project" />
