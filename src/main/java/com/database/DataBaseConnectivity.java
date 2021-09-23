@@ -4,7 +4,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class DataBaseConnectivity {
 
@@ -33,7 +32,7 @@ public class DataBaseConnectivity {
         }
     }
 
-    public void addOwner(String name, String surname, String patronymic, String passportNumber){
+    public void addOwner(String name, String surname, String patronymic, String passportNumber) throws Exception {
         String sql = "INSERT INTO owners(name, surname, patronymic, passport_number) VALUES (?, ?, ?, ?);";
         try {
             prSt = conn.prepareStatement(sql);
@@ -44,6 +43,7 @@ public class DataBaseConnectivity {
             prSt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new Exception("serverException");
         }
     }
 
@@ -111,22 +111,26 @@ public class DataBaseConnectivity {
     public String getShop(int id){
         String sql = "SELECT * FROM shops WHERE id = ?;";
         String resultReturn = "";
-        JSONObject json = new JSONObject();
+        JSONArray jsons = new JSONArray();
         ResultSet resultSet;
         try {
             prSt = conn.prepareStatement(sql);
             prSt.setInt(1,id);
             resultSet = prSt.executeQuery();
 
-            resultSet.next();
-            json.put("id",resultSet.getString(1));
-            json.put("shop",resultSet.getString(2));
+            ResultSetMetaData metaData = prSt.getMetaData();
+
+            while (resultSet.next()) {
+                JSONObject json = new JSONObject();
+                for(int i = 0; i < metaData.getColumnCount(); i++) {
+                    json.put(metaData.getColumnName(i+1),resultSet.getString(i+1));
+                }
+                jsons.add(json);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        JSONArray jsons = new JSONArray();
-        jsons.add(json);
         resultReturn = jsons.toJSONString();
 
         return  resultReturn;
@@ -135,22 +139,26 @@ public class DataBaseConnectivity {
     public String getShop(String name){
         String sql = "SELECT * FROM shops WHERE name = ?;";
         String resultReturn = "";
-        JSONObject json = new JSONObject();
+        JSONArray jsons = new JSONArray();
         ResultSet resultSet;
         try {
             prSt = conn.prepareStatement(sql);
             prSt.setString(1,name);
             resultSet = prSt.executeQuery();
 
-            resultSet.next();
-            json.put("id",resultSet.getString(1));
-            json.put("shop",resultSet.getString(2));
+            ResultSetMetaData metaData = prSt.getMetaData();
+
+            while (resultSet.next()) {
+                JSONObject json = new JSONObject();
+                for(int i = 0; i < metaData.getColumnCount(); i++) {
+                    json.put(metaData.getColumnName(i+1),resultSet.getString(i+1));
+                }
+                jsons.add(json);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        JSONArray jsons = new JSONArray();
-        jsons.add(json);
         resultReturn = jsons.toJSONString();
 
         return  resultReturn;
@@ -161,25 +169,26 @@ public class DataBaseConnectivity {
     public String getOwners(String passportNumber){
         String sql = "SELECT * FROM owners WHERE passport_number = ?;";
         String resultReturn = "";
-        JSONObject json = new JSONObject();
+        JSONArray jsons = new JSONArray();
         ResultSet resultSet;
         try {
             prSt = conn.prepareStatement(sql);
             prSt.setString(1,passportNumber);
             resultSet = prSt.executeQuery();
 
-            resultSet.next();
-            json.put("name",resultSet.getString(1));
-            json.put("surname",resultSet.getString(2));
-            json.put("patronymic",resultSet.getString(3));
-            json.put("passportNumber",resultSet.getString(4));
-            json.put("useCount",resultSet.getString(5));
+            ResultSetMetaData metaData = prSt.getMetaData();
+
+            while (resultSet.next()) {
+                JSONObject json = new JSONObject();
+                for(int i = 0; i < metaData.getColumnCount(); i++) {
+                    json.put(metaData.getColumnName(i+1),resultSet.getString(i+1));
+                }
+                jsons.add(json);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        JSONArray jsons = new JSONArray();
-        jsons.add(json);
         resultReturn = jsons.toJSONString();
 
         return  resultReturn;
@@ -197,13 +206,13 @@ public class DataBaseConnectivity {
             prSt.setString(3,patronymic);
             resultSet = prSt.executeQuery();
 
+            ResultSetMetaData metaData = prSt.getMetaData();
+
             while (resultSet.next()) {
                 JSONObject json = new JSONObject();
-                json.put("name", resultSet.getString(1));
-                json.put("surname", resultSet.getString(2));
-                json.put("patronymic", resultSet.getString(3));
-                json.put("passportNumber", resultSet.getString(4));
-                json.put("useCount", resultSet.getString(5));
+                for(int i = 0; i < metaData.getColumnCount(); i++) {
+                    json.put(metaData.getColumnName(i+1),resultSet.getString(i+1));
+                }
                 jsons.add(json);
             }
         } catch (SQLException e) {
@@ -226,13 +235,13 @@ public class DataBaseConnectivity {
             prSt = conn.prepareStatement(sql);
             resultSet = prSt.executeQuery();
 
+            ResultSetMetaData metaData = prSt.getMetaData();
+
             while (resultSet.next()) {
                 JSONObject json = new JSONObject();
-                json.put("name", resultSet.getString(1));
-                json.put("surname", resultSet.getString(2));
-                json.put("patronymic", resultSet.getString(3));
-                json.put("passportNumber", resultSet.getString(4));
-                json.put("useCount", resultSet.getString(5));
+                for(int i = 0; i < metaData.getColumnCount(); i++) {
+                    json.put(metaData.getColumnName(i+1),resultSet.getString(i+1));
+                }
                 jsons.add(json);
             }
         } catch (SQLException e) {
@@ -256,39 +265,11 @@ public class DataBaseConnectivity {
     }
     //endregion
 
-    //region Get cards list
-    public String getOwnersCards(String passportNumber){
-        String sql = "SELECT * FROM cards WHERE owner = ?;";
+    //region Get cards
+    public String getCards(int id, int idOrShop){
+        String resultReturn = "";
+        ResultSet resultSet;
         JSONArray jsons = new JSONArray();
-        String resultReturn = "";
-        ResultSet resultSet;
-        try {
-            prSt = conn.prepareStatement(sql);
-            prSt.setString(1,passportNumber);
-            resultSet = prSt.executeQuery();
-
-            while (resultSet.next()) {
-                JSONObject json = new JSONObject();
-                json.put("id", resultSet.getString(1));
-                json.put("ownersNumber", resultSet.getString(2));
-                json.put("owner", resultSet.getString(3));
-                json.put("shop", resultSet.getString(4));
-                jsons.add(json);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        resultReturn = jsons.toJSONString();
-
-        return  resultReturn;
-    }
-    //endregion
-
-    public String getCard(int id, int idOrShop){
-        String resultReturn = "";
-        JSONObject json = new JSONObject();
-        ResultSet resultSet;
         String sql = "";
         switch (idOrShop){
             case 1:
@@ -302,19 +283,115 @@ public class DataBaseConnectivity {
             prSt.setInt(1,id);
             resultSet = prSt.executeQuery();
 
-            resultSet.next();
-            json.put("id",resultSet.getString(1));
-            json.put("number",resultSet.getString(2));
-            json.put("owner",resultSet.getString(3));
-            json.put("shop",resultSet.getString(4));
+            ResultSetMetaData metaData = prSt.getMetaData();
+
+            while (resultSet.next()) {
+                JSONObject json = new JSONObject();
+                for(int i = 0; i < metaData.getColumnCount(); i++) {
+                    json.put(metaData.getColumnName(i+1),resultSet.getString(i+1));
+                }
+                jsons.add(json);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        JSONArray jsons = new JSONArray();
-        jsons.add(json);
         resultReturn = jsons.toJSONString();
 
         return resultReturn;
     }
+
+    public String getCards(String number, int cardOrPassport){
+        String resultReturn = "";
+        JSONArray jsons = new JSONArray();
+        ResultSet resultSet;
+        String sql = "";
+        switch (cardOrPassport){
+            case 1:
+                sql = "SELECT * FROM cards WHERE number = ?;";
+                break;
+            case 2:
+                sql = "SELECT * FROM cards WHERE owner = ?";
+        }
+        try {
+            prSt = conn.prepareStatement(sql);
+            prSt.setString(1,number);
+            resultSet = prSt.executeQuery();
+
+            ResultSetMetaData metaData = prSt.getMetaData();
+
+            while (resultSet.next()) {
+                JSONObject json = new JSONObject();
+                for(int i = 0; i < metaData.getColumnCount(); i++) {
+                    json.put(metaData.getColumnName(i+1),resultSet.getString(i+1));
+                }
+                jsons.add(json);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        resultReturn = jsons.toJSONString();
+
+        return resultReturn;
+    }
+
+    public String getCard(String number, int shop){
+        String resultReturn = "";
+        JSONArray jsons = new JSONArray();
+        ResultSet resultSet;
+        String sql = "SELECT * FROM cards WHERE number = ? AND shop = ?";
+        try {
+            prSt = conn.prepareStatement(sql);
+            prSt.setString(1,number);
+            prSt.setInt(2,shop);
+            resultSet = prSt.executeQuery();
+
+            ResultSetMetaData metaData = prSt.getMetaData();
+
+            while (resultSet.next()) {
+                JSONObject json = new JSONObject();
+                for(int i = 0; i < metaData.getColumnCount(); i++) {
+                    json.put(metaData.getColumnName(i+1),resultSet.getString(i+1));
+                }
+                jsons.add(json);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        resultReturn = jsons.toJSONString();
+
+        return resultReturn;
+    }
+
+    //endregion
+
+    //region Get all
+    public String getAllFromTable(String table){
+        String resultReturn = "";
+        String sql = "SELECT * FROM " + table +";";
+        JSONArray jsons = new JSONArray();
+        ResultSet resultSet;
+        try {
+            prSt = conn.prepareStatement(sql);
+            resultSet = prSt.executeQuery();
+
+            ResultSetMetaData metaData = prSt.getMetaData();
+
+            while (resultSet.next()) {
+                JSONObject json = new JSONObject();
+                for(int i = 0; i < metaData.getColumnCount(); i++) {
+                    json.put(metaData.getColumnName(i+1),resultSet.getString(i+1));
+                }
+                jsons.add(json);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        resultReturn = jsons.toJSONString();
+
+        return resultReturn;
+    }
+    //endregion
 }
