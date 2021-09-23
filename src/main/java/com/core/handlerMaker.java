@@ -1,4 +1,4 @@
-package com.main;
+package com.core;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
