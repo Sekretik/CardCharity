@@ -9,7 +9,13 @@ import java.nio.file.Path;
 public class CreateCode {
 
     public static void createQR(String data, String encoding, Path path) throws WriterException, IOException {
-        BitMatrix matrix = new MultiFormatWriter().encode(data, BarcodeFormat.valueOf(encoding), 1000, 500);
+        int width = 500;
+        int height = 250;
+
+        if(encoding.equals("QR_CODE")){
+            height = 500;
+        }
+        BitMatrix matrix = new MultiFormatWriter().encode(data, BarcodeFormat.valueOf(encoding), width, height);
 
         MatrixToImageWriter.writeToPath(matrix, "png", path);
     }
