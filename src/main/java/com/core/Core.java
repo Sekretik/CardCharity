@@ -2,14 +2,13 @@ package com.core;
 
 import com.configs.ConfigConnection;
 import com.database.DataBaseConnectivity;
-import com.web.WebServer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.image.Image;
 
 public class Core {
 
     ConfigConnection conf = new ConfigConnection();
-    static DataBaseConnectivity db;
+    public static DataBaseConnectivity db;
+    public static Image image = new Image();
 
     public Core(){
         String url = "";
@@ -25,10 +24,10 @@ public class Core {
 
         db = new DataBaseConnectivity(url,login,password);
 
-        Image.getImagePath("123456789012",1);
+        image.getImagePath("123456789012",2);
     }
 
     public static void main(String[] args) {
-        Core core = new Core();
+        new Core();
     }
 }
