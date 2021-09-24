@@ -3,7 +3,6 @@ package com.image;
 import com.codeGenerations.CreateCode;
 import com.codeGenerations.EncodingForCode;
 import com.core.Core;
-import com.database.DataBaseConnectivity;
 import com.google.zxing.WriterException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

@@ -27,6 +27,16 @@ public class Core {
         image.getImagePath("123456789012",2);
     }
 
+    static public String getCardNumber(int shop){
+        String s = "";
+        try {
+            s =  db.getOwnersCardWithMinUse(shop);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return s;
+    }
+
     public static void main(String[] args) {
         new Core();
     }
