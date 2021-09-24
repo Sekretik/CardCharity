@@ -24,7 +24,7 @@ public class Core {
 
         db = new DataBaseConnectivity(url,login,password);
 
-        image.getImagePath("123456789012",2);
+        image.getImagePath(1);
     }
 
     static public String getCardNumber(int shop){

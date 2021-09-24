@@ -13,14 +13,19 @@ import java.nio.file.Path;
 
 public class Image {
 
-    public Path getImagePath(String cardNumber,int shopId){
+    public Path getImagePath(int shopId){
         JSONObject shop = null;
+        JSONObject card = null;
+        String cardNumber = "";
         try {
             JSONArray json = (JSONArray) JSONValue.parse(Core.db.getShop(shopId));
             shop = (JSONObject) JSONValue.parse(json.get(0).toString());
+            json = (JSONArray) JSONValue.parse(Core.db.getOwnersCardWithMinUse(shopId));
+            card = (JSONObject) JSONValue.parse(json.get(0).toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
+        cardNumber = card.get("number").toString();
         
         Path path = Path.of(shop.get("name")+"_"+ cardNumber + ".png");
         EncodingForCode encode;
