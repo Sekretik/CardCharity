@@ -99,11 +99,11 @@ public class DataBaseConnectivity {
         }
     }
 
-    public void deleteOwner(int number) throws Exception {
+    public void deleteOwner(String number) throws Exception {
         String sql = "DELETE FROM owners WHERE passport_number = ?;";
         try {
             prSt = conn.prepareStatement(sql);
-            prSt.setInt(1,number);
+            prSt.setString(1,number);
             prSt.executeUpdate();
             logger.trace("Owner was deleted");
         } catch (SQLException e) {
@@ -253,13 +253,14 @@ public class DataBaseConnectivity {
     //endregion
 
     //region Get use count / increase use count
-    public String getOwnersWithMinUse() throws Exception {
-        String sql = "SELECT * FROM owners WHERE use_count = (SELECT MIN (use_count) FROM owners);";
+    public String getOwnersCardWithMinUse(int shop) throws Exception {
+        String sql = "SELECT id,number,owner,shop FROM cards JOIN owners ON cards.owner = owners.passport_number WHERE shop = ? AND use_count = (SELECT MIN (use_count) FROM owners);";
         JSONArray jsons = new JSONArray();
         String resultReturn = "";
         ResultSet resultSet;
         try {
             prSt = conn.prepareStatement(sql);
+            prSt.setInt(1, shop);
             resultSet = prSt.executeQuery();
 
             ResultSetMetaData metaData = prSt.getMetaData();
@@ -271,9 +272,9 @@ public class DataBaseConnectivity {
                 }
                 jsons.add(json);
             }
-            logger.trace("Owners with MIN use count was received");
+            logger.trace("Owner's card with MIN use count was received");
         } catch (SQLException e) {
-            logger.error("Can not get owner's use count from data base: {}", e.toString());
+            logger.error("Can not get owner's card with use count from data base: {}", e.toString());
             throw new Exception("serverException");
         }
 
