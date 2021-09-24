@@ -13,7 +13,7 @@ import java.io.IOException;
 public class WebServer {
     Server server;
 
-     WebServer(String ip, int port, ContextHandlerCollection contextCollection) {
+    WebServer(String ip, int port, ContextHandlerCollection contextCollection) {
         server = new Server();
 
         QueuedThreadPool threadPool = new QueuedThreadPool();
