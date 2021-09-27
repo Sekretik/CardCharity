@@ -18,7 +18,7 @@ public class Image {
         JSONObject card = null;
         String cardNumber = "";
         try {
-            JSONArray json = (JSONArray) JSONValue.parse(Core.db.getShop(shopId));
+            JSONArray json = (JSONArray) JSONValue.parse(Core.db.getShopWithId(shopId));
             shop = (JSONObject) JSONValue.parse(json.get(0).toString());
             json = (JSONArray) JSONValue.parse(Core.db.getOwnersCardWithMinUse(shopId));
             card = (JSONObject) JSONValue.parse(json.get(0).toString());

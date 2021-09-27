@@ -27,9 +27,9 @@ public class DBMain {
         try {
             returnResult = db.executeRequest(sql);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         }
 
         return  returnResult;
@@ -41,9 +41,9 @@ public class DBMain {
         try {
             returnResult = db.executeRequest(sql);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         }
 
         return  returnResult;
@@ -55,9 +55,9 @@ public class DBMain {
         try {
             returnResult = db.executeRequest(sql);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         }
 
         return  returnResult;
@@ -69,9 +69,9 @@ public class DBMain {
         try {
             returnResult = db.executeRequest(sql);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         }
 
         return  returnResult;
@@ -83,13 +83,28 @@ public class DBMain {
         try {
             returnResult = db.executeRequest(sql);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         }
 
         return  returnResult;
     }
+
+    public String getOwnersCardWithMinUse(int shop){
+        String sql = "SELECT * FROM cards JOIN owners ON owner = passport_number WHERE use_count = (SELECT MIN(use_count) FROM owners) AND shop = "+shop;
+        String returnResult = "";
+        try {
+            returnResult = db.executeRequest(sql);
+        } catch (SQLException e) {
+            logger.error(e.toString());
+        } catch (Exception e) {
+            logger.error(e.toString());
+        }
+
+        return  returnResult;
+    }
+
     //endregion
 
     //region Get Owner
@@ -99,9 +114,9 @@ public class DBMain {
         try {
             returnResult = db.executeRequest(sql);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         }
 
         return  returnResult;
@@ -113,9 +128,9 @@ public class DBMain {
         try {
             returnResult = db.executeRequest(sql);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         }
 
         return  returnResult;
@@ -129,23 +144,25 @@ public class DBMain {
         try {
             returnResult = db.executeRequest(sql);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         }
 
         return  returnResult;
     }
 
-    public String getShopWithName(String name){
+    public String getShopWithName(String name) throws Exception {
         String sql = "SELECT * FROM shops WHERE name = " + name;
         String returnResult = "";
         try {
             returnResult = db.executeRequest(sql);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.toString());
+            throw new Exception("Server exception");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.toString());
+            throw new Exception("Server exception");
         }
 
         return  returnResult;
@@ -158,7 +175,7 @@ public class DBMain {
         try {
             db.executeRequest(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         }
     }
 
@@ -167,7 +184,7 @@ public class DBMain {
         try {
             db.executeRequest(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         }
     }
 
@@ -182,7 +199,7 @@ public class DBMain {
         try {
             db.executeRequest(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         }
     }
 
@@ -191,7 +208,7 @@ public class DBMain {
         try {
             db.executeRequest(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         }
     }
 
@@ -200,7 +217,7 @@ public class DBMain {
         try {
             db.executeRequest(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         }
     }
     //endregion
@@ -211,9 +228,9 @@ public class DBMain {
         try {
             returnResult = db.executeRequest(sql);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         }
 
         return  returnResult;

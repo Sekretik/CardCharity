@@ -26,6 +26,8 @@ public class Core {
         }
 
         db = new DBMain(url,login,password);
+
+        System.out.println(db.getOwnersCardWithMinUse(1));
     }
 
     public static void main(String[] args) {
