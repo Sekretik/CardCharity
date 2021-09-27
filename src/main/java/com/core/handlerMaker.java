@@ -36,7 +36,7 @@ class ownerHandler extends AbstractHandler {
                         return;
                     }
                     try {
-                        String owner = Core.db.getOwners(ownerPassportNum);
+                        String owner = Core.db.getOwnerWithPassNumber(ownerPassportNum);
                         if(owner.equals("[]")) {
                             response.setStatus(404);
                             return;
@@ -49,7 +49,7 @@ class ownerHandler extends AbstractHandler {
                 }
                 else if(originalURI.endsWith("/owner")) {
                     try {
-                        String allOwners = Core.db.getAllFromTable("owners");
+                        String allOwners = Core.db.getAll("owners");
                         response.getWriter().print(allOwners);
                     } catch (Exception e) {
                         response.setStatus(500);
@@ -65,7 +65,7 @@ class ownerHandler extends AbstractHandler {
                         return;
                     }
                     try {
-                        String ownerList = Core.db.getOwners(ownerName, ownerSurname, ownerPatronymic);
+                        String ownerList = Core.db.getOwnerWithFIO(ownerName, ownerSurname, ownerPatronymic);
                         if(ownerList.equals("[]")) {
                             response.setStatus(404);
                             return;
@@ -97,7 +97,7 @@ class ownerHandler extends AbstractHandler {
                     String ownerSurname = newOwner.get("surname").toString();
                     String ownerPatronymic = newOwner.get("patronymic").toString();
 
-                    if(!Core.db.getOwners(ownerPassportNumber).equals("[]")) {
+                    if(!Core.db.getOwnerWithPassNumber(ownerPassportNumber).equals("[]")) {
                         response.setStatus(409);
                         return;
                     }
@@ -111,6 +111,7 @@ class ownerHandler extends AbstractHandler {
                     }
                     return;
                 }
+                break;
             //endregion
 
             //region DELETE
@@ -126,7 +127,7 @@ class ownerHandler extends AbstractHandler {
                     return;
                 }
                 try {
-                    String owner = Core.db.getOwners(ownerPassportNumber);
+                    String owner = Core.db.getOwnerWithPassNumber(ownerPassportNumber);
                     if(owner.equals("[]")) {
                         response.setStatus(404);
                         return;
@@ -136,7 +137,12 @@ class ownerHandler extends AbstractHandler {
                     response.setStatus(500);
                     return;
                 }
+                break;
             //endregion
+
+            default:
+                response.setStatus(400);
+                return;
         }
     }
 }
@@ -160,7 +166,7 @@ class cardHandler extends AbstractHandler {
                         return;
                     }
                     try {
-                        String card = Core.db.getCards(Integer.parseInt(cardNumber), 1);
+                        String card = Core.db.getCardWithId(Integer.parseInt(cardNumber));
                         if(card.equals("[]")) {
                             response.setStatus(404);
                             return;
@@ -177,8 +183,8 @@ class cardHandler extends AbstractHandler {
                 }
                 else if(originalURI.endsWith("/card")) {
                     try {
-                        String allOwners = Core.db.getAllFromTable("cards");
-                        response.getWriter().print(allOwners);
+                        String allCards = Core.db.getAll("cards");
+                        response.getWriter().print(allCards);
                     } catch (Exception e) {
                         response.setStatus(500);
                         return;
@@ -192,7 +198,7 @@ class cardHandler extends AbstractHandler {
                     if (!(number == null || shopID == null)) {
                         try {
                             int intShopID = Integer.parseInt(shopID);
-                            String card = Core.db.getCard(number, intShopID);
+                            String card = Core.db.getCardsWithCardNumberAndShopId(number, intShopID);
                             if(card.equals("[]")) {
                                 response.setStatus(404);
                                 return;
@@ -209,7 +215,7 @@ class cardHandler extends AbstractHandler {
                     }
                     else if(!(number == null)) {
                         try {
-                            String card = Core.db.getCards(number, 1);
+                            String card = Core.db.getCardsWithCardNumber(number);
                             if(card.equals("[]")) {
                                 response.setStatus(404);
                                 return;
@@ -222,7 +228,7 @@ class cardHandler extends AbstractHandler {
                     }
                     else if(!(owner == null)) {
                         try {
-                            String card = Core.db.getCards(owner, 2);
+                            String card = Core.db.getCardsWithOwner(owner);
                             if(card.equals("[]")) {
                                 response.setStatus(404);
                                 return;
@@ -236,7 +242,7 @@ class cardHandler extends AbstractHandler {
                     else if(!(shopID == null)) {
                         try {
                             int intShopID = Integer.parseInt(shopID);
-                            String card = Core.db.getCards(intShopID, 2);
+                            String card = Core.db.getCardsWithShopId(intShopID);
                             if(card.equals("[]")) {
                                 response.setStatus(404);
                                 return;
@@ -264,12 +270,12 @@ class cardHandler extends AbstractHandler {
                 }
                 JSONObject newCard = (JSONObject) JSONValue.parse(request.getReader().readLine());
                 try {
-                    int cardNumber = Integer.parseInt(newCard.get("number").toString());
+                    int cardID = Integer.parseInt(newCard.get("number").toString());
                     String cardOwner = newCard.get("owner").toString();
                     int shopID = Integer.parseInt(newCard.get("shop").toString());
 
-                    if(!Core.db.getCards(cardNumber, 1).equals("[]") ||
-                            Core.db.getShop(shopID).equals("[]") || Core.db.getOwners(cardOwner).equals("[]")) {
+                    if(!Core.db.getCardWithId(cardID).equals("[]") ||
+                            Core.db.getShopWithId(shopID).equals("[]") || Core.db.getOwnerWithPassNumber(cardOwner).equals("[]")) {
                         response.setStatus(409);
                         return;
                     }
@@ -282,6 +288,7 @@ class cardHandler extends AbstractHandler {
                     }
                     return;
                 }
+                break;
                 //endregion
 
             //region DELETE
@@ -292,13 +299,13 @@ class cardHandler extends AbstractHandler {
                     return;
                 }
                 try {
-                    int cardNumber = Integer.parseInt(originalURI.substring("/owner/".length()));
-                    String card = Core.db.getCards(cardNumber, 1);
+                    int cardID = Integer.parseInt(originalURI.substring("/owner/".length()));
+                    String card = Core.db.getCardWithId(cardID);
                     if(card.equals("[]")) {
                         response.setStatus(404);
                         return;
                     }
-                    Core.db.deleteCard(cardNumber);
+                    Core.db.deleteCard(cardID);
                 } catch (Exception e) {
                     if(Exception.class.equals(NumberFormatException.class)) {
                         response.setStatus(400);
@@ -307,7 +314,81 @@ class cardHandler extends AbstractHandler {
                     }
                     return;
                 }
+                break;
                 //endregion
+
+            default:
+                response.setStatus(400);
+                return;
+        }
+    }
+}
+
+class shopHandler extends AbstractHandler {
+
+    @Override
+    public void handle(String uri, Request request, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException, ServletException {
+        request.setHandled(true);
+        response.setContentType("application/json; charset=UTF-8");
+        String originalURI = request.getOriginalURI();
+
+        switch (request.getMethod()) {
+            case "GET":
+                response.setStatus(200);
+                if(originalURI.startsWith("/shop/")) {
+                    String shopID = originalURI.substring("/shop/".length());
+                    if(shopID.isEmpty()) {
+                        response.setStatus(400);
+                        return;
+                    }
+                    try {
+                        String shop = Core.db.getShopWithId(Integer.parseInt(shopID));
+                        if(shop.equals("[]")) {
+                            response.setStatus(404);
+                            return;
+                        }
+                        response.getWriter().print(shop);
+                    } catch (Exception e) {
+                        if(Exception.class.equals(NumberFormatException.class)) {
+                            response.setStatus(400);
+                            return;
+                        }
+                        response.setStatus(500);
+                        return;
+                    }
+                }
+                else if(originalURI.endsWith("/shop")) {
+                    try {
+                        String allOwners = Core.db.getAll("shops");
+                        response.getWriter().print(allOwners);
+                    } catch (Exception e) {
+                        response.setStatus(500);
+                        return;
+                    }
+                }
+                else if(originalURI.startsWith("/shop?")) {
+                    String shopName = request.getParameter("name");
+                    if(shopName == null) {
+                        response.setStatus(400);
+                        return;
+                    }
+                    try {
+                        String shopList = Core.db.getShopWithName(shopName);
+                        if(shopList.equals("[]")) {
+                            response.setStatus(404);
+                            return;
+                        }
+                        response.getWriter().print(shopList);
+                    } catch (Exception e) {
+                        response.setStatus(500);
+                        return;
+                    }
+                }
+                else {
+                    response.setStatus(400);
+                    return;
+                }
+                break;
         }
     }
 }

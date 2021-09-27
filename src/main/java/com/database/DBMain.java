@@ -137,7 +137,7 @@ public class DBMain {
         return  returnResult;
     }
 
-    public String geShopWithName(String name){
+    public String getShopWithName(String name){
         String sql = "SELECT * FROM shops WHERE name = " + name;
         String returnResult = "";
         try {
@@ -187,7 +187,7 @@ public class DBMain {
     }
 
     public void deleteOwner(String passportNumber){
-        String sql = "DELETE FROM owners WHERE id = '"+ passportNumber+"'";
+        String sql = "DELETE FROM owners WHERE passport_number = '"+ passportNumber+"'";
         try {
             db.executeRequest(sql);
         } catch (Exception e) {
@@ -195,8 +195,8 @@ public class DBMain {
         }
     }
 
-    public void deleteCard(String cardNumber){
-        String sql = "DELETE FROM cards WHERE id = '"+ cardNumber+"'";
+    public void deleteCard(int id){
+        String sql = "DELETE FROM cards WHERE id = '"+ id+"'";
         try {
             db.executeRequest(sql);
         } catch (Exception e) {
@@ -204,4 +204,18 @@ public class DBMain {
         }
     }
     //endregion
+
+    public String getAll(String table){
+        String sql = "SELECT * FROM "+table+" WHERE id > 0";
+        String returnResult = "";
+        try {
+            returnResult = db.executeRequest(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return  returnResult;
+    }
 }
