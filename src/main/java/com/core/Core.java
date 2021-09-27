@@ -1,13 +1,16 @@
 package com.core;
 
 import com.configs.ConfigConnection;
-import com.database.DataBaseConnectivity;
+import com.database.DataBase;
 import com.image.Image;
+
+import java.sql.SQLException;
 
 public class Core {
 
     ConfigConnection conf = new ConfigConnection();
     public static DataBaseConnectivity db;
+    public static DataBase db1;
     public static Image image = new Image();
 
     public Core(){
@@ -23,18 +26,17 @@ public class Core {
         }
 
         db = new DataBaseConnectivity(url,login,password);
-
-        image.getImagePath(1);
-    }
-
-    static public String getCardNumber(int shop){
-        String s = "";
         try {
-            s =  db.getOwnersCardWithMinUse(shop);
+            db1 = new DataBase(url,login,password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            System.out.println(db1.executeRequest("SELECT * FROM cards"));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return s;
     }
 
     public static void main(String[] args) {
