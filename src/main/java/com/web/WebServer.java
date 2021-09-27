@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.*;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
+import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 
 import java.io.IOException;
@@ -13,7 +14,7 @@ import java.io.IOException;
 public class WebServer {
     Server server;
 
-    WebServer(String ip, int port, ContextHandlerCollection contextCollection) {
+    public WebServer(String ip, int port, HandlerCollection handlers) {
         server = new Server();
 
         QueuedThreadPool threadPool = new QueuedThreadPool();
@@ -27,11 +28,11 @@ public class WebServer {
         http11Connector.setHost(ip);
         http11Connector.setPort(port);
 
-        server.setHandler(contextCollection);
+        server.setHandler(handlers);
         server.addConnector(http11Connector);
     }
 
-    void startServer() {
+    public void startServer() {
         try {
             server.start();
         } catch (Exception e) {
@@ -39,7 +40,7 @@ public class WebServer {
         }
     }
 
-    void stopServer() {
+    public void stopServer() {
         try {
             server.stop();
         } catch (Exception e) {

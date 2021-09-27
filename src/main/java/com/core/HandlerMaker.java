@@ -5,19 +5,50 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.eclipse.jetty.server.handler.ContextHandler;
+import org.eclipse.jetty.server.handler.ContextHandlerCollection;
+import org.eclipse.jetty.server.handler.HandlerCollection;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class handlerMaker {
 
+public class HandlerMaker {
+    static HandlerCollection makeHandlerCollection() {
+        HandlerCollection handlerCollection = new HandlerCollection();
+        ContextHandlerCollection contextHandlerCollection = new ContextHandlerCollection();
+
+        ContextHandler ownerHandler = new ContextHandler("/owner");
+        ownerHandler.setHandler(new OwnerHandler());
+        contextHandlerCollection.addHandler(ownerHandler);
+
+        ContextHandler shopHandler = new ContextHandler("/shop");
+        shopHandler.setHandler(new ShopHandler());
+        contextHandlerCollection.addHandler(shopHandler);
+
+        ContextHandler cardHandler = new ContextHandler("/card");
+        ownerHandler.setHandler(new CardHandler());
+        contextHandlerCollection.addHandler(cardHandler);
+
+        ContextHandler codeHandler = new ContextHandler("/code");
+        ownerHandler.setHandler(new CodeHandler());
+        contextHandlerCollection.addHandler(new CodeHandler());
+
+        handlerCollection.addHandler(contextHandlerCollection);
+        handlerCollection.addHandler(new LoggingHandler());
+
+        return handlerCollection;
+    }
 }
 
-class ownerHandler extends AbstractHandler {
-    final Logger logger = LoggerFactory.getLogger(ownerHandler.class);
+class OwnerHandler extends AbstractHandler {
+    final Logger logger = LoggerFactory.getLogger(OwnerHandler.class);
 
     @Override
     public void handle(String url, Request request, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException, ServletException {
@@ -147,7 +178,7 @@ class ownerHandler extends AbstractHandler {
     }
 }
 
-class cardHandler extends AbstractHandler {
+class CardHandler extends AbstractHandler {
 
     @Override
     public void handle(String uri, Request request, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException, ServletException {
@@ -324,7 +355,7 @@ class cardHandler extends AbstractHandler {
     }
 }
 
-class shopHandler extends AbstractHandler {
+class ShopHandler extends AbstractHandler {
 
     @Override
     public void handle(String uri, Request request, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException, ServletException {
@@ -392,3 +423,44 @@ class shopHandler extends AbstractHandler {
         }
     }
 }
+
+class CodeHandler extends AbstractHandler {
+
+    @Override
+    public void handle(String uri, Request request, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException, ServletException {
+        request.setHandled(true);
+        response.setContentType("image/png");
+        String originalURI = request.getOriginalURI();
+        String shopName = request.getParameter("shop");
+        int shopID = 0;
+        try {
+            String shop = Core.db.getShopWithName(shopName);
+            if(shop.equals("[]")) {
+                response.setStatus(404);
+                return;
+            }
+            JSONArray jsonShopArray = (JSONArray) JSONValue.parse(shop);
+            JSONObject jsonShop = (JSONObject) jsonShopArray.get(0);
+            shopID = Integer.parseInt(jsonShop.get("id").toString());
+        } catch (Exception e) {
+            response.setStatus(500);
+            return;
+        }
+        if(!originalURI.startsWith("/code?") || shopName == null) {
+            response.setStatus(400);
+            return;
+        }
+        BufferedImage image = Core.image.getImagePath(shopID);
+        ImageIO.write(image, "png", response.getOutputStream());
+    }
+}
+
+class LoggingHandler extends AbstractHandler {
+    static Logger logger = LoggerFactory.getLogger(LoggingHandler.class);
+
+    @Override
+    public void handle(String s, Request request, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException, ServletException {
+        logger.trace("Http request from {}: method - {}, URI - {}  Response code: {}", request.getRemoteAddr(), request.getMethod(), request.getOriginalURI(), response.getStatus());
+    }
+}
+
