@@ -3,38 +3,42 @@ package com.image;
 import com.codeGenerations.CreateCode;
 import com.codeGenerations.EncodingForCode;
 import com.core.Core;
+import com.database.DataBase;
 import com.google.zxing.WriterException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;
 
 public class Image {
 
-    public Path getImagePath(int shopId){
-        JSONObject shop = null;
+    private final Logger logger = LoggerFactory.getLogger(Image.class);
+
+    public BufferedImage getImagePath(int shopId){
         JSONObject card = null;
         String cardNumber = "";
         try {
-            JSONArray json = (JSONArray) JSONValue.parse(Core.db.getShopWithId(shopId));
-            shop = (JSONObject) JSONValue.parse(json.get(0).toString());
-            json = (JSONArray) JSONValue.parse(Core.db.getOwnersCardWithMinUse(shopId));
+            JSONArray json = (JSONArray) JSONValue.parse(Core.db.getOwnersCardWithMinUse(shopId));
             card = (JSONObject) JSONValue.parse(json.get(0).toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
         cardNumber = card.get("number").toString();
         
-        Path path = Path.of(shop.get("name")+"_"+ cardNumber + ".png");
+        BufferedImage resultReturn = null;
         EncodingForCode encode;
 
         switch (shopId){
             case 1:
                 encode = EncodingForCode.EAN_13;
                 try {
-                    CreateCode.createQR(cardNumber,encode.toString(),path);
+                    resultReturn = CreateCode.createQR(cardNumber,encode.toString());
+                    logger.trace("Card hs received: " + card.get("number").toString());
                 } catch (WriterException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -44,7 +48,8 @@ public class Image {
             case 2:
                 encode = EncodingForCode.QR_CODE;
                 try {
-                    CreateCode.createQR(cardNumber,encode.toString(),path);
+                    resultReturn = CreateCode.createQR(cardNumber,encode.toString());
+                    logger.trace("Card hs received: " + card.get("number").toString());
                 } catch (WriterException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -53,6 +58,6 @@ public class Image {
                 break;
         }
 
-        return path;
+        return resultReturn;
     }
 }
