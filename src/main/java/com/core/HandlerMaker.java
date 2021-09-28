@@ -198,7 +198,7 @@ class CardHandler extends AbstractHandler {
             //region GET
             case "GET":
                 response.setStatus(200);
-                if(originalURI.startsWith("/card/")) {
+                if(originalURI.startsWith("/card/") && !originalURI.endsWith("/card/")) {
                     String cardNumber = originalURI.substring("/card/".length());
                     if(cardNumber.isEmpty()) {
                         response.setStatus(400);
@@ -220,7 +220,7 @@ class CardHandler extends AbstractHandler {
                         return;
                     }
                 }
-                else if(originalURI.endsWith("/card")) {
+                else if(originalURI.endsWith("/card/")) {
                     try {
                         String allCards = Core.db.getAll("cards");
                         response.getWriter().print(allCards);
@@ -229,7 +229,7 @@ class CardHandler extends AbstractHandler {
                         return;
                     }
                 }
-                else if(originalURI.startsWith("/card?")) {
+                else if(originalURI.startsWith("/card/?")) {
                     String owner = request.getParameter("owner");
                     String number = request.getParameter("number");
                     String shopID = request.getParameter("shop");
@@ -303,7 +303,7 @@ class CardHandler extends AbstractHandler {
             //region POST
             case "POST":
                 response.setStatus(201);
-                if(!originalURI.equals("/card")) {
+                if(!originalURI.equals("/card/")) {
                     response.setStatus(400);
                     return;
                 }
@@ -374,7 +374,7 @@ class ShopHandler extends AbstractHandler {
         switch (request.getMethod()) {
             case "GET":
                 response.setStatus(200);
-                if(originalURI.startsWith("/shop/")) {
+                if(originalURI.startsWith("/shop/") && !originalURI.endsWith("/shop/")) {
                     String shopID = originalURI.substring("/shop/".length());
                     if(shopID.isEmpty()) {
                         response.setStatus(400);
@@ -396,7 +396,7 @@ class ShopHandler extends AbstractHandler {
                         return;
                     }
                 }
-                else if(originalURI.endsWith("/shop")) {
+                else if(originalURI.endsWith("/shop/")) {
                     try {
                         String allOwners = Core.db.getAll("shops");
                         response.getWriter().print(allOwners);
@@ -405,7 +405,7 @@ class ShopHandler extends AbstractHandler {
                         return;
                     }
                 }
-                else if(originalURI.startsWith("/shop?")) {
+                else if(originalURI.startsWith("/shop/?")) {
                     String shopName = request.getParameter("name");
                     if(shopName == null) {
                         response.setStatus(400);
@@ -450,6 +450,10 @@ class CodeHandler extends AbstractHandler {
             BufferedImage image = Core.image.getImagePath(shopID);
             ImageIO.write(image, "png", response.getOutputStream());
         } catch (Exception e) {
+            if(Exception.class.equals(NumberFormatException.class)) {
+                response.setStatus(400);
+                return;
+            }
             response.setStatus(500);
             return;
         }
