@@ -33,11 +33,11 @@ public class HandlerMaker {
         contextHandlerCollection.addHandler(shopHandler);
 
         ContextHandler cardHandler = new ContextHandler("/card");
-        ownerHandler.setHandler(new CardHandler());
+        cardHandler.setHandler(new CardHandler());
         contextHandlerCollection.addHandler(cardHandler);
 
         ContextHandler codeHandler = new ContextHandler("/code");
-        ownerHandler.setHandler(new CodeHandler());
+        codeHandler.setHandler(new CodeHandler());
         contextHandlerCollection.addHandler(new CodeHandler());
 
         handlerCollection.addHandler(contextHandlerCollection);
