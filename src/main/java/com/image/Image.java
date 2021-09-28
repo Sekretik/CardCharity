@@ -57,7 +57,6 @@ public class Image {
                 }
                 break;
         }
-
         return resultReturn;
     }
 }

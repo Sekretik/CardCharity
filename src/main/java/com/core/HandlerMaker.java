@@ -8,13 +8,13 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.server.handler.HandlerCollection;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageOutputStream;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -38,7 +38,7 @@ public class HandlerMaker {
 
         ContextHandler codeHandler = new ContextHandler("/code");
         codeHandler.setHandler(new CodeHandler());
-        contextHandlerCollection.addHandler(new CodeHandler());
+        contextHandlerCollection.addHandler(codeHandler);
 
         handlerCollection.addHandler(contextHandlerCollection);
         handlerCollection.addHandler(new LoggingHandler());
@@ -142,7 +142,7 @@ class OwnerHandler extends AbstractHandler {
 
                     Core.db.addOwner(ownerName, ownerSurname, ownerPatronymic, ownerPassportNumber);
                 } catch (Exception e) {
-                    if(Exception.class.equals(NullPointerException.class)) {
+                    if(e.getClass().equals(NullPointerException.class)) {
                         response.setStatus(400);
                     } else {
                         response.setStatus(500);
@@ -190,6 +190,7 @@ class CardHandler extends AbstractHandler {
 
     @Override
     public void handle(String uri, Request request, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException, ServletException {
+        Logger logger = LoggerFactory.getLogger("CardHandlerLogger");
         request.setHandled(true);
         response.setContentType("application/json; charset=UTF-8");
         String originalURI = request.getOriginalURI();
@@ -198,7 +199,7 @@ class CardHandler extends AbstractHandler {
             //region GET
             case "GET":
                 response.setStatus(200);
-                if(originalURI.startsWith("/card/") && !originalURI.endsWith("/card/")) {
+                if(originalURI.startsWith("/card/") && !originalURI.endsWith("/card/") && !originalURI.startsWith("/card/?")) {
                     String cardNumber = originalURI.substring("/card/".length());
                     if(cardNumber.isEmpty()) {
                         response.setStatus(400);
@@ -212,7 +213,7 @@ class CardHandler extends AbstractHandler {
                         }
                         response.getWriter().print(card);
                     } catch (Exception e) {
-                        if(Exception.class.equals(NumberFormatException.class)) {
+                        if(e.getClass().equals(NumberFormatException.class)) {
                             response.setStatus(400);
                         } else {
                             response.setStatus(500);
@@ -244,7 +245,7 @@ class CardHandler extends AbstractHandler {
                             }
                             response.getWriter().print(card);
                         } catch (Exception e) {
-                            if (Exception.class.equals(NumberFormatException.class)) {
+                            if (e.getClass().equals(NumberFormatException.class)) {
                                 response.setStatus(400);
                             } else {
                                 response.setStatus(500);
@@ -288,7 +289,7 @@ class CardHandler extends AbstractHandler {
                             }
                             response.getWriter().print(card);
                         } catch (Exception e) {
-                            if(Exception.class.equals(NumberFormatException.class)) {
+                            if(e.getClass().equals(NumberFormatException.class)) {
                                 response.setStatus(400);
                                 return;
                             }
@@ -302,6 +303,7 @@ class CardHandler extends AbstractHandler {
 
             //region POST
             case "POST":
+                logger.debug("Creating new card");
                 response.setStatus(201);
                 if(!originalURI.equals("/card/")) {
                     response.setStatus(400);
@@ -309,18 +311,23 @@ class CardHandler extends AbstractHandler {
                 }
                 JSONObject newCard = (JSONObject) JSONValue.parse(request.getReader().readLine());
                 try {
-                    int cardID = Integer.parseInt(newCard.get("number").toString());
+                    String cardNumber = newCard.get("number").toString();
                     String cardOwner = newCard.get("owner").toString();
                     int shopID = Integer.parseInt(newCard.get("shop").toString());
+                    logger.debug("Adding card number = {}, shopID = {}, ownerNum = {}", cardNumber, shopID, cardOwner);
 
-                    if(!Core.db.getCardWithId(cardID).equals("[]") ||
+                    if(!Core.db.getCardsWithCardNumberAndShopId(cardNumber, shopID).equals("[]") ||
                             Core.db.getShopWithId(shopID).equals("[]") || Core.db.getOwnerWithPassNumber(cardOwner).equals("[]")) {
+                        logger.debug("Wrong data - 409");
                         response.setStatus(409);
                         return;
                     }
+                    Core.db.addCard(cardNumber, cardOwner, shopID);
+                    logger.debug("Card added");
 
                 } catch (Exception e) {
-                    if(Exception.class.equals(NullPointerException.class) || Exception.class.equals(NumberFormatException.class)) {
+                    logger.debug(e.toString());
+                    if(e.getClass().equals(NullPointerException.class) || e.getClass().equals(NumberFormatException.class)) {
                         response.setStatus(400);
                     } else {
                         response.setStatus(500);
@@ -346,7 +353,7 @@ class CardHandler extends AbstractHandler {
                     }
                     Core.db.deleteCard(cardID);
                 } catch (Exception e) {
-                    if(Exception.class.equals(NumberFormatException.class)) {
+                    if(e.getClass().equals(NumberFormatException.class)) {
                         response.setStatus(400);
                     } else {
                         response.setStatus(500);
@@ -367,6 +374,7 @@ class ShopHandler extends AbstractHandler {
 
     @Override
     public void handle(String uri, Request request, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException, ServletException {
+        Logger logger = LoggerFactory.getLogger("ShopLogger");
         request.setHandled(true);
         response.setContentType("application/json; charset=UTF-8");
         String originalURI = request.getOriginalURI();
@@ -374,7 +382,7 @@ class ShopHandler extends AbstractHandler {
         switch (request.getMethod()) {
             case "GET":
                 response.setStatus(200);
-                if(originalURI.startsWith("/shop/") && !originalURI.endsWith("/shop/")) {
+                if(originalURI.startsWith("/shop/") && !originalURI.endsWith("/shop/") && !originalURI.startsWith("/shop/?")) {
                     String shopID = originalURI.substring("/shop/".length());
                     if(shopID.isEmpty()) {
                         response.setStatus(400);
@@ -388,7 +396,7 @@ class ShopHandler extends AbstractHandler {
                         }
                         response.getWriter().print(shop);
                     } catch (Exception e) {
-                        if(Exception.class.equals(NumberFormatException.class)) {
+                        if(e.getClass().equals(NumberFormatException.class)) {
                             response.setStatus(400);
                             return;
                         }
@@ -407,7 +415,9 @@ class ShopHandler extends AbstractHandler {
                 }
                 else if(originalURI.startsWith("/shop/?")) {
                     String shopName = request.getParameter("name");
+                    logger.debug("shopName = {}", shopName);
                     if(shopName == null) {
+                        logger.debug("shop name is null");
                         response.setStatus(400);
                         return;
                     }
@@ -433,14 +443,18 @@ class ShopHandler extends AbstractHandler {
 }
 
 class CodeHandler extends AbstractHandler {
+    Logger codeLogger = LoggerFactory.getLogger("CodeLogger");
 
     @Override
     public void handle(String uri, Request request, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException, ServletException {
         request.setHandled(true);
+        response.setStatus(200);
         response.setContentType("image/png");
         String originalURI = request.getOriginalURI();
+        codeLogger.debug("Getting code image, URI: {}", originalURI);
         try {
             int shopID = Integer.parseInt(request.getParameter("shop"));
+            codeLogger.debug("ShopID: {}", shopID);
             String shop = Core.db.getShopWithId(shopID);
             LoggingHandler.logger.info(shop);
             if(shop.equals("[]")) {
@@ -449,8 +463,9 @@ class CodeHandler extends AbstractHandler {
             }
             BufferedImage image = Core.image.getImagePath(shopID);
             ImageIO.write(image, "png", response.getOutputStream());
+
         } catch (Exception e) {
-            if(Exception.class.equals(NumberFormatException.class)) {
+            if(e.getClass().equals(NumberFormatException.class)) {
                 response.setStatus(400);
                 return;
             }

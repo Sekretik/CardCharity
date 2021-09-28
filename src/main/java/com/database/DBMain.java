@@ -156,7 +156,7 @@ public class DBMain {
     }
 
     public String getShopWithName(String name) throws Exception {
-        String sql = "SELECT * FROM shops WHERE name = " + name;
+        String sql = "SELECT * FROM shops WHERE name = '"+name+"'";
         String returnResult = "";
         try {
             returnResult = db.executeRequest(sql);
@@ -193,6 +193,12 @@ public class DBMain {
 
     public void addCard(String number,String owner,int shop){
         String sql = "INSERT INTO cards(number, owner, shop) VALUES ('"+number+"','"+owner+"',"+shop+")";
+        try {
+            db.executeRequest(sql);
+        } catch (Exception e) {
+            logger.error(e.toString());
+        }
+        logger.debug("Added card: number = {}, owner= {}, shop = {}", number, owner, shop);
     }
     //endregion
 
