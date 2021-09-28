@@ -52,6 +52,7 @@ class OwnerHandler extends AbstractHandler {
 
     @Override
     public void handle(String url, Request request, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException, ServletException {
+        Logger logger = LoggerFactory.getLogger("OwnerLogger");
         request.setHandled(true);
         response.setContentType("application/json; charset=UTF-8");
         String originalURI = request.getOriginalURI();
@@ -61,14 +62,9 @@ class OwnerHandler extends AbstractHandler {
             //region GET
             case "GET":
                 response.setStatus(200);
-                if(originalURI.startsWith("/owner/")) {
+                if(originalURI.startsWith("/owner/") && !originalURI.endsWith("/owner/") && !originalURI.startsWith("/owner/?")) {
                     String ownerPassportNum = originalURI.substring("/owner/".length());
                     logger.debug("Getting owner by passNum:{}", ownerPassportNum);
-                    if(ownerPassportNum.isEmpty()) {
-                        logger.debug("Owner passNum is empty - 404");
-                        response.setStatus(400);
-                        return;
-                    }
                     try {
                         String owner = Core.db.getOwnerWithPassNumber(ownerPassportNum);
                         logger.debug("Getting owner from db - owner:{}", owner);
@@ -83,7 +79,7 @@ class OwnerHandler extends AbstractHandler {
                         return;
                     }
                 }
-                else if(originalURI.endsWith("/owner")) {
+                else if(originalURI.endsWith("/owner/") || originalURI.endsWith("/owner")) {
                     logger.debug("Getting all owners");
                     try {
                         String allOwners = Core.db.getAll("owners");
@@ -93,7 +89,7 @@ class OwnerHandler extends AbstractHandler {
                         return;
                     }
                 }
-                else if(originalURI.startsWith("/owner?")) {
+                else if(originalURI.startsWith("/owner?") || originalURI.startsWith("/owner/?")) {
                     String ownerName = request.getParameter("name");
                     String ownerSurname = request.getParameter("surname");
                     String ownerPatronymic = request.getParameter("patronymic");
@@ -126,7 +122,7 @@ class OwnerHandler extends AbstractHandler {
             case "POST":
                 response.setStatus(201);
                 logger.debug("Adding owner");
-                if(!originalURI.equals("/owner")) {
+                if(!originalURI.equals("/owner/")) {
                     logger.debug("Wrong uri:{} - 400", originalURI);
                     response.setStatus(400);
                     return;
@@ -443,27 +439,20 @@ class CodeHandler extends AbstractHandler {
         request.setHandled(true);
         response.setContentType("image/png");
         String originalURI = request.getOriginalURI();
-        String shopName = request.getParameter("shop");
-        int shopID = 0;
         try {
-            String shop = Core.db.getShopWithName(shopName);
+            int shopID = Integer.parseInt(request.getParameter("shop"));
+            String shop = Core.db.getShopWithId(shopID);
+            LoggingHandler.logger.info(shop);
             if(shop.equals("[]")) {
                 response.setStatus(404);
                 return;
             }
-            JSONArray jsonShopArray = (JSONArray) JSONValue.parse(shop);
-            JSONObject jsonShop = (JSONObject) jsonShopArray.get(0);
-            shopID = Integer.parseInt(jsonShop.get("id").toString());
+            BufferedImage image = Core.image.getImagePath(shopID);
+            ImageIO.write(image, "png", response.getOutputStream());
         } catch (Exception e) {
             response.setStatus(500);
             return;
         }
-        if(!originalURI.startsWith("/code?") || shopName == null) {
-            response.setStatus(400);
-            return;
-        }
-        BufferedImage image = Core.image.getImagePath(shopID);
-        ImageIO.write(image, "png", response.getOutputStream());
     }
 }
 

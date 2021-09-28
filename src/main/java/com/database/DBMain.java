@@ -109,7 +109,7 @@ public class DBMain {
 
     //region Get Owner
     public String getOwnerWithPassNumber(String owner){
-        String sql = "SELECT * FROM owner WHERE passport_number = '" + owner + "'";
+        String sql = "SELECT * FROM owners WHERE passport_number = '" + owner + "'";
         String returnResult = "";
         try {
             returnResult = db.executeRequest(sql);
@@ -118,6 +118,9 @@ public class DBMain {
         } catch (Exception e) {
             logger.error(e.toString());
         }
+
+        logger.info("SQL response: " + returnResult);
+        logger.info("SQL request: " + sql);
 
         return  returnResult;
     }
@@ -223,7 +226,7 @@ public class DBMain {
     //endregion
 
     public String getAll(String table){
-        String sql = "SELECT * FROM "+table+" WHERE id > 0";
+        String sql = "SELECT * FROM "+table;
         String returnResult = "";
         try {
             returnResult = db.executeRequest(sql);
