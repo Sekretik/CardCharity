@@ -55,6 +55,7 @@ class OwnerHandler extends AbstractHandler {
         request.setHandled(true);
         response.setContentType("application/json; charset=UTF-8");
         String originalURI = request.getOriginalURI();
+        logger.debug("Launching owner handler on URI {}", originalURI);
 
         switch (request.getMethod()) {
             //region GET
@@ -62,13 +63,17 @@ class OwnerHandler extends AbstractHandler {
                 response.setStatus(200);
                 if(originalURI.startsWith("/owner/")) {
                     String ownerPassportNum = originalURI.substring("/owner/".length());
+                    logger.debug("Getting owner by passNum:{}", ownerPassportNum);
                     if(ownerPassportNum.isEmpty()) {
+                        logger.debug("Owner passNum is empty - 404");
                         response.setStatus(400);
                         return;
                     }
                     try {
                         String owner = Core.db.getOwnerWithPassNumber(ownerPassportNum);
+                        logger.debug("Getting owner from db - owner:{}", owner);
                         if(owner.equals("[]")) {
+                            logger.debug("Owner is empty - 4044");
                             response.setStatus(404);
                             return;
                         }
@@ -79,6 +84,7 @@ class OwnerHandler extends AbstractHandler {
                     }
                 }
                 else if(originalURI.endsWith("/owner")) {
+                    logger.debug("Getting all owners");
                     try {
                         String allOwners = Core.db.getAll("owners");
                         response.getWriter().print(allOwners);
@@ -91,12 +97,14 @@ class OwnerHandler extends AbstractHandler {
                     String ownerName = request.getParameter("name");
                     String ownerSurname = request.getParameter("surname");
                     String ownerPatronymic = request.getParameter("patronymic");
+                    logger.debug("Getting owners by NSP:{}, {}, {}", ownerName, ownerSurname, ownerPatronymic);
                     if(ownerName == null || ownerPatronymic == null || ownerSurname == null) {
                         response.setStatus(400);
                         return;
                     }
                     try {
                         String ownerList = Core.db.getOwnerWithFIO(ownerName, ownerSurname, ownerPatronymic);
+                        logger.debug("Owner by NSP:{}", ownerList);
                         if(ownerList.equals("[]")) {
                             response.setStatus(404);
                             return;
@@ -117,12 +125,15 @@ class OwnerHandler extends AbstractHandler {
             //region POST
             case "POST":
                 response.setStatus(201);
+                logger.debug("Adding owner");
                 if(!originalURI.equals("/owner")) {
+                    logger.debug("Wrong uri:{} - 400", originalURI);
                     response.setStatus(400);
                     return;
                 }
                 JSONObject newOwner = (JSONObject) JSONValue.parse(request.getReader().readLine());
                 try {
+                    logger.debug("New owner from http:{}");
                     String ownerPassportNumber = newOwner.get("passport_number").toString();
                     String ownerName = newOwner.get("name").toString();
                     String ownerSurname = newOwner.get("surname").toString();
@@ -148,6 +159,7 @@ class OwnerHandler extends AbstractHandler {
             //region DELETE
             case "DELETE":
                 response.setStatus(200);
+                logger.debug("Deleting owner");
                 if(!originalURI.startsWith("/owner/")) {
                     response.setStatus(400);
                     return;
