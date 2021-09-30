@@ -19,7 +19,7 @@ public class Image {
 
     private final Logger logger = LoggerFactory.getLogger(Image.class);
 
-    public BufferedImage getImagePath(int shopId){
+    public BufferedImage getImagePath(int shopId) throws Exception {
         JSONObject card = null;
         String cardNumber = "";
         try {
@@ -40,9 +40,12 @@ public class Image {
                     resultReturn = CreateCode.createQR(cardNumber,encode.toString());
                     logger.trace("Card hs received: " + card.get("number").toString());
                 } catch (WriterException e) {
-                    e.printStackTrace();
+                    logger.trace(e.toString());
+                    throw new Exception("Server exception");
                 } catch (IOException e) {
                     e.printStackTrace();
+                    logger.trace(e.toString());
+                    throw new Exception("Server exception");
                 }
                 break;
             case 2:
@@ -51,9 +54,11 @@ public class Image {
                     resultReturn = CreateCode.createQR(cardNumber,encode.toString());
                     logger.trace("Card hs received: " + card.get("number").toString());
                 } catch (WriterException e) {
-                    e.printStackTrace();
+                    logger.trace(e.toString());
+                    throw new Exception("Server exception");
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.trace(e.toString());
+                    throw new Exception("Server exception");
                 }
                 break;
         }
