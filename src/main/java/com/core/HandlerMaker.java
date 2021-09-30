@@ -16,7 +16,9 @@ import org.slf4j.LoggerFactory;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageOutputStream;
 import java.awt.image.BufferedImage;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 
 public class HandlerMaker {
@@ -90,9 +92,9 @@ class OwnerHandler extends AbstractHandler {
                     }
                 }
                 else if(originalURI.startsWith("/owner?") || originalURI.startsWith("/owner/?")) {
-                    String ownerName = request.getParameter("name");
-                    String ownerSurname = request.getParameter("surname");
-                    String ownerPatronymic = request.getParameter("patronymic");
+                    String ownerName = request.getParameter("name").toLowerCase();
+                    String ownerSurname = request.getParameter("surname").toLowerCase();
+                    String ownerPatronymic = request.getParameter("patronymic").toLowerCase();
                     logger.debug("Getting owners by NSP:{}, {}, {}", ownerName, ownerSurname, ownerPatronymic);
                     if(ownerName == null || ownerPatronymic == null || ownerSurname == null) {
                         response.setStatus(400);
@@ -127,9 +129,11 @@ class OwnerHandler extends AbstractHandler {
                     response.setStatus(400);
                     return;
                 }
-                JSONObject newOwner = (JSONObject) JSONValue.parse(request.getReader().readLine());
+                logger.debug("Encoding: {}", response.getCharacterEncoding());
+                JSONObject newOwner = (JSONObject) JSONValue.parse(new String(request.getInputStream().readAllBytes(), StandardCharsets.UTF_8).toLowerCase());
+
                 try {
-                    logger.debug("New owner from http:{}");
+                    logger.debug("New owner from http:{}", newOwner);
                     String ownerPassportNumber = newOwner.get("passport_number").toString();
                     String ownerName = newOwner.get("name").toString();
                     String ownerSurname = newOwner.get("surname").toString();
@@ -231,9 +235,9 @@ class CardHandler extends AbstractHandler {
                     }
                 }
                 else if(originalURI.startsWith("/card/?")) {
-                    String owner = request.getParameter("owner");
-                    String number = request.getParameter("number");
-                    String shopID = request.getParameter("shop");
+                    String owner = request.getParameter("owner").toLowerCase();
+                    String number = request.getParameter("number").toLowerCase();
+                    String shopID = request.getParameter("shop").toLowerCase();
 
                     if (!(number == null || shopID == null)) {
                         try {
@@ -309,7 +313,7 @@ class CardHandler extends AbstractHandler {
                     response.setStatus(400);
                     return;
                 }
-                JSONObject newCard = (JSONObject) JSONValue.parse(request.getReader().readLine());
+                JSONObject newCard = (JSONObject) JSONValue.parse(new String(request.getInputStream().readAllBytes(), StandardCharsets.UTF_8).toLowerCase());
                 try {
                     String cardNumber = newCard.get("number").toString();
                     String cardOwner = newCard.get("owner").toString();
@@ -414,7 +418,7 @@ class ShopHandler extends AbstractHandler {
                     }
                 }
                 else if(originalURI.startsWith("/shop/?")) {
-                    String shopName = request.getParameter("name");
+                    String shopName = request.getParameter("name").toLowerCase();
                     logger.debug("shopName = {}", shopName);
                     if(shopName == null) {
                         logger.debug("shop name is null");
@@ -453,7 +457,7 @@ class CodeHandler extends AbstractHandler {
         String originalURI = request.getOriginalURI();
         codeLogger.debug("Getting code image, URI: {}", originalURI);
         try {
-            int shopID = Integer.parseInt(request.getParameter("shop"));
+            int shopID = Integer.parseInt(request.getParameter("shop").toLowerCase());
             codeLogger.debug("ShopID: {}", shopID);
             String shop = Core.db.getShopWithId(shopID);
             LoggingHandler.logger.info(shop);

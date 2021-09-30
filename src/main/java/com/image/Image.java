@@ -25,8 +25,9 @@ public class Image {
         try {
             JSONArray json = (JSONArray) JSONValue.parse(Core.db.getOwnersCardWithMinUse(shopId));
             card = (JSONObject) JSONValue.parse(json.get(0).toString());
+            Core.db.increaseUseCount(card.get("owner").toString());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getStackTrace().toString());
         }
         cardNumber = card.get("number").toString();
         

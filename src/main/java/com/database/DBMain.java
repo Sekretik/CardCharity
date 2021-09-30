@@ -21,85 +21,97 @@ public class DBMain {
 
 
     //region Get Card
-    public String getCardWithId(int id){
+    public String getCardWithId(int id) throws Exception {
         String sql = "SELECT * FROM cards WHERE id = " + id;
         String returnResult = "";
         try {
             returnResult = db.executeRequest(sql);
         } catch (SQLException e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         } catch (Exception e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         }
 
         return  returnResult;
     }
 
-    public String getCardsWithShopId(int id){
+    public String getCardsWithShopId(int id) throws Exception {
         String sql = "SELECT * FROM cards WHERE shop = " + id;
         String returnResult = "";
         try {
             returnResult = db.executeRequest(sql);
         } catch (SQLException e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         } catch (Exception e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         }
 
         return  returnResult;
     }
 
-    public String getCardsWithOwner(String owner){
+    public String getCardsWithOwner(String owner) throws Exception {
         String sql = "SELECT * FROM cards WHERE owner = '" + owner + "'";
         String returnResult = "";
         try {
             returnResult = db.executeRequest(sql);
         } catch (SQLException e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         } catch (Exception e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         }
 
         return  returnResult;
     }
 
-    public String getCardsWithCardNumber(String number){
+    public String getCardsWithCardNumber(String number) throws Exception {
         String sql = "SELECT * FROM cards WHERE number = '" + number + "'";
         String returnResult = "";
         try {
             returnResult = db.executeRequest(sql);
         } catch (SQLException e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         } catch (Exception e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         }
 
         return  returnResult;
     }
 
-    public String getCardsWithCardNumberAndShopId(String number,int id){
+    public String getCardsWithCardNumberAndShopId(String number,int id) throws Exception {
         String sql = "SELECT * FROM cards WHERE number = '" + number + "' AND shop = " + id;
         String returnResult = "";
         try {
             returnResult = db.executeRequest(sql);
         } catch (SQLException e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         } catch (Exception e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         }
 
         return  returnResult;
     }
 
-    public String getOwnersCardWithMinUse(int shop){
+    public String getOwnersCardWithMinUse(int shop) throws Exception {
         String sql = "SELECT * FROM cards JOIN owners ON owner = passport_number WHERE use_count = (SELECT MIN(use_count) FROM owners) AND shop = "+shop;
         String returnResult = "";
         try {
             returnResult = db.executeRequest(sql);
         } catch (SQLException e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         } catch (Exception e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         }
 
         return  returnResult;
@@ -108,15 +120,17 @@ public class DBMain {
     //endregion
 
     //region Get Owner
-    public String getOwnerWithPassNumber(String owner){
+    public String getOwnerWithPassNumber(String owner) throws Exception {
         String sql = "SELECT * FROM owners WHERE passport_number = '" + owner + "'";
         String returnResult = "";
         try {
             returnResult = db.executeRequest(sql);
         } catch (SQLException e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         } catch (Exception e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         }
 
         logger.info("SQL response: " + returnResult);
@@ -125,15 +139,17 @@ public class DBMain {
         return  returnResult;
     }
 
-    public String getOwnerWithFIO(String name, String surname, String patronymic){
+    public String getOwnerWithFIO(String name, String surname, String patronymic) throws Exception {
         String sql = "SELECT * FROM owners WHERE name = '"+name+"' AND surname = '"+surname+"' AND patronymic = '"+patronymic+"'";
         String returnResult = "";
         try {
             returnResult = db.executeRequest(sql);
         } catch (SQLException e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         } catch (Exception e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         }
 
         return  returnResult;
@@ -141,15 +157,17 @@ public class DBMain {
     //endregion
 
     //region Get Shop
-    public String getShopWithId(int id){
+    public String getShopWithId(int id) throws Exception {
         String sql = "SELECT * FROM shops WHERE id = " + id;
         String returnResult = "";
         try {
             returnResult = db.executeRequest(sql);
         } catch (SQLException e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         } catch (Exception e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         }
 
         return  returnResult;
@@ -173,75 +191,93 @@ public class DBMain {
     //endregion
 
     //region Add
-    public void addShop(String name){
+    public void addShop(String name) throws Exception {
         String sql = "INSERT INTO shops(name) VALUES ('"+name+"')";
         try {
             db.executeRequest(sql);
         } catch (Exception e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         }
     }
 
-    public void addOwner(String name, String surname, String patronymic, String passportNumber){
+    public void addOwner(String name, String surname, String patronymic, String passportNumber) throws Exception {
         String sql = "INSERT INTO owners(name,surname,patronymic,passport_number) VALUES('"+name+"','"+surname+"','"+patronymic+"',"+passportNumber+")";
         try {
             db.executeRequest(sql);
         } catch (Exception e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         }
     }
 
-    public void addCard(String number,String owner,int shop){
+    public void addCard(String number,String owner,int shop) throws Exception {
         String sql = "INSERT INTO cards(number, owner, shop) VALUES ('"+number+"','"+owner+"',"+shop+")";
         try {
             db.executeRequest(sql);
         } catch (Exception e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         }
         logger.debug("Added card: number = {}, owner= {}, shop = {}", number, owner, shop);
     }
     //endregion
 
     //region Delete
-    public void deleteShop(int id){
+    public void deleteShop(int id) throws Exception {
         String sql = "DELETE FROM shops WHERE id = "+ id;
         try {
             db.executeRequest(sql);
         } catch (Exception e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         }
     }
 
-    public void deleteOwner(String passportNumber){
+    public void deleteOwner(String passportNumber) throws Exception {
         String sql = "DELETE FROM owners WHERE passport_number = '"+ passportNumber+"'";
         try {
             db.executeRequest(sql);
         } catch (Exception e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         }
     }
 
-    public void deleteCard(int id){
+    public void deleteCard(int id) throws Exception {
         String sql = "DELETE FROM cards WHERE id = '"+ id+"'";
         try {
             db.executeRequest(sql);
         } catch (Exception e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         }
     }
     //endregion
 
-    public String getAll(String table){
+    public String getAll(String table) throws Exception {
         String sql = "SELECT * FROM "+table;
         String returnResult = "";
         try {
             returnResult = db.executeRequest(sql);
         } catch (SQLException e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         } catch (Exception e) {
             logger.error(e.toString());
+            throw new Exception("Server exception");
         }
 
         return  returnResult;
+    }
+
+    public void increaseUseCount(String number) throws Exception {
+        String sql = "UPDATE owners SET use_count = use_count + 1 WHERE passport_number = '" + number+"'";
+        try {
+            db.executeRequest(sql);
+        } catch (Exception e) {
+            logger.error(e.toString());
+            throw new Exception("Server exception");
+        }
     }
 }

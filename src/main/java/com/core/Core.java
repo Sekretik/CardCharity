@@ -34,6 +34,7 @@ public class Core {
 
         WebServer webServer = new WebServer(ip, port, HandlerMaker.makeHandlerCollection());
         webServer.startServer();
+
     }
 
     public static void main(String[] args) {
