@@ -7015,3 +7015,4 @@ java.util.concurrent.TimeoutException: Idle timeout expired: 30001/30000 ms
 30.09.2021 13:41:20.931 [qtp2035070981-21] DEBUG  o.e.j.u.t.ReservedThreadExecutor - ReservedThreadExecutor@1623b78d{s=1/2,p=0}@590a1d6a IDLE
 30.09.2021 13:41:20.931 [qtp2035070981-21] DEBUG  o.e.j.u.t.ReservedThreadExecutor - ReservedThreadExecutor@1623b78d{s=0/2,p=0}@590a1d6a Exited
 30.09.2021 13:41:20.931 [qtp2035070981-21] DEBUG  o.e.j.u.t.QueuedThreadPool - ran ReservedThreadExecutor@1623b78d{s=0/2,p=0}@590a1d6a in QueuedThreadPool[qtp2035070981]@794cb805{STARTED,8<=8<=200,i=5,r=-1,q=0}[ReservedThreadExecutor@1623b78d{s=0/2,p=0}]
+04.10.2021 13:19:25.380 [main] ERROR  c.database.DataBase - Failed connect to data base: org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
