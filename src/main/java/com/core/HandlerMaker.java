@@ -196,6 +196,7 @@ class CardHandler extends AbstractHandler {
     public void handle(String uri, Request request, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException, ServletException {
         Logger logger = LoggerFactory.getLogger("CardHandlerLogger");
         request.setHandled(true);
+        response.addHeader("Access-Control-Allow-Origin", "*");
         response.setContentType("application/json; charset=UTF-8");
         String originalURI = request.getOriginalURI();
 
@@ -386,6 +387,7 @@ class ShopHandler extends AbstractHandler {
         Logger logger = LoggerFactory.getLogger("ShopLogger");
         request.setHandled(true);
         response.setContentType("application/json; charset=UTF-8");
+        response.addHeader("Access-Control-Allow-Origin", "*");
         String originalURI = request.getOriginalURI();
 
         switch (request.getMethod()) {
@@ -459,6 +461,7 @@ class CodeHandler extends AbstractHandler {
         request.setHandled(true);
         response.setStatus(200);
         response.setContentType("image/png");
+        response.addHeader("Access-Control-Allow-Origin", "*");
         String originalURI = request.getOriginalURI();
         codeLogger.debug("Getting code image, URI: {}", originalURI);
         try {
@@ -489,7 +492,6 @@ class LoggingHandler extends AbstractHandler {
 
     @Override
     public void handle(String s, Request request, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException, ServletException {
-        response.addHeader("Access-Control-Allow-Origin", "*");
         logger.trace("Http request from {}: method - {}, URI - {}  Response code: {}", request.getRemoteAddr(), request.getMethod(), request.getOriginalURI(), response.getStatus());
     }
 }
