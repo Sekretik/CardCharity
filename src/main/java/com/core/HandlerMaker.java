@@ -130,14 +130,14 @@ class OwnerHandler extends AbstractHandler {
                     return;
                 }
                 logger.debug("Encoding: {}", response.getCharacterEncoding());
-                JSONObject newOwner = (JSONObject) JSONValue.parse(new String(request.getInputStream().readAllBytes(), StandardCharsets.UTF_8).toLowerCase());
+                JSONObject newOwner = (JSONObject) JSONValue.parse(new String(request.getInputStream().readAllBytes(), StandardCharsets.UTF_8));
 
                 try {
                     logger.debug("New owner from http:{}", newOwner);
                     String ownerPassportNumber = newOwner.get("passport_number").toString();
-                    String ownerName = newOwner.get("name").toString();
-                    String ownerSurname = newOwner.get("surname").toString();
-                    String ownerPatronymic = newOwner.get("patronymic").toString();
+                    String ownerName = newOwner.get("name").toString().toLowerCase();
+                    String ownerSurname = newOwner.get("surname").toString().toLowerCase();
+                    String ownerPatronymic = newOwner.get("patronymic").toString().toLowerCase();
 
                     if(!Core.db.getOwnerWithPassNumber(ownerPassportNumber).equals("[]")) {
                         response.setStatus(409);
@@ -235,9 +235,9 @@ class CardHandler extends AbstractHandler {
                     }
                 }
                 else if(originalURI.startsWith("/card/?")) {
-                    String owner = request.getParameter("owner").toLowerCase();
-                    String number = request.getParameter("number").toLowerCase();
-                    String shopID = request.getParameter("shop").toLowerCase();
+                    String owner = request.getParameter("owner");
+                    String number = request.getParameter("number");
+                    String shopID = request.getParameter("shop");
 
                     if (!(number == null || shopID == null)) {
                         try {
@@ -313,11 +313,16 @@ class CardHandler extends AbstractHandler {
                     response.setStatus(400);
                     return;
                 }
-                JSONObject newCard = (JSONObject) JSONValue.parse(new String(request.getInputStream().readAllBytes(), StandardCharsets.UTF_8).toLowerCase());
+                JSONObject newCard = (JSONObject) JSONValue.parse(new String(request.getInputStream().readAllBytes(), StandardCharsets.UTF_8));
                 try {
                     String cardNumber = newCard.get("number").toString();
                     String cardOwner = newCard.get("owner").toString();
                     int shopID = Integer.parseInt(newCard.get("shop").toString());
+
+                    if(shopID == 1 && cardNumber.length() != 12) {
+                        logger.error("Wrong card number for shop {}: {}", shopID, cardNumber);
+                    }
+
                     logger.debug("Adding card number = {}, shopID = {}, ownerNum = {}", cardNumber, shopID, cardOwner);
 
                     if(!Core.db.getCardsWithCardNumberAndShopId(cardNumber, shopID).equals("[]") ||
@@ -349,7 +354,7 @@ class CardHandler extends AbstractHandler {
                     return;
                 }
                 try {
-                    int cardID = Integer.parseInt(originalURI.substring("/owner/".length()));
+                    int cardID = Integer.parseInt(originalURI.substring("/card/".length()));
                     String card = Core.db.getCardWithId(cardID);
                     if(card.equals("[]")) {
                         response.setStatus(404);
@@ -418,7 +423,7 @@ class ShopHandler extends AbstractHandler {
                     }
                 }
                 else if(originalURI.startsWith("/shop/?")) {
-                    String shopName = request.getParameter("name").toLowerCase();
+                    String shopName = request.getParameter("name");
                     logger.debug("shopName = {}", shopName);
                     if(shopName == null) {
                         logger.debug("shop name is null");
@@ -426,7 +431,7 @@ class ShopHandler extends AbstractHandler {
                         return;
                     }
                     try {
-                        String shopList = Core.db.getShopWithName(shopName);
+                        String shopList = Core.db.getShopWithName(shopName.toLowerCase());
                         if(shopList.equals("[]")) {
                             response.setStatus(404);
                             return;
@@ -457,7 +462,7 @@ class CodeHandler extends AbstractHandler {
         String originalURI = request.getOriginalURI();
         codeLogger.debug("Getting code image, URI: {}", originalURI);
         try {
-            int shopID = Integer.parseInt(request.getParameter("shop").toLowerCase());
+            int shopID = Integer.parseInt(request.getParameter("shop"));
             codeLogger.debug("ShopID: {}", shopID);
             String shop = Core.db.getShopWithId(shopID);
             LoggingHandler.logger.info(shop);
