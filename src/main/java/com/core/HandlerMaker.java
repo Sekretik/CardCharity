@@ -489,6 +489,7 @@ class LoggingHandler extends AbstractHandler {
 
     @Override
     public void handle(String s, Request request, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException, ServletException {
+        response.addHeader("Access-Control-Allow-Origin", "*");
         logger.trace("Http request from {}: method - {}, URI - {}  Response code: {}", request.getRemoteAddr(), request.getMethod(), request.getOriginalURI(), response.getStatus());
     }
 }
