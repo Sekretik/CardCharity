@@ -51,6 +51,7 @@ public class HandlerMaker {
 
 class OwnerHandler extends AbstractHandler {
     final Logger logger = LoggerFactory.getLogger(OwnerHandler.class);
+    private final String allNumbers = "1234567890";
 
     @Override
     public void handle(String url, Request request, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException, ServletException {
@@ -138,6 +139,13 @@ class OwnerHandler extends AbstractHandler {
                     String ownerName = newOwner.get("name").toString().toLowerCase();
                     String ownerSurname = newOwner.get("surname").toString().toLowerCase();
                     String ownerPatronymic = newOwner.get("patronymic").toString().toLowerCase();
+                    for (char c:
+                         ownerPassportNumber.toCharArray()) {
+                        if(!allNumbers.contains(String.valueOf(c))) {
+                            response.setStatus(400);
+                            return;
+                        }
+                    }
 
                     if(!Core.db.getOwnerWithPassNumber(ownerPassportNumber).equals("[]")) {
                         response.setStatus(409);
