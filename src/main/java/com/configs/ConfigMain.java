@@ -52,7 +52,7 @@ public class ConfigMain {
     //Default configs are made here
     static private JSONObject createDefaultConfigs() {
         JSONObject defaultConfigs = new JSONObject();
-        defaultConfigs.put("webServerIP", "127.0.0.1");
+        defaultConfigs.put("webServerIP", "localhost");
         defaultConfigs.put("webServerPort", 8080);
         defaultConfigs.put("dbServerURL","jdbc:postgresql://localhost:5432/cardcharity");
         defaultConfigs.put("dbLogin","postgres");

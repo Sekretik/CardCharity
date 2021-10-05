@@ -501,10 +501,8 @@ class LoggingHandler extends AbstractHandler {
     @Override
     public void handle(String s, Request request, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException, ServletException {
         response.addHeader("Access-Control-Allow-Origin", "*");
-        if(response.getStatus() > 299) {
-            response.addHeader("Ok", "false");
-        } else {response.addHeader("Ok", "true");}
+        response.addHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
+        response.addHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
         logger.trace("Http request from {}: method - {}, URI - {}  Response code: {}", request.getRemoteAddr(), request.getMethod(), request.getOriginalURI(), response.getStatus());
     }
 }
-
