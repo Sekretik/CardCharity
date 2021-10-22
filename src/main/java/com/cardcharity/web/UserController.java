@@ -1,20 +1,26 @@
 package com.cardcharity.web;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.cardcharity.web.exception.ServerException;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
     @GetMapping("/{id}")
     public void /*User*/ getId(@PathVariable long id){
         //userDAO.get(id) - return User model
     }
     @GetMapping("/test")
-    public String test(){
-        return "test";
+    public String test(@RequestParam boolean bool) throws Exception {
+        if(bool){
+            throw new ServerException("loh");
+        }
+        return "Test Done";
+    }
+    @GetMapping("/get")
+    public TestModel getObj(@RequestParam("id") int id, @RequestParam("name") String name){
+        return new TestModel(id,name);
     }
 
 }

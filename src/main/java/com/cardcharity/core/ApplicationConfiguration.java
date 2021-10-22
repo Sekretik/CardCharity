@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@ComponentScan
+@ComponentScan("com.cardcharity")
 @PropertySource("configs.properties")
 public class ApplicationConfiguration {
 
