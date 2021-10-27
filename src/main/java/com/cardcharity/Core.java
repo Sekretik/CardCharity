@@ -3,11 +3,10 @@ package com.cardcharity;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -17,9 +16,14 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @PropertySource({"dataBase.properties","hibernate.properties","server.properties"})
-@ComponentScan("com.cardcharity")
 @SpringBootConfiguration
+@ComponentScan("com.sprigdata")
+@EnableJpaRepositories
 public class Core {
+    public static void main(String[] args) {
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Core.class);
+        applicationContext.getBean("ownerRepository");
+    }
 
     @Bean
     DataSource dataSource(Environment environment) {
@@ -37,7 +41,7 @@ public class Core {
 
         entityManagerFactoryBean.setDataSource(dataSource);
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        entityManagerFactoryBean.setPackagesToScan("com.springdata");
+        entityManagerFactoryBean.setPackagesToScan("com.cardcharity");
 
         Properties ormProperties = new Properties();
         ormProperties.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));

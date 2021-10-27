@@ -99,4 +99,11 @@ public class Owner {
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) return true;
+        if(this.getClass() !=  obj.getClass()) return false;
+        return this.getPassportNumber().equals(((Owner) obj).getPassportNumber());
+    }
 }
