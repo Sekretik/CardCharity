@@ -2,7 +2,9 @@ package com.cardcharity;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
@@ -16,13 +18,11 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @PropertySource({"dataBase.properties","hibernate.properties","server.properties"})
-@SpringBootConfiguration
-@ComponentScan("com.sprigdata")
+@SpringBootApplication
 @EnableJpaRepositories
 public class Core {
     public static void main(String[] args) {
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Core.class);
-        applicationContext.getBean("ownerRepository");
+        SpringApplication.run(Core.class,args);
     }
 
     @Bean
