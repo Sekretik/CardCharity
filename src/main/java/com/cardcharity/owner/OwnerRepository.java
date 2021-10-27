@@ -13,4 +13,6 @@ public interface OwnerRepository extends CrudRepository<Owner, Long> {
     List<Owner> findBySurnameAndPatronymic(String surname, String patronymic);
     List<Owner> findByNameAndSurnameAndPatronymic(String name, String surname, String patronymic);
     List<Owner> findByPassportNumber(String passportNumber);
+    List<Owner> findByActiveTrue();
+    List<Owner> findByActiveFalse();
 }
