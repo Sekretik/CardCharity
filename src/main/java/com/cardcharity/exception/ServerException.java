@@ -1,4 +1,4 @@
-package com.cardcharity.web.exception;
+package com.cardcharity.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -21,7 +21,6 @@ public class Owner {
     private int useCount = 0;
 
     @NotNull
-    @NaturalId
     private String passportNumber;
 
     @NotNull
@@ -39,14 +38,6 @@ public class Owner {
         this.name = name;
         this.surname = surname;
         this.patronymic = patronymic;
-    }
-
-    public Owner(long id, String passportNumber, String name, String surname, String patronymic) {
-        this.passportNumber = passportNumber;
-        this.name = name;
-        this.surname = surname;
-        this.patronymic = patronymic;
-        this.id = id;
     }
 
     protected Owner() {

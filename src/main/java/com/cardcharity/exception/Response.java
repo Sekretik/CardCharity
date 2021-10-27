@@ -1,4 +1,4 @@
-package com.cardcharity.web.exception;
+package com.cardcharity.exception;
 
 public class Response {
     private String error;
