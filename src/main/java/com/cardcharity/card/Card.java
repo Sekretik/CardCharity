@@ -18,6 +18,7 @@ public class Card {
 
     @NotNull
     @ManyToOne
+    @JoinColumn(name = "shop_id")
     private Shop shop;
 
     @NotNull
