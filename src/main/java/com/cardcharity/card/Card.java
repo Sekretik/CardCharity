@@ -1,6 +1,7 @@
 package com.cardcharity.card;
 
 import com.cardcharity.owner.Owner;
+import com.cardcharity.shop.Shop;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotNull;
 public class Card {
     @Id
     @GeneratedValue
+    @NotNull
     private long id;
 
     @NotNull
@@ -16,14 +18,29 @@ public class Card {
 
     @NotNull
     @ManyToOne
+    @JoinColumn(name = "shop_id")
+    private Shop shop;
+
+    @NotNull
+    @ManyToOne
     @JoinColumn(name = "owner_id")
     private Owner owner;
+
+    @NotNull
+    private boolean active = true;
+
+    public Card() {
+
+    }
+
+    public Card(String number, Owner owner, Shop shop) {
+    }
 
     public long getId() {
         return id;
     }
 
-    private void setId(long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
