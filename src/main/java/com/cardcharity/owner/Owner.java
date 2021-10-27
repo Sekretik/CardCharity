@@ -41,6 +41,14 @@ public class Owner {
         this.patronymic = patronymic;
     }
 
+    public Owner(long id, String passportNumber, String name, String surname, String patronymic) {
+        this.passportNumber = passportNumber;
+        this.name = name;
+        this.surname = surname;
+        this.patronymic = patronymic;
+        this.id = id;
+    }
+
     protected Owner() {
     }
 
@@ -48,7 +56,7 @@ public class Owner {
         return id;
     }
 
-    public void setId(long id) {
+    private void setId(long id) {
         this.id = id;
     }
 
