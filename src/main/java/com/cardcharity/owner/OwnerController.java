@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/owner")
@@ -13,11 +14,16 @@ public class OwnerController {
     OwnerDAO dao;
 
     @GetMapping("/get")
-    public List<Owner> getOwnerWithFIO(@RequestParam(required = false) String name,
+    public List<Owner> getOwnerWithFIOP(@RequestParam(required = false) String name,
                                        @RequestParam(required = false) String surname,
                                        @RequestParam(required = false) String patronymic,
                                        @RequestParam(required = false) String passport){
-        return dao.findByFIO(name,surname,patronymic,passport);
+        return dao.findByFIOP(name,surname,patronymic,passport);
+    }
+
+    @GetMapping("/get/{id}")
+    public Optional<Owner> getOwnerWithID(@PathVariable Long id){
+        return dao.findByID(id);
     }
 
     @PostMapping("/post")

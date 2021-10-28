@@ -5,13 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class OwnerDAO {
     @Autowired
     OwnerRepository repository;
 
-    public List<Owner> findByFIO(String name, String surname, String patronymic,String passport) {
+    public List<Owner> findByFIOP(String name, String surname, String patronymic, String passport) {
         List<Owner> list = null;
         if(passport == null) {
             if (name == null && surname == null && patronymic == null) {
@@ -29,10 +30,27 @@ public class OwnerDAO {
             else if(name == null && surname != null && patronymic != null){
                 list = repository.findBySurnameAndPatronymic(surname, patronymic);
             }
+            else if(name != null && surname == null && patronymic == null){
+                list = repository.findByName(name);
+            }
+            else if(name == null && surname != null && patronymic == null){
+                list = repository.findBySurname(surname);
+            }
+            else if(name == null && surname == null && patronymic != null){
+                list = repository.findByPatronymic(patronymic);
+            }
         }else {
             list = repository.findByPassportNumber(passport);
         }
         return list;
+    }
+
+    public Optional<Owner> findByID(Long id){
+        return repository.findById(id);
+    }
+
+    public List<Owner> findByActive(boolean active){
+        return repository.findByActive(active);
     }
 
     public void create(Owner owner) throws ServerException {
