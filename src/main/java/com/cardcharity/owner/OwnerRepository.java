@@ -5,13 +5,14 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface OwnerRepository extends CrudRepository<Owner, Long> {
-    List<Owner> findByName(String name);
-    List<Owner> findBySurname(String surname);
-    List<Owner> findByPatronymic(String patronymic);
-    List<Owner> findByNameAndSurname(String name, String surname);
-    List<Owner> findByNameAndPatronymic(String name, String patronymic);
-    List<Owner> findBySurnameAndPatronymic(String surname, String patronymic);
-    List<Owner> findByNameAndSurnameAndPatronymic(String name, String surname, String patronymic);
+    List<Owner> findByNameIgnoreCase(String name);
+    List<Owner> findBySurnameIgnoreCase(String surname);
+    List<Owner> findByPatronymicIgnoreCase(String patronymic);
+    List<Owner> findByNameAndSurnameIgnoreCase(String name, String surname);
+    List<Owner> findByNameAndPatronymicIgnoreCase(String name, String patronymic);
+    List<Owner> findBySurnameAndPatronymicIgnoreCase(String surname, String patronymic);
+    List<Owner> findByNameAndSurnameAndPatronymicIgnoreCase(String name, String surname, String patronymic);
     List<Owner> findByPassportNumber(String passportNumber);
     List<Owner> findByActive(boolean active);
+    boolean existsById(long id);
 }

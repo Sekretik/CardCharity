@@ -2,8 +2,8 @@ package com.cardcharity.card;
 
 public class CardWrapper {
     private String cardNumber;
-    private long shopId;
-    private long ownerId;
+    private long shop;
+    private long owner;
 
     public String getCardNumber() {
         return cardNumber;
@@ -13,25 +13,25 @@ public class CardWrapper {
         this.cardNumber = cardNumber;
     }
 
-    public long getShopId() {
-        return shopId;
+    public long getShop() {
+        return shop;
     }
 
-    public void setShopId(long shopId) {
-        this.shopId = shopId;
+    public void setShop(long shop) {
+        this.shop = shop;
     }
 
-    public long getOwnerId() {
-        return ownerId;
+    public long getOwner() {
+        return owner;
     }
 
-    public void setOwnerId(long ownerId) {
-        this.ownerId = ownerId;
+    public void setOwner(long owner) {
+        this.owner = owner;
     }
 
-    public CardWrapper(String cardNumber, long shopId, long ownerId) {
+    public CardWrapper(String cardNumber, long shopId, long owner) {
         this.cardNumber = cardNumber;
-        this.shopId = shopId;
-        this.ownerId = ownerId;
+        this.shop = shopId;
+        this.owner = owner;
     }
 }
