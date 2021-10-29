@@ -21,22 +21,22 @@ public class OwnerDAO {
             else if(name != null && surname != null && patronymic != null){
                 list = repository.findByNameAndSurnameAndPatronymic(name, surname, patronymic);
             }
-            else if(name != null && surname != null && patronymic == null){
+            else if(name != null && surname != null){
                 list = repository.findByNameAndSurname(name, surname);
             }
-            else if(name != null && surname == null && patronymic != null){
+            else if(name != null && patronymic != null){
                 list = repository.findByNameAndPatronymic(name, patronymic);
             }
             else if(name == null && surname != null && patronymic != null){
                 list = repository.findBySurnameAndPatronymic(surname, patronymic);
             }
-            else if(name != null && surname == null && patronymic == null){
+            else if(name != null){
                 list = repository.findByName(name);
             }
-            else if(name == null && surname != null && patronymic == null){
+            else if(surname != null){
                 list = repository.findBySurname(surname);
             }
-            else if(name == null && surname == null && patronymic != null){
+            else if(patronymic != null){
                 list = repository.findByPatronymic(patronymic);
             }
         }else {
@@ -54,11 +54,12 @@ public class OwnerDAO {
     }
 
     public void create(Owner owner) throws ServerException {
-        if(repository.findById(owner.getId()).isEmpty()){
-            repository.save(owner);
-        }else {
-            throw new ServerException("Owner already exist");
+        if(owner.getId() != 0){
+            throw new ServerException("New owner's id is not 0");
+        } else if(!repository.findByPassportNumber(owner.getPassportNumber()).isEmpty()) {
+            throw new ServerException("Owner with this passport number already exists");
         }
+        repository.save(owner);
     }
 
     public void update(Owner owner) throws ServerException {
