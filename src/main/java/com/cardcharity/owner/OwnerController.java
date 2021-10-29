@@ -4,6 +4,7 @@ import com.cardcharity.exception.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,12 +28,12 @@ public class OwnerController {
     }
 
     @PostMapping("/post")
-    public void postOwner(@RequestBody Owner owner) throws ServerException {
+    public void postOwner(@Valid @RequestBody Owner owner) throws ServerException {
         dao.create(owner);
     }
 
     @PutMapping("/put")
-    public void putOwner(@RequestBody Owner owner) throws ServerException {
+    public void putOwner(@Valid @RequestBody Owner owner) throws ServerException {
         dao.update(owner);
     }
 }

@@ -65,8 +65,7 @@ public class OwnerDAO {
     public void update(Owner owner) throws ServerException {
         if(repository.findById(owner.getId()).isEmpty()){
             throw new ServerException("Owner doesn't exist");
-        }else {
-            repository.save(owner);
         }
+        repository.save(owner);
     }
 }
