@@ -56,7 +56,23 @@ public class Card {
         this.number = number;
     }
 
-    public Owner getOwner() {
-        return owner;
+    public long getOwner() {
+        return owner.getId();
+    }
+
+    public long getShop() {
+        return shop.getId();
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
