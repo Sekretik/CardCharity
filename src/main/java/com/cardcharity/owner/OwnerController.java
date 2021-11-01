@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/owner")
+@RequestMapping("/admin/owner")
 public class OwnerController {
     @Autowired
     OwnerDAO dao;

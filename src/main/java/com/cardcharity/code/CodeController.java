@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/code")
+@RequestMapping("user/code")
 public class CodeController {
     @GetMapping("/{content}")
     public void getCode(@PathVariable String content, HttpServletResponse response){

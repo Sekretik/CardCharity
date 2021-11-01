@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/shop")
+@RequestMapping("/admin/shop")
 public class ShopController {
     @GetMapping("/logo/{id}")
     public void getLogo(@PathVariable String id, HttpServletResponse response) throws QueryException {
