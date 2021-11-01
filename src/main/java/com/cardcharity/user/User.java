@@ -11,7 +11,6 @@ public class User {
     @GeneratedValue
     private long id;
 
-    @NotNull
     private long use_count;
 
     public User(long use_count) {
