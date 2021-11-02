@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/card")
-@SecurityRequirement(name = "admin")
 public class CardController {
     @GetMapping("/test")
     public String test2 (){

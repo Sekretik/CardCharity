@@ -1,21 +1,25 @@
 package com.cardcharity.shop;
 
-import com.cardcharity.code.Image;
 import com.cardcharity.exception.QueryException;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.cardcharity.exception.ServerException;
+import com.cardcharity.owner.Owner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/admin/shop")
 public class ShopController {
+    @Autowired
+    ShopRepository dao;
+
     @GetMapping("/logo/{id}")
     public void getLogo(@PathVariable String id, HttpServletResponse response) throws QueryException {
         String shopName = "shopLogo_" + id + ".jpg";
@@ -26,5 +30,19 @@ public class ShopController {
         } catch (IOException e) {
             throw new QueryException("this shop does not exist");
         }
+    }
+    @GetMapping("/get")
+    public Iterable<Shop> getShops(){
+        return dao.findAll();
+    }
+
+    @GetMapping("/get/{id}")
+    public Optional<Shop> getShopWithID(@PathVariable Long id){
+        return dao.findById(id);
+    }
+
+    @PostMapping("/post")
+    public void postOwner(@Valid @RequestBody Shop shop) throws ServerException {
+        dao.save(shop);
     }
 }
