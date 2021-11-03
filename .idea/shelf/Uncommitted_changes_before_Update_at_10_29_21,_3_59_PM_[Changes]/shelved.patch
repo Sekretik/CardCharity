@@ -1,0 +1,62 @@
+Index: src/main/java/com/cardcharity/card/CardDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/cardcharity/card/CardDAO.java b/src/main/java/com/cardcharity/card/CardDAO.java
+new file mode 100644
+--- /dev/null	(date 1635505150268)
++++ b/src/main/java/com/cardcharity/card/CardDAO.java	(date 1635505150268)
+@@ -0,0 +1,52 @@
++package com.cardcharity.card;
++
++import com.cardcharity.exception.ServerException;
++import com.cardcharity.owner.Owner;
++import com.cardcharity.owner.OwnerDAO;
++import com.cardcharity.shop.Shop;
++import com.cardcharity.shop.ShopDAO;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.stereotype.Component;
++
++import javax.persistence.EntityManager;
++import javax.persistence.criteria.CriteriaBuilder;
++import javax.persistence.criteria.CriteriaQuery;
++import javax.persistence.criteria.Root;
++
++@Component
++public class CardDAO {
++    @Autowired
++    private CardRepository cardRepository;
++
++    @Autowired
++    private OwnerDAO ownerDAO;
++
++    @Autowired
++    private ShopDAO shopDAO;
++
++    @Autowired
++    private EntityManager entityManager;
++
++    public void save(CardWrapper cardWrapper) throws ServerException {
++        if(!ownerDAO.existsById(cardWrapper.getOwner())) {
++            throw new ServerException("Owner does not exist");
++        } else if(!shopDAO.existsById(cardWrapper.getShop())) {
++            throw new ServerException("Shop does not exist");
++        }
++        Card card = new Card();
++        card.setNumber(cardWrapper.getCardNumber());
++        card.setOwner(ownerDAO.findByID(cardWrapper.getOwner()).get());
++        card.setShop(shopDAO.findById(cardWrapper.getShop()).get());
++    }
++//    public Card getCardWithMinUse(Shop shop) {
++//        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
++//        CriteriaQuery<Card> criteriaQuery = criteriaBuilder.createQuery(Card.class);
++//        Root<Card> cardRoot = criteriaQuery.from(Card.class);
++//        cardRoot.join(cardRoot.get);
++//        Root<Owner> ownerRoot = criteriaQuery.from(Owner.class);
++//        criteriaQuery
++//                .select(cardRoot)
++//                .where(criteriaBuilder.equal(cardRoot.get("shop_id"), shop))
++//                .where(criteriaBuilder.equal(ownerRoot.))
++//    }
++}

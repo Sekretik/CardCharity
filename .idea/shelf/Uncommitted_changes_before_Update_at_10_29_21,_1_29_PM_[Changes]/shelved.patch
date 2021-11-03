@@ -1,0 +1,29 @@
+Index: src/main/java/com/cardcharity/card/CardDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/cardcharity/card/CardDAO.java b/src/main/java/com/cardcharity/card/CardDAO.java
+new file mode 100644
+--- /dev/null	(date 1635496163534)
++++ b/src/main/java/com/cardcharity/card/CardDAO.java	(date 1635496163534)
+@@ -0,0 +1,19 @@
++package com.cardcharity.card;
++
++import com.cardcharity.exception.ServerException;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.stereotype.Component;
++
++@Component
++public class CardDAO {
++    @Autowired
++    private CardRepository cardRepository;
++
++    @
++
++    public void save(Card card) throws ServerException {
++        if(card.getId() != 0) {
++            throw new ServerException("New card id is not 0");
++        } else if(cardRepository.f)
++    }
++}
