@@ -52,6 +52,10 @@ public class Core {
         ownerRepository.save(owner2);
         cardRepository.save(card);
         cardRepository.save(card2);
+        for (Owner o:ownerRepository.findAll()
+             ) {
+            System.out.println(o.getName());
+        }
         for (Card c:cardRepository.findAll()
              ) {
             System.out.println(c.getNumber());

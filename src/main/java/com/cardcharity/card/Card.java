@@ -34,6 +34,9 @@ public class Card {
     }
 
     public Card(String number, Owner owner, Shop shop) {
+        this.number = number;
+        this.owner = owner;
+        this.shop = shop;
     }
 
     public long getId() {
