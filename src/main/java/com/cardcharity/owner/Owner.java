@@ -1,8 +1,5 @@
 package com.cardcharity.owner;
 
-import org.hibernate.annotations.NaturalId;
-import org.springframework.beans.factory.annotation.Value;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -33,7 +30,7 @@ public class Owner {
     @NotNull
     private String patronymic;
 
-    public Owner(long id, String passportNumber, String name, String surname, String patronymic) {
+    public Owner(String passportNumber, String name, String surname, String patronymic) {
         this.passportNumber = passportNumber;
         this.name = name;
         this.surname = surname;
@@ -64,8 +61,11 @@ public class Owner {
         return useCount;
     }
 
-    public void setUseCount(int useCount) {
+    private void setUseCount(int useCount) {
         this.useCount = useCount;
+    }
+
+    public void increaseUseCount() { useCount++;
     }
 
     public String getPassportNumber() {

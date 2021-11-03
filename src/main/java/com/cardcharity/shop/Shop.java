@@ -14,11 +14,13 @@ public class Shop {
     @NotNull
     private long id;
 
-    @NotNull
-    @NaturalId
+    public void setName(String name) {
+        this.name = name;
+    }
+
     private String name;
 
-    private Shop() {}
+    public Shop() {}
 
     public long getId() {
         return id;

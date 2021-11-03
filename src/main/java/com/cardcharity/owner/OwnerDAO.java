@@ -19,25 +19,25 @@ public class OwnerDAO {
                 list = (List<Owner>) repository.findAll();
             }
             else if(name != null && surname != null && patronymic != null){
-                list = repository.findByNameAndSurnameAndPatronymic(name, surname, patronymic);
+                list = repository.findByNameAndSurnameAndPatronymicIgnoreCase(name, surname, patronymic);
             }
             else if(name != null && surname != null){
-                list = repository.findByNameAndSurname(name, surname);
+                list = repository.findByNameAndSurnameIgnoreCase(name, surname);
             }
             else if(name != null && patronymic != null){
-                list = repository.findByNameAndPatronymic(name, patronymic);
+                list = repository.findByNameAndPatronymicIgnoreCase(name, patronymic);
             }
             else if(name == null && surname != null && patronymic != null){
-                list = repository.findBySurnameAndPatronymic(surname, patronymic);
+                list = repository.findBySurnameAndPatronymicIgnoreCase(surname, patronymic);
             }
             else if(name != null){
-                list = repository.findByName(name);
+                list = repository.findByNameIgnoreCase(name);
             }
             else if(surname != null){
-                list = repository.findBySurname(surname);
+                list = repository.findBySurnameIgnoreCase(surname);
             }
             else if(patronymic != null){
-                list = repository.findByPatronymic(patronymic);
+                list = repository.findByPatronymicIgnoreCase(patronymic);
             }
         }else {
             list = repository.findByPassportNumber(passport);

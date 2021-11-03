@@ -75,4 +75,11 @@ public class Card {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) return true;
+        if(this.getClass() !=  obj.getClass()) return false;
+        return (this.getNumber().equals(((Card) obj).getNumber()) && (this.getShop() == ((Card) obj).getShop()));
+    }
 }

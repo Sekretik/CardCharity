@@ -1,14 +1,17 @@
 package com.cardcharity;
 
+import com.cardcharity.card.Card;
+import com.cardcharity.card.CardRepository;
+import com.cardcharity.owner.Owner;
+import com.cardcharity.owner.OwnerRepository;
+import com.cardcharity.shop.Shop;
 import com.cardcharity.shop.ShopRepository;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.*;
@@ -19,8 +22,10 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.util.List;
 import java.util.Properties;
 
 @PropertySource({"dataBase.properties","hibernate.properties","server.properties"})
@@ -30,7 +35,29 @@ import java.util.Properties;
 @SecurityScheme(name = "admin", scheme = "basic", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
 public class Core {
     public static void main(String[] args) {
-        SpringApplication.run(Core.class,args);
+        //SpringApplication.run(Core.class,args);
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Core.class);
+        ShopRepository shopRepository = applicationContext.getBean(ShopRepository.class);
+        CardRepository cardRepository = applicationContext.getBean(CardRepository.class);
+        OwnerRepository ownerRepository = applicationContext.getBean(OwnerRepository.class);
+        Shop shop = new Shop();
+        shop.setName("testShopName");
+        Owner owner1 = new Owner("123456", "Ivan", "Ivanovich", "Ivanov");
+        owner1.increaseUseCount();
+        Owner owner2 = new Owner("321654", "Vasyli", "Vasylievich", "Vasyliev");
+        Card card = new Card("number123456", owner1, shop);
+        Card card2 = new Card("number654321", owner2, shop);
+        shopRepository.save(shop);
+        ownerRepository.save(owner1);
+        ownerRepository.save(owner2);
+        cardRepository.save(card);
+        cardRepository.save(card2);
+        for (Card c:cardRepository.findAll()
+             ) {
+            System.out.println(c.getNumber());
+        }
+        List<Card> cardList = cardRepository.findByOwnerMinUseAndShop(shop);
+        System.out.println(cardList.get(0).getNumber());
     }
 
     @Bean
