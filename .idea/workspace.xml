@@ -4,26 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0df801f7-4e0e-41f4-99d5-ea8872d5767d" name="Changes" comment="Fixing card repo">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/owner/CardDAO.java" afterDir="false" />
+    <list default="true" id="0df801f7-4e0e-41f4-99d5-ea8872d5767d" name="Changes" comment="Fixed user dao">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/HistoryDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/HistoryRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/Core.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/Core.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/card/CardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/card/CardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/code/CodeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/code/CodeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/History.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/History.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/owner/OwnerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/owner/OwnerDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/shop/ShopDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/shop/ShopDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/dataBase.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/dataBase.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/hibernate.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/hibernate.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cardcharity/Core.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cardcharity/Core.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cardcharity/card/CardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cardcharity/card/CardController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cardcharity/card/CardRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cardcharity/card/CardRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cardcharity/code/CodeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cardcharity/code/CodeController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cardcharity/owner/Owner.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cardcharity/owner/Owner.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cardcharity/owner/OwnerDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cardcharity/owner/OwnerDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cardcharity/shop/ShopDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cardcharity/shop/ShopDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dataBase.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dataBase.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hibernate.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hibernate.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,7 +148,28 @@
       <option name="project" value="LOCAL" />
       <updated>1635949856359</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Fixing card repo">
+      <created>1635950842780</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1635950842780</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Fixing card repo">
+      <created>1635950887620</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1635950887620</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Fixed user dao">
+      <created>1636043045494</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1636043045494</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -185,6 +190,7 @@
     <MESSAGE value="Added card wrapper" />
     <MESSAGE value="Writing cardDao and validation" />
     <MESSAGE value="Fixing card repo" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing card repo" />
+    <MESSAGE value="Fixed user dao" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed user dao" />
   </component>
 </project>
