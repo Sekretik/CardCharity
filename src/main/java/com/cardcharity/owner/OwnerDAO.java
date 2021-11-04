@@ -44,6 +44,10 @@ public class OwnerDAO {
         }
         return list;
     }
+    public void increaseUseCount(Owner owner) {
+        int ownerUseCount = owner.getUseCount();
+        owner.setUseCount(ownerUseCount++);
+    }
 
     public Optional<Owner> findByID(Long id){
         return repository.findById(id);

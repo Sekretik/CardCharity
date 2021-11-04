@@ -61,11 +61,8 @@ public class Owner {
         return useCount;
     }
 
-    private void setUseCount(int useCount) {
+    public void setUseCount(int useCount) {
         this.useCount = useCount;
-    }
-
-    public void increaseUseCount() { useCount++;
     }
 
     public String getPassportNumber() {

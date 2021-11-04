@@ -17,6 +17,6 @@ public interface CardRepository extends CrudRepository<Card, Long> {
     List<Card> findByNumberAndOwner(String number, Owner owner);
     List<Card> findByOwnerAndShop(String number, Shop shop);
 
-    @Query("SELECT c FROM Card c WHERE c.shop = :shop ORDER BY c.owner.useCount ASK")
+    @Query("SELECT c FROM Card c WHERE c.shop = :shop ORDER BY c.owner.useCount ASC")
     List<Card> findByOwnerMinUseAndShop(@Param("shop")Shop shop);
 }
