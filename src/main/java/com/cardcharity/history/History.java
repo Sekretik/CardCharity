@@ -3,9 +3,7 @@ package com.cardcharity.history;
 import com.cardcharity.card.Card;
 import com.cardcharity.user.User;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -16,11 +14,15 @@ public class History {
 
     private Date date;
 
+    @ManyToOne
+    @JoinColumn(name = "card_id")
     private Card card;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
-    public long getId() {
+    private long getId() {
         return id;
     }
 

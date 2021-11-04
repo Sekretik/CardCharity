@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0df801f7-4e0e-41f4-99d5-ea8872d5767d" name="Changes" comment="Fixing card repo">
+    <list default="true" id="0df801f7-4e0e-41f4-99d5-ea8872d5767d" name="Changes" comment="Fixed user dao">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/HistoryDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/HistoryRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/card/CardRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/card/CardRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/History.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/History.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/owner/Owner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/owner/Owner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/owner/OwnerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/owner/OwnerDAO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,7 +162,14 @@
       <option name="project" value="LOCAL" />
       <updated>1635950887620</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Fixed user dao">
+      <created>1636043045494</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1636043045494</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -185,17 +190,7 @@
     <MESSAGE value="Added card wrapper" />
     <MESSAGE value="Writing cardDao and validation" />
     <MESSAGE value="Fixing card repo" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing card repo" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/cardcharity/history/History.java</url>
-          <line>11</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Fixed user dao" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed user dao" />
   </component>
 </project>
