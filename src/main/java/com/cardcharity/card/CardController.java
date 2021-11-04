@@ -1,22 +1,32 @@
 package com.cardcharity.card;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.cardcharity.owner.CardDAO;
+import com.cardcharity.owner.OwnerDAO;
+import com.cardcharity.shop.ShopDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/admin/card")
 public class CardController {
-    @GetMapping("/test")
-    public String test2 (){
-        return "test";
+    @Autowired
+    CardDAO cardDAO;
+
+    @PostMapping("/post")
+    public void postCard(@RequestBody CardWrapper card){
+        cardDAO.save(card);
     }
 
-    @GetMapping
-    public String tes1t (){
-        return "test1";
+    @GetMapping("/get")
+    public List<Card> getOwnerWithFIOP(){
+        return cardDAO.findAll();
+    }
+
+    @GetMapping("/get/{id}")
+    public Optional<Card> getOwnerWithID(@PathVariable Long id){
+        return cardDAO.findById(id);
     }
 }

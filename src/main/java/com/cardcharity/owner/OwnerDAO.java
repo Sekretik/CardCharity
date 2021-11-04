@@ -46,7 +46,8 @@ public class OwnerDAO {
     }
     public void increaseUseCount(Owner owner) {
         int ownerUseCount = owner.getUseCount();
-        owner.setUseCount(ownerUseCount++);
+        owner.setUseCount(ownerUseCount + 1);
+        repository.save(owner);
     }
 
     public Optional<Owner> findByID(Long id){
