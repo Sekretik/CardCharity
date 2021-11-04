@@ -2,6 +2,7 @@ package com.cardcharity.owner;
 
 import com.cardcharity.exception.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

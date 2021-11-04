@@ -1,5 +1,6 @@
 package com.cardcharity.owner;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -9,25 +10,24 @@ import javax.validation.constraints.NotNull;
 public class Owner {
     @Id
     @GeneratedValue
-    @NotNull
     private long id;
 
-    @NotNull
+    @Column(nullable = false)
     private boolean active = true;
 
-    @NotNull
+    @Column(nullable = false)
     private int useCount = 0;
 
-    @NotNull
+    @Column(nullable = false)
     private String passportNumber;
 
-    @NotNull
+    @Column(nullable = false)
     private String name;
 
-    @NotNull
+    @Column(nullable = false)
     private String surname;
 
-    @NotNull
+    @Column(nullable = false)
     private String patronymic;
 
     public Owner(String passportNumber, String name, String surname, String patronymic) {

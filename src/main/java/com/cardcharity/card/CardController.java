@@ -3,6 +3,7 @@ package com.cardcharity.card;
 import com.cardcharity.owner.CardDAO;
 import com.cardcharity.owner.OwnerDAO;
 import com.cardcharity.shop.ShopDAO;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/admin/card")
+@SecurityRequirement(name = "admin")
+
 public class CardController {
     @Autowired
     CardDAO cardDAO;
