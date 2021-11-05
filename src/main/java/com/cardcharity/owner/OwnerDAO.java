@@ -2,6 +2,7 @@ package com.cardcharity.owner;
 
 import com.cardcharity.exception.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -46,7 +47,8 @@ public class OwnerDAO {
     }
     public void increaseUseCount(Owner owner) {
         int ownerUseCount = owner.getUseCount();
-        owner.setUseCount(ownerUseCount++);
+        owner.setUseCount(ownerUseCount + 1);
+        repository.save(owner);
     }
 
     public Optional<Owner> findByID(Long id){

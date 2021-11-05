@@ -1,6 +1,7 @@
 package com.cardcharity.owner;
 
 import com.cardcharity.exception.ServerException;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/admin/owner")
+@SecurityRequirement(name = "admin")
+
 public class OwnerController {
     @Autowired
     OwnerDAO dao;

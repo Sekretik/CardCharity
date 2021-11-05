@@ -1,10 +1,11 @@
 package com.cardcharity.owner;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface OwnerRepository extends CrudRepository<Owner, Long> {
+public interface OwnerRepository extends JpaRepository<Owner, Long> {
     List<Owner> findByNameIgnoreCase(String name);
     List<Owner> findBySurnameIgnoreCase(String surname);
     List<Owner> findByPatronymicIgnoreCase(String patronymic);
