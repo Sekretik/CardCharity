@@ -55,4 +55,6 @@ public class History {
         this.card = card;
         this.user = user;
     }
+
+    public History() {}
 }

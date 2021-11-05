@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0df801f7-4e0e-41f4-99d5-ea8872d5767d" name="Changes" comment="Fixed user dao">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/HistoryDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/HistoryRepository.java" afterDir="false" />
+    <list default="true" id="0df801f7-4e0e-41f4-99d5-ea8872d5767d" name="Changes" comment="Fixed history model">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/user/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_29_21,_1_29_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_29_21__1_29_PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/History.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/History.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/HistoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/HistoryDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/HistoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/HistoryRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,8 +21,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -169,7 +173,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636043045494</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Fixed history model">
+      <created>1636044551914</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1636044551915</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -191,6 +202,7 @@
     <MESSAGE value="Writing cardDao and validation" />
     <MESSAGE value="Fixing card repo" />
     <MESSAGE value="Fixed user dao" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed user dao" />
+    <MESSAGE value="Fixed history model" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed history model" />
   </component>
 </project>
