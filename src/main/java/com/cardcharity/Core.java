@@ -40,20 +40,7 @@ import java.util.Properties;
 public class Core {
 
     public static void main(String[] args) {
-        //SpringApplication.run(Core.class,args);
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Core.class);
-        OwnerRepository ownerRepository = applicationContext.getBean(OwnerRepository.class);
-        ownerRepository.save(new Owner("123456", "Ivan", "Ivanov", "Ivanovich"));
-        ownerRepository.save(new Owner("123456", "Vasyli", "Vasyliev","Vasylievich"));
-        ExampleMatcher exampleMatcher = ExampleMatcher.matchingAll()
-                //.withIgnoreNullValues();
-                .withIgnorePaths("id");
-        Example<Owner> ownerExample = Example.of(new Owner("123456", null, "Ivanov", null), exampleMatcher);
-        List<Owner> ownerList = ownerRepository.findAll(ownerExample);
-        for (Owner o:ownerList
-             ) {
-            System.out.println(o.getName());
-        }
+        SpringApplication.run(Core.class,args);
     }
 
     @Bean
