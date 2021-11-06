@@ -35,7 +35,6 @@ public class Owner {
         this.name = name;
         this.surname = surname;
         this.patronymic = patronymic;
-        this.id = id;
     }
 
     protected Owner() {

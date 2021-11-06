@@ -3,6 +3,7 @@ package com.cardcharity;
 import com.cardcharity.card.Card;
 import com.cardcharity.card.CardRepository;
 import com.cardcharity.owner.Owner;
+import com.cardcharity.owner.OwnerDAO;
 import com.cardcharity.owner.OwnerRepository;
 import com.cardcharity.shop.Shop;
 import com.cardcharity.shop.ShopRepository;
@@ -11,11 +12,14 @@ import com.zaxxer.hikari.HikariDataSource;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -34,8 +38,22 @@ import java.util.Properties;
 @EnableWebSecurity
 @SecurityScheme(name = "admin", scheme = "basic", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
 public class Core {
+
     public static void main(String[] args) {
-        SpringApplication.run(Core.class,args);
+        //SpringApplication.run(Core.class,args);
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Core.class);
+        OwnerRepository ownerRepository = applicationContext.getBean(OwnerRepository.class);
+        ownerRepository.save(new Owner("123456", "Ivan", "Ivanov", "Ivanovich"));
+        ownerRepository.save(new Owner("123456", "Vasyli", "Vasyliev","Vasylievich"));
+        ExampleMatcher exampleMatcher = ExampleMatcher.matchingAll()
+                //.withIgnoreNullValues();
+                .withIgnorePaths("id");
+        Example<Owner> ownerExample = Example.of(new Owner("123456", null, "Ivanov", null), exampleMatcher);
+        List<Owner> ownerList = ownerRepository.findAll(ownerExample);
+        for (Owner o:ownerList
+             ) {
+            System.out.println(o.getName());
+        }
     }
 
     @Bean

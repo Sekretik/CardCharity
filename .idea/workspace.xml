@@ -4,14 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0df801f7-4e0e-41f4-99d5-ea8872d5767d" name="Changes" comment="Fixed history model">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/user/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_29_21,_1_29_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_29_21__1_29_PM__Changes_.xml" beforeDir="false" />
+    <list default="true" id="0df801f7-4e0e-41f4-99d5-ea8872d5767d" name="Changes" comment="History dao completed(kinda)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/History.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/History.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/HistoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/HistoryDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/HistoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/HistoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/Core.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/Core.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/owner/Owner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/owner/Owner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/dataBase.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/dataBase.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/hibernate.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/hibernate.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,7 +178,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636044551915</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="History dao completed(kinda)">
+      <created>1636136564273</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1636136564273</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -203,6 +208,7 @@
     <MESSAGE value="Fixing card repo" />
     <MESSAGE value="Fixed user dao" />
     <MESSAGE value="Fixed history model" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed history model" />
+    <MESSAGE value="History dao completed(kinda)" />
+    <option name="LAST_COMMIT_MESSAGE" value="History dao completed(kinda)" />
   </component>
 </project>
