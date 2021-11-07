@@ -7,6 +7,9 @@ import com.cardcharity.owner.OwnerDAO;
 import com.cardcharity.owner.OwnerRepository;
 import com.cardcharity.shop.Shop;
 import com.cardcharity.shop.ShopRepository;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
@@ -29,10 +32,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
-@PropertySource({"dataBase.properties","hibernate.properties","server.properties"})
+@PropertySource({"dataBase.properties","hibernate.properties","server.properties","firebase.properties"})
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableWebSecurity
@@ -40,20 +46,7 @@ import java.util.Properties;
 public class Core {
 
     public static void main(String[] args) {
-        //SpringApplication.run(Core.class,args);
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Core.class);
-        OwnerRepository ownerRepository = applicationContext.getBean(OwnerRepository.class);
-        ownerRepository.save(new Owner("123456", "Ivan", "Ivanov", "Ivanovich"));
-        ownerRepository.save(new Owner("123456", "Vasyli", "Vasyliev","Vasylievich"));
-        ExampleMatcher exampleMatcher = ExampleMatcher.matchingAll()
-                //.withIgnoreNullValues();
-                .withIgnorePaths("id");
-        Example<Owner> ownerExample = Example.of(new Owner("123456", null, "Ivanov", null), exampleMatcher);
-        List<Owner> ownerList = ownerRepository.findAll(ownerExample);
-        for (Owner o:ownerList
-             ) {
-            System.out.println(o.getName());
-        }
+        SpringApplication.run(Core.class,args);
     }
 
     @Bean
@@ -88,5 +81,16 @@ public class Core {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory);
         return transactionManager;
+    }
+
+    @Bean
+    FirebaseApp firebaseApp(Environment environment) throws IOException {
+        FileInputStream inputStream = new FileInputStream(environment.getProperty("firebase.authfile"));
+
+        FirebaseOptions firebaseOptions = FirebaseOptions.builder()
+                .setCredentials(GoogleCredentials.fromStream(inputStream))
+                .build();
+        FirebaseApp firebaseApp = FirebaseApp.initializeApp(firebaseOptions);
+        return firebaseApp;
     }
 }

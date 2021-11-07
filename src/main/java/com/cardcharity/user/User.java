@@ -1,9 +1,10 @@
 package com.cardcharity.user;
 
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
 
 @Entity
 public class User {
@@ -11,10 +12,32 @@ public class User {
     @GeneratedValue
     private long id;
 
-    private long use_count;
+    @NaturalId
+    private String uid;
 
-    public User(long use_count) {
-        this.use_count = use_count;
+    String email;
+
+    private long useCount = 0;
+
+    public User(String uid, String email) {
+        this.uid = uid;
+        this.email = email;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public User() {
@@ -28,11 +51,11 @@ public class User {
         this.id = id;
     }
 
-    public long getUse_count() {
-        return use_count;
+    public long getUseCount() {
+        return useCount;
     }
 
-    public void setUse_count(long use_count) {
-        this.use_count = use_count;
+    public void setUseCount(long useCount) {
+        this.useCount = useCount;
     }
 }
