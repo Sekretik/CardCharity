@@ -35,6 +35,10 @@ public class UserDAO {
         return user;
     }
 
+    public void save(User user){
+        userRepository.save(user);
+    }
+
     public List<User> getAll() {
         return userRepository.findAll();
     }

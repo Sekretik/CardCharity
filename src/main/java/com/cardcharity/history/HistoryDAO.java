@@ -32,11 +32,11 @@ public class HistoryDAO {
         return historyRepository.findAll(historyExample);
     }
 
-    public History from(Card card, User user) {
+    public void save(Card card, User user) {
         History history = new History();
         history.setCard(card);
         history.setUser(user);
         history.setDate(new Date());
-        return history;
+        historyRepository.save(history);
     }
 }
