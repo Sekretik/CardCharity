@@ -1,8 +1,10 @@
 package com.cardcharity.owner;
 
 import com.cardcharity.exception.ServerException;
+import com.cardcharity.history.History;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,36 +16,12 @@ public class OwnerDAO {
     OwnerRepository repository;
 
     public List<Owner> findByFIOP(String name, String surname, String patronymic, String passport) {
-        List<Owner> list = null;
-        if(passport == null) {
-            if (name == null && surname == null && patronymic == null) {
-                list = (List<Owner>) repository.findAll();
-            }
-            else if(name != null && surname != null && patronymic != null){
-                list = repository.findByNameAndSurnameAndPatronymicIgnoreCase(name, surname, patronymic);
-            }
-            else if(name != null && surname != null){
-                list = repository.findByNameAndSurnameIgnoreCase(name, surname);
-            }
-            else if(name != null && patronymic != null){
-                list = repository.findByNameAndPatronymicIgnoreCase(name, patronymic);
-            }
-            else if(name == null && surname != null && patronymic != null){
-                list = repository.findBySurnameAndPatronymicIgnoreCase(surname, patronymic);
-            }
-            else if(name != null){
-                list = repository.findByNameIgnoreCase(name);
-            }
-            else if(surname != null){
-                list = repository.findBySurnameIgnoreCase(surname);
-            }
-            else if(patronymic != null){
-                list = repository.findByPatronymicIgnoreCase(patronymic);
-            }
-        }else {
-            list = repository.findByPassportNumber(passport);
-        }
-        return list;
+        Owner owner = new Owner(passport,name,surname,patronymic);
+        Example<Owner> historyExample = Example.of(owner, ExampleMatcher.matchingAll().withIgnoreNullValues()
+                .withIgnorePaths("id")
+                .withIgnorePaths("useCount")
+                .withIgnorePaths("active"));
+        return repository.findAll(historyExample);
     }
     public void increaseUseCount(Owner owner) {
         int ownerUseCount = owner.getUseCount();

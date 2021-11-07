@@ -27,7 +27,8 @@ public class HistoryDAO {
         History history = new History();
         history.setCard(cardRepository.findById(cardId).get());
         history.setUser(userRepository.findById(userId).get());
-        Example<History> historyExample = Example.of(history, ExampleMatcher.matchingAll());
+        Example<History> historyExample = Example.of(history, ExampleMatcher.matchingAll().withIgnoreNullValues()
+                .withIgnorePaths("id"));
         return historyRepository.findAll(historyExample);
     }
 

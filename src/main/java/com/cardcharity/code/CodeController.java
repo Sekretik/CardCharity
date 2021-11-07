@@ -1,7 +1,7 @@
 package com.cardcharity.code;
 
 import com.cardcharity.card.Card;
-import com.cardcharity.owner.CardDAO;
+import com.cardcharity.card.CardDAO;
 import com.cardcharity.owner.OwnerDAO;
 import com.cardcharity.shop.ShopDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class CodeController {
     @GetMapping("/{shopId}")
     public void getCode(@PathVariable Long shopId, HttpServletResponse response){
         Card card = cardDAO.getCardWithMinUse(shopDAO.findById(shopId).get());
-        ownerDAO.increaseUseCount(ownerDAO.findByID(card.getOwner()).get());
+        ownerDAO.increaseUseCount(ownerDAO.findByID(card.getOwner().getId()).get());
         BufferedImage image = Image.createQR(card.getNumber());
         try {
             ImageIO.write(image,"png",response.getOutputStream());
