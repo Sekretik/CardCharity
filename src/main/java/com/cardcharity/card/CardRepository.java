@@ -2,13 +2,14 @@ package com.cardcharity.card;
 
 import com.cardcharity.owner.Owner;
 import com.cardcharity.shop.Shop;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface CardRepository extends CrudRepository<Card, Long> {
+public interface CardRepository extends JpaRepository<Card, Long> {
     List<Card> findByNumber(String number);
     List<Card> findByOwner(Owner owner);
     List<Card> findByShop(Shop shop);

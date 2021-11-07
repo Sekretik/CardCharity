@@ -10,23 +10,18 @@ import javax.validation.constraints.NotNull;
 public class Card {
     @Id
     @GeneratedValue
-    @NotNull
     private long id;
 
-    @NotNull
     private String number;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "shop_id")
     private Shop shop;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private Owner owner;
 
-    @NotNull
     private boolean active = true;
 
     public Card() {
@@ -59,12 +54,12 @@ public class Card {
         this.number = number;
     }
 
-    public long getOwner() {
-        return owner.getId();
+    public Owner getOwner() {
+        return owner;
     }
 
-    public long getShop() {
-        return shop.getId();
+    public Shop getShop() {
+        return shop;
     }
 
     public void setShop(Shop shop) {

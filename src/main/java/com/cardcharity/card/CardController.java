@@ -1,8 +1,5 @@
 package com.cardcharity.card;
 
-import com.cardcharity.owner.CardDAO;
-import com.cardcharity.owner.OwnerDAO;
-import com.cardcharity.shop.ShopDAO;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +21,10 @@ public class CardController {
     }
 
     @GetMapping("/get")
-    public List<Card> getOwnerWithFIOP(){
-        return cardDAO.findAll();
+    public List<CardWrapper> getOwnerWithFIOP(@RequestParam(required = false) String number,
+                                       @RequestParam(required = false) Long owner,
+                                       @RequestParam(required = false) Long shop){
+        return cardDAO.findAll(number,owner,shop);
     }
 
     @GetMapping("/get/{id}")
