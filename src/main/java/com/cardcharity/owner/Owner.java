@@ -18,7 +18,7 @@ public class Owner {
     @Column(nullable = false)
     private int useCount = 0;
 
-    @Column(nullable = false)
+    @Column(unique=true, nullable=false)
     private String passportNumber;
 
     @Column(nullable = false)

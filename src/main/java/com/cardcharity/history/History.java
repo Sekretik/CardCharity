@@ -12,14 +12,17 @@ public class History {
     @GeneratedValue
     private long id;
 
+    @Column(nullable = false)
     private Date date;
 
+    @Column(nullable = false)
     @ManyToOne
     @JoinColumn(name = "card_id")
     private Card card;
 
+    @Column(nullable = false)
     @ManyToOne
-    //@JoinColumn(name = "user_id")
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     private long getId() {

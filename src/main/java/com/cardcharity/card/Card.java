@@ -12,16 +12,20 @@ public class Card {
     @GeneratedValue
     private long id;
 
+    @Column(nullable = false)
     private String number;
 
+    @Column(nullable = false)
     @ManyToOne
     @JoinColumn(name = "shop_id")
     private Shop shop;
 
+    @Column(nullable = false)
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private Owner owner;
 
+    @Column(nullable = false)
     private boolean active = true;
 
     public Card() {
