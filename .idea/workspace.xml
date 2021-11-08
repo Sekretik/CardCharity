@@ -4,12 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0df801f7-4e0e-41f4-99d5-ea8872d5767d" name="Changes" comment="History dao completed(kinda)">
+    <list default="true" id="0df801f7-4e0e-41f4-99d5-ea8872d5767d" name="Changes" comment="Finished userDao">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/Core.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/Core.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/owner/Owner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/owner/Owner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/code/CodeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/code/CodeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/History.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/History.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/HistoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/HistoryDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/user/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/user/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/user/UserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/user/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/user/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/resources/dataBase.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/dataBase.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/firebase.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/firebase.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/resources/hibernate.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/hibernate.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/server.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/server.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cardcharity/Core.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cardcharity/Core.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cardcharity/admin/Admin.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cardcharity/admin/AdminController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cardcharity/code/CodeController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cardcharity/user/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cardcharity/user/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dataBase.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dataBase.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +32,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -51,9 +64,11 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/resources" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.cardcharity" />
     </key>
@@ -185,7 +200,28 @@
       <option name="project" value="LOCAL" />
       <updated>1636136564273</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="example">
+      <created>1636193514051</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1636193514051</updated>
+    </task>
+    <task id="LOCAL-00016" summary="example">
+      <created>1636193530878</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1636193530878</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Finished userDao">
+      <created>1636284165978</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1636284165978</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -209,6 +245,8 @@
     <MESSAGE value="Fixed user dao" />
     <MESSAGE value="Fixed history model" />
     <MESSAGE value="History dao completed(kinda)" />
-    <option name="LAST_COMMIT_MESSAGE" value="History dao completed(kinda)" />
+    <MESSAGE value="example" />
+    <MESSAGE value="Finished userDao" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished userDao" />
   </component>
 </project>

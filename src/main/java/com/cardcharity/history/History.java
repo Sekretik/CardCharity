@@ -1,7 +1,7 @@
 package com.cardcharity.history;
 
 import com.cardcharity.card.Card;
-import com.cardcharity.user.User;
+import com.cardcharity.user.Customer;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,8 +19,8 @@ public class History {
     private Card card;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    //@JoinColumn(name = "user_id")
+    private Customer customer;
 
     private long getId() {
         return id;
@@ -42,18 +42,18 @@ public class History {
         this.card = card;
     }
 
-    public User getUser() {
-        return user;
+    public Customer getUser() {
+        return customer;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Customer customer) {
+        this.customer = customer;
     }
 
-    public History(Date date, Card card, User user) {
+    public History(Date date, Card card, Customer customer) {
         this.date = date;
         this.card = card;
-        this.user = user;
+        this.customer = customer;
     }
 
     public History() {}

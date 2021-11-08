@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class User {
+public class Customer {
     @Id
     @GeneratedValue
     private long id;
@@ -15,13 +15,19 @@ public class User {
     @NaturalId
     private String uid;
 
-    String email;
+    private String email;
 
-    private long useCount = 0;
+    private int useCount = 0;
 
-    public User(String uid, String email) {
+    public Customer() {}
+
+    public Customer(String uid, String email) {
         this.uid = uid;
         this.email = email;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getUid() {
@@ -40,22 +46,11 @@ public class User {
         this.email = email;
     }
 
-    public User() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getUseCount() {
+    public int getUseCount() {
         return useCount;
     }
 
-    public void setUseCount(long useCount) {
+    public void setUseCount(int useCount) {
         this.useCount = useCount;
     }
 }

@@ -6,8 +6,8 @@ import com.cardcharity.history.HistoryDAO;
 import com.cardcharity.owner.OwnerDAO;
 import com.cardcharity.shop.Shop;
 import com.cardcharity.shop.ShopDAO;
-import com.cardcharity.user.User;
-import com.cardcharity.user.UserDAO;
+import com.cardcharity.user.Customer;
+import com.cardcharity.user.CustomerDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,23 +28,23 @@ public class CodeController {
     @Autowired
     HistoryDAO historyDAO;
     @Autowired
-    UserDAO userDAO;
+    CustomerDAO customerDAO;
 
     @GetMapping("/{shopId}")
     public void getCode(@PathVariable Long shopId, @RequestParam String uid, HttpServletResponse response){
         Shop shop = shopDAO.findById(shopId).get();
         Card card = cardDAO.getCardWithMinUse(shop);
-        User user = userDAO.findByUid(uid).get();
+        Customer customer = customerDAO.findByUid(uid).get();
 
-        if(user == null){
-            user = userDAO.getFromFirebase(uid);
-            userDAO.save(user);
+        if(customer == null){
+            customer = customerDAO.getFromFirebase(uid);
+            customerDAO.save(customer);
         }
 
-        historyDAO.save(card,user);
+        historyDAO.save(card, customer);
 
         ownerDAO.increaseUseCount(ownerDAO.findByID(card.getOwner().getId()).get());
-        userDAO.increaseUseCount(user);
+        customerDAO.increaseUseCount(customer);
         BufferedImage image = Image.createQR(card.getNumber());
         try {
             ImageIO.write(image,"png",response.getOutputStream());

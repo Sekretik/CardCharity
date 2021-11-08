@@ -1,12 +1,5 @@
 package com.cardcharity;
 
-import com.cardcharity.card.Card;
-import com.cardcharity.card.CardRepository;
-import com.cardcharity.owner.Owner;
-import com.cardcharity.owner.OwnerDAO;
-import com.cardcharity.owner.OwnerRepository;
-import com.cardcharity.shop.Shop;
-import com.cardcharity.shop.ShopRepository;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -15,27 +8,20 @@ import com.zaxxer.hikari.HikariDataSource;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
 import java.util.Properties;
 
 @PropertySource({"dataBase.properties","hibernate.properties","server.properties","firebase.properties"})
@@ -47,6 +33,9 @@ public class Core {
 
     public static void main(String[] args) {
         SpringApplication.run(Core.class,args);
+        //ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Core.class);
+        //CustomerDAO userDAO = applicationContext.getBean(CustomerDAO.class);
+        //Customer user = userDAO.getFromFirebase()
     }
 
     @Bean
@@ -71,6 +60,7 @@ public class Core {
         ormProperties.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
         ormProperties.put("hibernate.dialect", environment.getProperty("hibernate.dialect"));
         ormProperties.put("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
+        ormProperties.put("hibernate.jdbc.lob.non_contextual_creation", "true");
         entityManagerFactoryBean.setJpaProperties(ormProperties);
 
         return entityManagerFactoryBean;
