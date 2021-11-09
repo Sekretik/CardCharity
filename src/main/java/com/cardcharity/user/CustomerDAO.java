@@ -20,7 +20,7 @@ public class CustomerDAO {
 
     public void increaseUseCount(Customer customer) {
         int useCount = customer.getUseCount();
-        useCount++;
+        useCount += 1;
         customer.setUseCount(useCount);
     }
 

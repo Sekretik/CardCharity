@@ -35,15 +35,16 @@ public class CodeController {
     public void getCode(@PathVariable Long shopId, @RequestParam String uid, HttpServletResponse response) throws ServerException {
         Shop shop = shopDAO.findById(shopId).get();
         Card card = cardDAO.getCardWithMinUse(shop);
-        Customer customer = customerDAO.findByUid(uid).get();
+        Customer customer = null;
+        boolean bool = customerDAO.findByUid(uid).isPresent();
 
-        if(customer == null){
+        if(!bool){
             customer = customerDAO.getFromFirebase(uid);
             customerDAO.save(customer);
+        }else if(bool){
+            customer = customerDAO.findByUid(uid).get();
         }
-        if(customer == null){
-            throw new ServerException("User does not exist");
-        }
+
 
         historyDAO.save(card, customer);
 
