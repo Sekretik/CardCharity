@@ -23,11 +23,12 @@ public class HistoryDAO {
     @Autowired
     HistoryRepository historyRepository;
 
-    public List<History> getHistoryListByCardOrUser(long cardId, long userId) {
+    public List<History> getHistoryListByCardOrCustomer(long cardId, long userId) {
         History history = new History();
         history.setCard(cardRepository.findById(cardId).get());
-        history.setUser(customerRepository.findById(userId).get());
-        Example<History> historyExample = Example.of(history, ExampleMatcher.matchingAll().withIgnoreNullValues()
+        history.setCustomer(customerRepository.findById(userId).get());
+        Example<History> historyExample = Example.of(history, ExampleMatcher.matchingAll()
+                .withIgnoreNullValues()
                 .withIgnorePaths("id"));
         return historyRepository.findAll(historyExample);
     }
@@ -35,7 +36,7 @@ public class HistoryDAO {
     public void save(Card card, Customer customer) {
         History history = new History();
         history.setCard(card);
-        history.setUser(customer);
+        history.setCustomer(customer);
         history.setDate(new Date());
         historyRepository.save(history);
     }

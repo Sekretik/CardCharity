@@ -53,7 +53,7 @@ public class CardDAO {
         List<Card> cards = repository.findAll(historyExample);
         List<CardWrapper> wrappers = new ArrayList<>();
         for (Card c : cards) {
-            wrappers.add(new CardWrapper(c.getNumber(),c.getShop().getId(),c.getOwner().getId()));
+            wrappers.add(new CardWrapper(c));
         }
         return wrappers;
     }

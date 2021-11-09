@@ -29,9 +29,9 @@ public class CardWrapper {
         this.owner = owner;
     }
 
-    public CardWrapper(String cardNumber, long shopId, long owner) {
-        this.cardNumber = cardNumber;
-        this.shop = shopId;
-        this.owner = owner;
+    public CardWrapper(Card card) {
+        this.cardNumber = card.getNumber();
+        this.shop = card.getShop().getId();
+        this.owner = card.getOwner().getId();
     }
 }
