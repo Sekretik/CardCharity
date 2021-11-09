@@ -1,5 +1,7 @@
 package com.cardcharity;
 
+import com.cardcharity.user.Customer;
+import com.cardcharity.user.CustomerDAO;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -10,6 +12,7 @@ import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -33,9 +36,10 @@ public class Core {
 
     public static void main(String[] args) {
         SpringApplication.run(Core.class,args);
-        //ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Core.class);
-        //CustomerDAO userDAO = applicationContext.getBean(CustomerDAO.class);
-        //Customer user = userDAO.getFromFirebase()
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Core.class);
+        CustomerDAO userDAO = applicationContext.getBean(CustomerDAO.class);
+        Customer user = userDAO.getFromFirebase("23kSwbNl5IYtBDt02aUvfDZ9tsT2");
+        System.out.println(user.getEmail());
     }
 
     @Bean
@@ -75,12 +79,14 @@ public class Core {
 
     @Bean
     FirebaseApp firebaseApp(Environment environment) throws IOException {
-        FileInputStream inputStream = new FileInputStream(environment.getProperty("firebase.authfile"));
 
-        FirebaseOptions firebaseOptions = FirebaseOptions.builder()
-                .setCredentials(GoogleCredentials.fromStream(inputStream))
-                .build();
-        FirebaseApp firebaseApp = FirebaseApp.initializeApp(firebaseOptions);
-        return firebaseApp;
+        if(FirebaseApp.getApps().isEmpty()) {
+            FileInputStream inputStream = new FileInputStream(environment.getProperty("firebase.authfile"));
+            FirebaseOptions firebaseOptions = FirebaseOptions.builder()
+                    .setCredentials(GoogleCredentials.fromStream(inputStream))
+                    .build();
+            FirebaseApp.initializeApp(firebaseOptions);
+        }
+        return FirebaseApp.getInstance(FirebaseApp.DEFAULT_APP_NAME);
     }
 }
