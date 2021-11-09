@@ -2,6 +2,7 @@ package com.cardcharity.code;
 
 import com.cardcharity.card.Card;
 import com.cardcharity.card.CardDAO;
+import com.cardcharity.exception.ServerException;
 import com.cardcharity.history.HistoryDAO;
 import com.cardcharity.owner.OwnerDAO;
 import com.cardcharity.shop.Shop;
@@ -31,7 +32,7 @@ public class CodeController {
     CustomerDAO customerDAO;
 
     @GetMapping("/{shopId}")
-    public void getCode(@PathVariable Long shopId, @RequestParam String uid, HttpServletResponse response){
+    public void getCode(@PathVariable Long shopId, @RequestParam String uid, HttpServletResponse response) throws ServerException {
         Shop shop = shopDAO.findById(shopId).get();
         Card card = cardDAO.getCardWithMinUse(shop);
         Customer customer = customerDAO.findByUid(uid).get();
@@ -39,6 +40,9 @@ public class CodeController {
         if(customer == null){
             customer = customerDAO.getFromFirebase(uid);
             customerDAO.save(customer);
+        }
+        if(customer == null){
+            throw new ServerException("User does not exist");
         }
 
         historyDAO.save(card, customer);
