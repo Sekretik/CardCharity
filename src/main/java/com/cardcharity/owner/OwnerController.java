@@ -1,5 +1,6 @@
 package com.cardcharity.owner;
 
+import com.cardcharity.exception.QueryException;
 import com.cardcharity.exception.ServerException;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +32,12 @@ public class OwnerController {
     }
 
     @PostMapping("/post")
-    public void postOwner(@Valid @RequestBody Owner owner) throws ServerException {
+    public void postOwner(@Valid @RequestBody Owner owner) throws QueryException {
         dao.create(owner);
     }
 
     @PutMapping("/put")
-    public void putOwner(@Valid @RequestBody Owner owner) throws ServerException {
+    public void putOwner(@Valid @RequestBody Owner owner) throws QueryException {
         dao.update(owner);
     }
 }

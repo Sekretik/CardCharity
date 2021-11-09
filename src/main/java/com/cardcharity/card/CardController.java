@@ -1,5 +1,6 @@
 package com.cardcharity.card;
 
+import com.cardcharity.exception.QueryException;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +17,13 @@ public class CardController {
     CardDAO cardDAO;
 
     @PostMapping("/post")
-    public void postCard(@RequestBody CardWrapper card){
-        cardDAO.save(card);
+    public void postCard(@RequestBody CardWrapper card) throws QueryException {
+        cardDAO.create(card);
+    }
+
+    @PutMapping("/put")
+    public void putCard(@RequestBody CardWrapper card) throws QueryException {
+        cardDAO.update(card);
     }
 
     @GetMapping("/get")
