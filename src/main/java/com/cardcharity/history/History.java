@@ -15,12 +15,10 @@ public class History {
     @Column(nullable = false)
     private Date date;
 
-    @Column(nullable = false)
     @ManyToOne
     @JoinColumn(name = "card_id")
     private Card card;
 
-    @Column(nullable = false)
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
