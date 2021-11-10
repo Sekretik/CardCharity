@@ -17,7 +17,7 @@ public class OwnerController {
     @Autowired
     OwnerDAO dao;
 
-    @GetMapping("/get")
+    @GetMapping
     public List<Owner> getOwnerWithFIOP(@RequestParam(required = false) String name,
                                        @RequestParam(required = false) String surname,
                                        @RequestParam(required = false) String patronymic,
@@ -25,17 +25,17 @@ public class OwnerController {
         return dao.findByFIOP(name,surname,patronymic,passport);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     public Optional<Owner> getOwnerWithID(@PathVariable Long id){
         return dao.findByID(id);
     }
 
-    @PostMapping("/post")
+    @PostMapping
     public void postOwner(@Valid @RequestBody Owner owner) throws ServerException {
         dao.create(owner);
     }
 
-    @PutMapping("/put")
+    @PutMapping
     public void putOwner(@Valid @RequestBody Owner owner) throws ServerException {
         dao.update(owner);
     }
