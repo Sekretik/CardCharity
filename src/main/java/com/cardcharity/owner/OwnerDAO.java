@@ -1,5 +1,6 @@
 package com.cardcharity.owner;
 
+import com.cardcharity.exception.QueryException;
 import com.cardcharity.exception.ServerException;
 import com.cardcharity.history.History;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,18 +38,18 @@ public class OwnerDAO {
         return repository.findByActive(active);
     }
 
-    public void create(Owner owner) throws ServerException {
+    public void create(Owner owner) throws QueryException {
         if(owner.getId() != 0){
-            throw new ServerException("New owner's id is not 0");
+            throw new QueryException("New owner's id is not 0");
         } else if(!repository.findByPassportNumber(owner.getPassportNumber()).isEmpty()) {
-            throw new ServerException("Owner with this passport number already exists");
+            throw new QueryException("Owner with this passport number already exists");
         }
         repository.save(owner);
     }
 
-    public void update(Owner owner) throws ServerException {
+    public void update(Owner owner) throws QueryException {
         if(repository.findById(owner.getId()).isEmpty()){
-            throw new ServerException("Owner doesn't exist");
+            throw new QueryException("Owner doesn't exist");
         }
         repository.save(owner);
     }

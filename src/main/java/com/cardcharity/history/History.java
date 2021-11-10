@@ -23,7 +23,7 @@ public class History {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    private long getId() {
+    public long getId() {
         return id;
     }
 

@@ -41,6 +41,7 @@ public class HistoryWrapper {
     }
 
     public HistoryWrapper(History history) {
+        this.id = history.getId();
         this.date = history.getDate();
         this.card = history.getCard().getId();
         this.customer = history.getCustomer().getId();

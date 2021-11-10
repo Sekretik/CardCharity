@@ -36,10 +36,6 @@ public class Core {
 
     public static void main(String[] args) {
         SpringApplication.run(Core.class,args);
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Core.class);
-        CustomerDAO userDAO = applicationContext.getBean(CustomerDAO.class);
-        Customer user = userDAO.getFromFirebase("23kSwbNl5IYtBDt02aUvfDZ9tsT2");
-        System.out.println(user.getEmail());
     }
 
     @Bean

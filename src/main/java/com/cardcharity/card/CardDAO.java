@@ -3,6 +3,7 @@ package com.cardcharity.card;
 import com.cardcharity.card.Card;
 import com.cardcharity.card.CardRepository;
 import com.cardcharity.card.CardWrapper;
+import com.cardcharity.exception.QueryException;
 import com.cardcharity.owner.Owner;
 import com.cardcharity.owner.OwnerDAO;
 import com.cardcharity.shop.Shop;
@@ -25,12 +26,11 @@ public class CardDAO {
     @Autowired
     ShopDAO shopDAO;
 
-    public void save(CardWrapper card) {
-        Card newCard = new Card();
-        newCard.setNumber(card.getCardNumber());
-        newCard.setOwner(ownerDAO.findByID(card.getOwner()).get());
-        newCard.setShop(shopDAO.findById(card.getShop()).get());
-        repository.save(newCard);
+    public void create(CardWrapper card) throws QueryException {
+        if(card.getId() != 0){
+            throw new QueryException("New card's id is not 0");
+        }
+        save(card);
     }
 
     public List<CardWrapper> findAll(String number, Long owner, Long shop) {
@@ -64,5 +64,23 @@ public class CardDAO {
 
     public Card getCardWithMinUse(Shop shop){
         return repository.findByOwnerMinUseAndShop(shop).get(0);
+    }
+
+    public void update(CardWrapper card) throws QueryException {
+        if(repository.findById(card.getId()).isEmpty()){
+            throw new QueryException("Card doesn't exist");
+        }
+        save(card);
+    }
+
+    private void save(CardWrapper card){
+        Card newCard = new Card();
+        if(card.getId() != 0) {
+            newCard.setId(card.getId());
+        }
+        newCard.setNumber(card.getCardNumber());
+        newCard.setOwner(ownerDAO.findByID(card.getOwner()).get());
+        newCard.setShop(shopDAO.findById(card.getShop()).get());
+        repository.save(newCard);
     }
 }
