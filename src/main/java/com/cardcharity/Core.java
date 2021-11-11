@@ -1,7 +1,5 @@
 package com.cardcharity;
 
-import com.cardcharity.user.Customer;
-import com.cardcharity.user.CustomerDAO;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -10,16 +8,23 @@ import com.zaxxer.hikari.HikariDataSource;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import org.apache.catalina.Context;
+import org.apache.catalina.connector.Connector;
+import org.apache.tomcat.util.descriptor.web.SecurityCollection;
+import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -27,7 +32,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-@PropertySource({"dataBase.properties","hibernate.properties","server.properties","firebase.properties"})
+@PropertySource({"properties/dataBase.properties", "properties/hibernate.properties", "properties/server.properties", "properties/firebase.properties","properties/application.properties"})
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableWebSecurity
@@ -84,5 +89,30 @@ public class Core {
             FirebaseApp.initializeApp(firebaseOptions);
         }
         return FirebaseApp.getInstance(FirebaseApp.DEFAULT_APP_NAME);
+    }
+
+    @Bean
+    public ServletWebServerFactory servletContainer() {
+        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {@Override
+        protected void postProcessContext(Context context) {
+            SecurityConstraint securityConstraint = new SecurityConstraint();
+            securityConstraint.setUserConstraint("CONFIDENTIAL");
+            SecurityCollection collection = new SecurityCollection();
+            collection.addPattern("/*");
+            securityConstraint.addCollection(collection);
+            context.addConstraint(securityConstraint);
+        }
+        };
+        tomcat.addAdditionalTomcatConnectors(redirectConnector());
+        return tomcat;
+    }
+
+    private Connector redirectConnector() {
+        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+        connector.setScheme("http");
+        connector.setPort(8080);
+        connector.setSecure(false);
+        connector.setRedirectPort(8443);
+        return connector;
     }
 }
