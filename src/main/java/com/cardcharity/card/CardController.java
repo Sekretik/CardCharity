@@ -16,7 +16,7 @@ public class CardController {
     @Autowired
     CardDAO cardDAO;
 
-    @PostMapping("/post")
+    @PostMapping
     public void postCard(@RequestBody CardWrapper card) throws QueryException {
         cardDAO.create(card);
     }
@@ -26,14 +26,14 @@ public class CardController {
         cardDAO.update(card);
     }
 
-    @GetMapping("/get")
+    @GetMapping
     public List<CardWrapper> getOwnerWithFIOP(@RequestParam(required = false) String number,
                                        @RequestParam(required = false) Long owner,
                                        @RequestParam(required = false) Long shop){
         return cardDAO.findAll(number,owner,shop);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     public Optional<Card> getOwnerWithID(@PathVariable Long id){
         return cardDAO.findById(id);
     }

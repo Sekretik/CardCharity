@@ -31,8 +31,8 @@ public class CodeController {
     @Autowired
     CustomerDAO customerDAO;
 
-    @GetMapping("/{shopId}")
-    public void getCode(@PathVariable Long shopId, @RequestParam String uid, HttpServletResponse response) throws ServerException {
+    @GetMapping()
+    public void getCode(@RequestParam Long shopId, @RequestParam String uid, HttpServletResponse response) throws ServerException {
         Shop shop = shopDAO.findById(shopId).get();
         Card card = cardDAO.getCardWithMinUse(shop);
         Customer customer = null;
