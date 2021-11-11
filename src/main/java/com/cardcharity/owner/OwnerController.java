@@ -1,6 +1,5 @@
 package com.cardcharity.owner;
 
-import com.cardcharity.exception.QueryException;
 import com.cardcharity.exception.ServerException;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ public class OwnerController {
     @Autowired
     OwnerDAO dao;
 
-    @GetMapping("/get")
+    @GetMapping
     public List<Owner> getOwnerWithFIOP(@RequestParam(required = false) String name,
                                        @RequestParam(required = false) String surname,
                                        @RequestParam(required = false) String patronymic,
@@ -26,18 +25,18 @@ public class OwnerController {
         return dao.findByFIOP(name,surname,patronymic,passport);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     public Optional<Owner> getOwnerWithID(@PathVariable Long id){
         return dao.findByID(id);
     }
 
-    @PostMapping("/post")
-    public void postOwner(@Valid @RequestBody Owner owner) throws QueryException {
+    @PostMapping
+    public void postOwner(@Valid @RequestBody Owner owner) throws ServerException {
         dao.create(owner);
     }
 
-    @PutMapping("/put")
-    public void putOwner(@Valid @RequestBody Owner owner) throws QueryException {
+    @PutMapping
+    public void putOwner(@Valid @RequestBody Owner owner) throws ServerException {
         dao.update(owner);
     }
 }

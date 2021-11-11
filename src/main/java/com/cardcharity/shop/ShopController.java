@@ -34,17 +34,17 @@ public class ShopController {
             throw new QueryException("this shop does not exist");
         }
     }
-    @GetMapping("/get")
+    @GetMapping
     public Iterable<Shop> getShops(){
         return dao.findAll();
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     public Optional<Shop> getShopWithID(@PathVariable Long id){
         return dao.findById(id);
     }
 
-    @PostMapping("/post")
+    @PostMapping
     public void postOwner(@Valid @RequestBody Shop shop) throws ServerException {
         dao.save(shop);
     }
