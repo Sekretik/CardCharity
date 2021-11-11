@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 public class Owner {
@@ -19,6 +20,7 @@ public class Owner {
     private int useCount = 0;
 
     @Column(unique=true, nullable=false)
+    @Pattern(regexp = "([0-9]){10}")
     private String passportNumber;
 
     @Column(nullable = false)
