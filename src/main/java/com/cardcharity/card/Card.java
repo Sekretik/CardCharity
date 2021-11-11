@@ -5,6 +5,7 @@ import com.cardcharity.shop.Shop;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 public class Card {
@@ -13,6 +14,7 @@ public class Card {
     private long id;
 
     @Column(nullable = false)
+    @Pattern(regexp = "[a-bA-B0-9]+")
     private String number;
 
     @ManyToOne

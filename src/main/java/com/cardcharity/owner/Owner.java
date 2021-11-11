@@ -23,12 +23,15 @@ public class Owner {
     private String passportNumber;
 
     @Column(nullable = false)
+    @Pattern(regexp = "[а-яА-Я\\s]+")
     private String name;
 
     @Column(nullable = false)
+    @Pattern(regexp = "[а-яА-Я\\s]+")
     private String surname;
 
     @Column(nullable = false)
+    @Pattern(regexp = "[a-zA-Z0-9]+")
     private String patronymic;
 
     public Owner(String passportNumber, String name, String surname, String patronymic) {
