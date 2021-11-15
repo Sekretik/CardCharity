@@ -23,7 +23,7 @@ public class ShopController {
     @Autowired
     ShopRepository dao;
 
-    @GetMapping("/logo/{id}")
+    @GetMapping("{id}/logo")
     public void getLogo(@PathVariable String id, HttpServletResponse response) throws QueryException {
         String shopName = "shopLogo_" + id + ".jpg";
         File file = new File("src/resources/logos/"+shopName);
@@ -31,7 +31,7 @@ public class ShopController {
             BufferedImage image = ImageIO.read(file);
             ImageIO.write(image,"png",response.getOutputStream());
         } catch (IOException e) {
-            throw new QueryException("this shop does not exist");
+            throw new QueryException("Logo not found - does this shop exist?");
         }
     }
     @GetMapping
