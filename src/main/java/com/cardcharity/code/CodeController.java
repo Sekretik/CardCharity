@@ -35,7 +35,6 @@ public class CodeController {
     @GetMapping()
     public void getCode(@RequestParam Long shopId, @RequestParam String uid, HttpServletResponse response) throws QueryException {
         Shop shop = shopDAO.findById(shopId).get();
-        System.out.println("------------------------\n" + shop.getId() + "\n" + shop.getName() + "\n------------------------" );
         Card card = cardDAO.getCardWithMinUse(shop);
         Customer customer = null;
         boolean bool = customerDAO.findByUid(uid).isPresent();

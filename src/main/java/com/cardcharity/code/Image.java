@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public class Image {
-    public static BufferedImage createQR(String content /*String encoding*/){
+    public static BufferedImage createQR(String content){
         int width = 500;
         int height = 500;
 
