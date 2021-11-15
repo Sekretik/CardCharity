@@ -2,6 +2,7 @@ package com.cardcharity.code;
 
 import com.cardcharity.card.Card;
 import com.cardcharity.card.CardDAO;
+import com.cardcharity.exception.QueryException;
 import com.cardcharity.exception.ServerException;
 import com.cardcharity.history.HistoryDAO;
 import com.cardcharity.owner.OwnerDAO;
@@ -32,8 +33,9 @@ public class CodeController {
     CustomerDAO customerDAO;
 
     @GetMapping()
-    public void getCode(@RequestParam Long shopId, @RequestParam String uid, HttpServletResponse response) throws ServerException {
+    public void getCode(@RequestParam Long shopId, @RequestParam String uid, HttpServletResponse response) throws QueryException {
         Shop shop = shopDAO.findById(shopId).get();
+        System.out.println("------------------------\n" + shop.getId() + "\n" + shop.getName() + "\n------------------------" );
         Card card = cardDAO.getCardWithMinUse(shop);
         Customer customer = null;
         boolean bool = customerDAO.findByUid(uid).isPresent();
