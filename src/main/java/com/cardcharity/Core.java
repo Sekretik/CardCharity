@@ -38,7 +38,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-@PropertySource({"properties/dataBase.properties", "properties/hibernate.properties", "properties/server.properties", "properties/firebase.properties","properties/application.properties"})
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableWebSecurity

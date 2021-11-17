@@ -31,7 +31,7 @@ public class Owner {
     private String surname;
 
     @Column(nullable = false)
-    @Pattern(regexp = "[a-zA-Z0-9]+")
+    @Pattern(regexp = "[а-яА-Я\\s]+")
     private String patronymic;
 
     public Owner(String passportNumber, String name, String surname, String patronymic) {

@@ -14,7 +14,7 @@ public class Card {
     private long id;
 
     @Column(nullable = false)
-    @Pattern(regexp = "[a-bA-B0-9]+")
+    @Pattern(regexp = "[a-zA-Z0-9]+")
     private String number;
 
     @ManyToOne

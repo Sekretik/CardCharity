@@ -11,7 +11,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/admin/card")
 @SecurityRequirement(name = "admin")
-
+@CrossOrigin
 public class CardController {
     @Autowired
     CardDAO cardDAO;

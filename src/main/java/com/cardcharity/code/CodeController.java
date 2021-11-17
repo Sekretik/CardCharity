@@ -2,6 +2,7 @@ package com.cardcharity.code;
 
 import com.cardcharity.card.Card;
 import com.cardcharity.card.CardDAO;
+import com.cardcharity.exception.QueryException;
 import com.cardcharity.exception.ServerException;
 import com.cardcharity.history.HistoryDAO;
 import com.cardcharity.owner.OwnerDAO;
@@ -19,6 +20,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("user/code")
+@CrossOrigin
 public class CodeController {
     @Autowired
     CardDAO cardDAO;
@@ -32,7 +34,7 @@ public class CodeController {
     CustomerDAO customerDAO;
 
     @GetMapping()
-    public void getCode(@RequestParam Long shopId, @RequestParam String uid, HttpServletResponse response) throws ServerException {
+    public void getCode(@RequestParam Long shopId, @RequestParam String uid, HttpServletResponse response) throws QueryException {
         Shop shop = shopDAO.findById(shopId).get();
         Card card = cardDAO.getCardWithMinUse(shop);
         Customer customer = null;
