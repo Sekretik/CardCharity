@@ -13,7 +13,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/admin/owner")
 @SecurityRequirement(name = "admin")
-
+@CrossOrigin
 public class OwnerController {
     @Autowired
     OwnerDAO dao;

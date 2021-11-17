@@ -20,6 +20,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("user/code")
+@CrossOrigin
 public class CodeController {
     @Autowired
     CardDAO cardDAO;

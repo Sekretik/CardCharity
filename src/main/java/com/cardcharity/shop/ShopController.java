@@ -12,8 +12,8 @@ import java.io.InputStream;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/admin/shop")
-
+@RequestMapping("/user/shop")
+@CrossOrigin
 public class ShopController {
     @Autowired
     ShopRepository dao;
