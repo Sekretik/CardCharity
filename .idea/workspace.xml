@@ -4,14 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0df801f7-4e0e-41f4-99d5-ea8872d5767d" name="Changes" comment="Finished userDao">
+    <list default="true" id="0df801f7-4e0e-41f4-99d5-ea8872d5767d" name="Changes" comment="Add @CrossOrigin">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/card/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/card/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/History.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/history/History.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/owner/Owner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/owner/Owner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/shop/Shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/shop/Shop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cardcharity/Core.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cardcharity/Core.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/cardcharity/user/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/card/CardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/card/CardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/card/CardDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/card/CardDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/code/Image.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/code/Image.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/logback.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/logback.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cardcharity/owner/OwnerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cardcharity/owner/OwnerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/properties/dataBase.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/properties/firebase.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/properties/server.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cardcharity/SecurityConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cardcharity/SecurityConfiguration.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cardcharity/card/CardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cardcharity/card/CardController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cardcharity/code/Image.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cardcharity/code/Image.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cardcharity/owner/OwnerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cardcharity/owner/OwnerController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/cardcharity/shop/ShopController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/cardcharity/shop/ShopController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/logos/shopLogo_1.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +55,9 @@
       </map>
     </option>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="1" />
+  </component>
   <component name="ProjectId" id="1zz1KqG0J8kTV5eoideNBznB2Ue" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -53,10 +66,18 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/resources/logos" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/resources/logos" />
+      <recent name="$PROJECT_DIR$/src/resources/keystore" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/resources" />
+      <recent name="$PROJECT_DIR$/src/resources/properties" />
+      <recent name="$PROJECT_DIR$/src/resources/conf" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.cardcharity" />
@@ -189,35 +210,91 @@
       <option name="project" value="LOCAL" />
       <updated>1636136564273</updated>
     </task>
-    <task id="LOCAL-00015" summary="example">
-      <created>1636193514051</created>
+    <task id="LOCAL-00015" summary="r">
+      <created>1636284108216</created>
       <option name="number" value="00015" />
       <option name="presentableId" value="LOCAL-00015" />
       <option name="project" value="LOCAL" />
-      <updated>1636193514051</updated>
+      <updated>1636284108216</updated>
     </task>
-    <task id="LOCAL-00016" summary="example">
-      <created>1636193530878</created>
+    <task id="LOCAL-00016" summary="error">
+      <created>1636291419987</created>
       <option name="number" value="00016" />
       <option name="presentableId" value="LOCAL-00016" />
       <option name="project" value="LOCAL" />
-      <updated>1636193530878</updated>
+      <updated>1636291419987</updated>
     </task>
-    <task id="LOCAL-00017" summary="Finished userDao">
-      <created>1636284165978</created>
+    <task id="LOCAL-00017" summary="test">
+      <created>1636436912070</created>
       <option name="number" value="00017" />
       <option name="presentableId" value="LOCAL-00017" />
       <option name="project" value="LOCAL" />
-      <updated>1636284165978</updated>
+      <updated>1636436912070</updated>
     </task>
-    <task id="LOCAL-00018" summary="Finished userDao">
-      <created>1636353693147</created>
+    <task id="LOCAL-00018" summary="error">
+      <created>1636437145118</created>
       <option name="number" value="00018" />
       <option name="presentableId" value="LOCAL-00018" />
       <option name="project" value="LOCAL" />
-      <updated>1636353693148</updated>
+      <updated>1636437145118</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="alpha debugging">
+      <created>1636437752717</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1636437752717</updated>
+    </task>
+    <task id="LOCAL-00020" summary="alpha 0.1 version">
+      <created>1636440961596</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1636440961596</updated>
+    </task>
+    <task id="LOCAL-00021" summary="alpha 0.2 version">
+      <created>1636446647551</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1636446647551</updated>
+    </task>
+    <task id="LOCAL-00022" summary="added https">
+      <created>1636618585968</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1636618585968</updated>
+    </task>
+    <task id="LOCAL-00023" summary="delete shop controller">
+      <created>1636951969479</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1636951969479</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Minor fixes for deployment">
+      <created>1636969532185</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1636969532185</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Minor fixes for deployment">
+      <created>1636969565326</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1636969565326</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Add @CrossOrigin">
+      <created>1637128360086</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1637128360086</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -241,8 +318,16 @@
     <MESSAGE value="Fixed user dao" />
     <MESSAGE value="Fixed history model" />
     <MESSAGE value="History dao completed(kinda)" />
-    <MESSAGE value="example" />
-    <MESSAGE value="Finished userDao" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished userDao" />
+    <MESSAGE value="r" />
+    <MESSAGE value="test" />
+    <MESSAGE value="error" />
+    <MESSAGE value="alpha debugging" />
+    <MESSAGE value="alpha 0.1 version" />
+    <MESSAGE value="alpha 0.2 version" />
+    <MESSAGE value="added https" />
+    <MESSAGE value="delete shop controller" />
+    <MESSAGE value="Minor fixes for deployment" />
+    <MESSAGE value="Add @CrossOrigin" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add @CrossOrigin" />
   </component>
 </project>
