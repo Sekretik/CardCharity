@@ -3,13 +3,12 @@ package com.cardcharity.code;
 import com.cardcharity.card.Card;
 import com.cardcharity.card.CardDAO;
 import com.cardcharity.exception.QueryException;
-import com.cardcharity.exception.ServerException;
 import com.cardcharity.history.HistoryDAO;
 import com.cardcharity.owner.OwnerDAO;
 import com.cardcharity.shop.Shop;
 import com.cardcharity.shop.ShopDAO;
-import com.cardcharity.user.Customer;
-import com.cardcharity.user.CustomerDAO;
+import com.cardcharity.customer.Customer;
+import com.cardcharity.customer.CustomerDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -2,10 +2,8 @@ package com.cardcharity.history;
 
 import com.cardcharity.card.Card;
 import com.cardcharity.card.CardRepository;
-import com.cardcharity.card.CardWrapper;
-import com.cardcharity.owner.Owner;
-import com.cardcharity.user.Customer;
-import com.cardcharity.user.CustomerRepository;
+import com.cardcharity.customer.Customer;
+import com.cardcharity.customer.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;

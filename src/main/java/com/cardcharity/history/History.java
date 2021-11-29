@@ -1,7 +1,7 @@
 package com.cardcharity.history;
 
 import com.cardcharity.card.Card;
-import com.cardcharity.user.Customer;
+import com.cardcharity.customer.Customer;
 
 import javax.persistence.*;
 import java.util.Date;
