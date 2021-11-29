@@ -6,6 +6,7 @@ import com.cardcharity.shop.Shop;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 
+@EntityListeners(CardListener.class)
 @Entity
 public class Card {
     @Id
