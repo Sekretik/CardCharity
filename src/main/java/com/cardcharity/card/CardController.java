@@ -17,13 +17,15 @@ public class CardController {
     CardDAO cardDAO;
 
     @PostMapping
-    public void postCard(@RequestBody CardWrapper card) throws QueryException {
+    public Optional<Card> postCard(@RequestBody CardWrapper card) throws QueryException {
         cardDAO.create(card);
+        return cardDAO.findById(card.getId());
     }
 
     @PutMapping("/put")
-    public void putCard(@RequestBody CardWrapper card) throws QueryException {
+    public Optional<Card> putCard(@RequestBody CardWrapper card) throws QueryException {
         cardDAO.update(card);
+        return cardDAO.findById(card.getId());
     }
 
     @GetMapping
