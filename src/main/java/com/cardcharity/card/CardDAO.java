@@ -33,7 +33,7 @@ public class CardDAO {
         save(card);
     }
 
-    public List<CardWrapper> findAll(String number, Long owner, Long shop) {
+    public List<Card> findAll(String number, Long owner, Long shop) {
         Card card = new Card();
         card.setNumber(number);
         if(owner != null){
@@ -51,11 +51,7 @@ public class CardDAO {
                 .withIgnorePaths("id")
                 .withIgnorePaths("active"));
         List<Card> cards = repository.findAll(historyExample);
-        List<CardWrapper> wrappers = new ArrayList<>();
-        for (Card c : cards) {
-            wrappers.add(new CardWrapper(c));
-        }
-        return wrappers;
+        return cards;
     }
 
     public Optional<Card> findById(Long id) {

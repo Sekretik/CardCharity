@@ -29,7 +29,7 @@ public class CardController {
     }
 
     @GetMapping
-    public List<CardWrapper> getOwnerWithFIOP(@RequestParam(required = false) String number,
+    public List<Card> getOwnerWithFIOP(@RequestParam(required = false) String number,
                                        @RequestParam(required = false) Long owner,
                                        @RequestParam(required = false) Long shop){
         return cardDAO.findAll(number,owner,shop);
