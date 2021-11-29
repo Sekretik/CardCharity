@@ -46,6 +46,7 @@ public class CardWrapper {
     public void setActive(boolean active) {
         this.active = active;
     }
+    //rem
 
     public CardWrapper(){}
 
