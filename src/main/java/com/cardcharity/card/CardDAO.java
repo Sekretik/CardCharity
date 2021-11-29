@@ -75,7 +75,7 @@ public class CardDAO {
         save(card);
     }
 
-    private void save(CardWrapper card){
+    public void save(CardWrapper card){
         Card newCard = new Card();
         if(card.getId() != 0) {
             newCard.setId(card.getId());
@@ -84,5 +84,9 @@ public class CardDAO {
         newCard.setOwner(ownerDAO.findByID(card.getOwner()).get());
         newCard.setShop(shopDAO.findById(card.getShop()).get());
         repository.save(newCard);
+    }
+
+    public void save(Card card) {
+        repository.save(card);
     }
 }

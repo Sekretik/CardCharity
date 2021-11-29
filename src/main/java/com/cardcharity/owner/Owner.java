@@ -1,11 +1,9 @@
 package com.cardcharity.owner;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 
+@EntityListeners(OwnerListener.class)
 @Entity
 public class Owner {
     @Id
@@ -106,4 +104,6 @@ public class Owner {
         if(this.getClass() !=  obj.getClass()) return false;
         return this.getPassportNumber().equals(((Owner) obj).getPassportNumber());
     }
+
+
 }
