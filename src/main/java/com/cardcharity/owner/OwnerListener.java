@@ -14,11 +14,13 @@ public class OwnerListener {
 
     @PostUpdate
     private void afterOwnerUpdate(Owner owner) {
-        List<Card> cardList = cardDAO.findAll(null, owner.getId(), null);
-        for (Card card :cardList
-             ) {
-            card.setActive(owner.isActive());
-            cardDAO.save(card);
+        if(!owner.isActive()) {
+            List<Card> cardList = cardDAO.findAll(null, owner.getId(), null);
+            for (Card card : cardList
+            ) {
+                card.setActive(false);
+                cardDAO.save(card);
+            }
         }
     }
 }

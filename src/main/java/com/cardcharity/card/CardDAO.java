@@ -1,10 +1,6 @@
 package com.cardcharity.card;
 
-import com.cardcharity.card.Card;
-import com.cardcharity.card.CardRepository;
-import com.cardcharity.card.CardWrapper;
 import com.cardcharity.exception.QueryException;
-import com.cardcharity.owner.Owner;
 import com.cardcharity.owner.OwnerDAO;
 import com.cardcharity.shop.Shop;
 import com.cardcharity.shop.ShopDAO;
@@ -13,7 +9,6 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +30,7 @@ public class CardDAO {
 
     public List<Card> findAll(String number, Long owner, Long shop) {
         Card card = new Card();
-        card.setNumber(number);
+        card.setCardNumber(number);
         if(owner != null){
             card.setOwner(ownerDAO.findByID(owner).get());
         }else {
@@ -80,7 +75,7 @@ public class CardDAO {
         if(card.getId() != 0) {
             newCard.setId(card.getId());
         }
-        newCard.setNumber(card.getCardNumber());
+        newCard.setCardNumber(card.getCardNumber());
         newCard.setOwner(ownerDAO.findByID(card.getOwner()).get());
         newCard.setShop(shopDAO.findById(card.getShop()).get());
         repository.save(newCard);

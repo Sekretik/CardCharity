@@ -1,4 +1,4 @@
-package com.cardcharity.user;
+package com.cardcharity.customer;
 
 import org.hibernate.annotations.NaturalId;
 

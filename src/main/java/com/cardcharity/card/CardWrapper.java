@@ -51,7 +51,7 @@ public class CardWrapper {
 
     public CardWrapper(Card card) {
         this.id = card.getId();
-        this.cardNumber = card.getNumber();
+        this.cardNumber = card.getCardNumber();
         this.shop = card.getShop().getId();
         this.owner = card.getOwner().getId();
         this.active = card.isActive();
