@@ -5,6 +5,7 @@ public class CardWrapper {
     private String cardNumber;
     private long shop;
     private long owner;
+    private boolean active;
 
     public String getCardNumber() {
         return cardNumber;
@@ -38,6 +39,14 @@ public class CardWrapper {
         this.id = id;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public CardWrapper(){}
 
     public CardWrapper(Card card) {
@@ -45,5 +54,6 @@ public class CardWrapper {
         this.cardNumber = card.getNumber();
         this.shop = card.getShop().getId();
         this.owner = card.getOwner().getId();
+        this.active = card.isActive();
     }
 }
