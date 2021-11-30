@@ -2,17 +2,17 @@ package com.cardcharity.card;
 
 public class CardWrapper {
     private long id;
-    private String cardNumber;
+    private String number;
     private long shop;
     private long owner;
     private boolean active;
 
-    public String getCardNumber() {
-        return cardNumber;
+    public String getNumber() {
+        return number;
     }
 
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public long getShop() {
@@ -51,7 +51,7 @@ public class CardWrapper {
 
     public CardWrapper(Card card) {
         this.id = card.getId();
-        this.cardNumber = card.getCardNumber();
+        this.number = card.getNumber();
         this.shop = card.getShop().getId();
         this.owner = card.getOwner().getId();
         this.active = card.isActive();

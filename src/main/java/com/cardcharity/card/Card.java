@@ -15,7 +15,7 @@ public class Card {
 
     @Column(nullable = false)
     @Pattern(regexp = "[a-zA-Z0-9]+")
-    private String cardNumber;
+    private String number;
 
     @ManyToOne
     @JoinColumn(name = "shop_id")
@@ -33,7 +33,7 @@ public class Card {
     }
 
     public Card(String number, Owner owner, Shop shop) {
-        this.cardNumber = number;
+        this.number = number;
         this.owner = owner;
         this.shop = shop;
     }
@@ -50,12 +50,12 @@ public class Card {
         this.owner = owner;
     }
 
-    public String getCardNumber() {
-        return cardNumber;
+    public String getNumber() {
+        return number;
     }
 
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public Owner getOwner() {
@@ -82,6 +82,6 @@ public class Card {
     public boolean equals(Object obj) {
         if(this == obj) return true;
         if(this.getClass() !=  obj.getClass()) return false;
-        return (this.getCardNumber().equals(((Card) obj).getCardNumber()) && (this.getShop() == ((Card) obj).getShop()));
+        return (this.getNumber().equals(((Card) obj).getNumber()) && (this.getShop() == ((Card) obj).getShop()));
     }
 }

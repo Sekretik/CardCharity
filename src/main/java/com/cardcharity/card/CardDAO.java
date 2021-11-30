@@ -30,7 +30,7 @@ public class CardDAO {
 
     public List<Card> findAll(String number, Long owner, Long shop) {
         Card card = new Card();
-        card.setCardNumber(number);
+        card.setNumber(number);
         if(owner != null){
             card.setOwner(ownerDAO.findByID(owner).get());
         }else {
@@ -75,7 +75,7 @@ public class CardDAO {
         if(card.getId() != 0) {
             newCard.setId(card.getId());
         }
-        newCard.setCardNumber(card.getCardNumber());
+        newCard.setNumber(card.getNumber());
         newCard.setOwner(ownerDAO.findByID(card.getOwner()).get());
         newCard.setShop(shopDAO.findById(card.getShop()).get());
         repository.save(newCard);

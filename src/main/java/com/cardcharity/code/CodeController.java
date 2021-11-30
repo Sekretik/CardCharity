@@ -51,7 +51,7 @@ public class CodeController {
 
         ownerDAO.increaseUseCount(ownerDAO.findByID(card.getOwner().getId()).get());
         customerDAO.increaseUseCount(customer);
-        BufferedImage image = Image.createQR(card.getCardNumber());
+        BufferedImage image = Image.createQR(card.getNumber());
         try {
             ImageIO.write(image,"png",response.getOutputStream());
         } catch (IOException e) {

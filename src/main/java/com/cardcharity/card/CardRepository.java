@@ -16,7 +16,7 @@ public interface CardRepository extends JpaRepository<Card, Long> {
 
     List<Card> findByNumberAndShop(String number, Shop shop);
     List<Card> findByNumberAndOwner(String number, Owner owner);
-    List<Card> findByOwnerAndShop(String number, Shop shop);
+    List<Card> findByOwnerAndShop(Owner owner, Shop shop);
 
     @Query("SELECT c FROM Card c WHERE c.shop = :shop ORDER BY c.owner.useCount ASC")
     List<Card> findByOwnerMinUseAndShop(@Param("shop")Shop shop);
