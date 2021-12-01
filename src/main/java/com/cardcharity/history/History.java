@@ -17,10 +17,12 @@ public class History {
 
     @ManyToOne
     @JoinColumn(name = "card_id")
+    @Column(nullable = false)
     private Card card;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @Column(nullable = false)
     private Customer customer;
 
     public long getId() {

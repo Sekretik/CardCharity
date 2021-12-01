@@ -19,10 +19,12 @@ public class Card {
 
     @ManyToOne
     @JoinColumn(name = "shop_id")
+    @Column(nullable = false)
     private Shop shop;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
+    @Column(nullable = false)
     private Owner owner;
 
     @Column(nullable = false)
