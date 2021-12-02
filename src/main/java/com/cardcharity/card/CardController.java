@@ -17,15 +17,17 @@ public class CardController {
     CardDAO cardDAO;
 
     @PostMapping
-    public Optional<Card> postCard(@RequestBody CardWrapper card) throws QueryException {
-        cardDAO.create(card);
-        return cardDAO.findById(card.getId());
+    public Card postCard(@RequestBody CardWrapper cardWrapper) throws QueryException {
+        Card newCard = cardDAO.getCardFromWrapper(cardWrapper);
+        cardDAO.save(newCard);
+        return newCard;
     }
 
     @PutMapping("/put")
-    public Optional<Card> putCard(@RequestBody CardWrapper card) throws QueryException {
-        cardDAO.update(card);
-        return cardDAO.findById(card.getId());
+    public Card putCard(@RequestBody CardWrapper cardWrapper) throws QueryException {
+        Card updatedCard = cardDAO.getCardFromWrapper(cardWrapper);
+        cardDAO.update(updatedCard);
+        return updatedCard;
     }
 
     @GetMapping
@@ -36,7 +38,7 @@ public class CardController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Card> getOwnerWithID(@PathVariable Long id){
+    public Optional<Card> getCardWithId(@PathVariable Long id){
         return cardDAO.findById(id);
     }
 }

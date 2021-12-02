@@ -13,7 +13,9 @@ public class CardListener {
         if(card.isActive() && !card.getOwner().isActive()) {
             throw new QueryException("Cannot set card " +
                     card.getId() +
-                    " to active: its owner is not active");
+                    " to active: its owner(owners ID: " +
+                    card.getOwner().getId() +
+                    "is not active");
         }
     }
 }

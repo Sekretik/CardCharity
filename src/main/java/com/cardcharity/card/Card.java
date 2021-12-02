@@ -18,13 +18,11 @@ public class Card {
     private String number;
 
     @ManyToOne
-    @JoinColumn(name = "shop_id")
-    @Column(nullable = false)
+    @JoinColumn(name = "shop_id",nullable = false)
     private Shop shop;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id")
-    @Column(nullable = false)
+    @JoinColumn(name = "owner_id",nullable = false)
     private Owner owner;
 
     @Column(nullable = false)

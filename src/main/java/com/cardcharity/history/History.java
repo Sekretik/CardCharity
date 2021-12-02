@@ -16,13 +16,11 @@ public class History {
     private Date date;
 
     @ManyToOne
-    @JoinColumn(name = "card_id")
-    @Column(nullable = false)
+    @JoinColumn(name = "card_id",nullable = false)
     private Card card;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
-    @Column(nullable = false)
+    @JoinColumn(name = "customer_id",nullable = false)
     private Customer customer;
 
     public long getId() {

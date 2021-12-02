@@ -21,13 +21,6 @@ public class CardDAO {
     @Autowired
     ShopDAO shopDAO;
 
-    public void create(CardWrapper card) throws QueryException {
-        if(card.getId() != 0){
-            throw new QueryException("New card's id is not 0");
-        }
-        save(card);
-    }
-
     public List<Card> findAll(String number, Long owner, Long shop) {
         Card card = new Card();
         card.setNumber(number);
@@ -63,22 +56,23 @@ public class CardDAO {
         return card;
     }
 
-    public void update(CardWrapper card) throws QueryException {
+    public void update(Card card) throws QueryException {
         if(repository.findById(card.getId()).isEmpty()){
             throw new QueryException("Card doesn't exist");
         }
         save(card);
     }
 
-    public void save(CardWrapper card){
+    public Card getCardFromWrapper(CardWrapper cardWrapper){
         Card newCard = new Card();
-        if(card.getId() != 0) {
-            newCard.setId(card.getId());
+        if(cardWrapper.getId() != 0) {
+            newCard.setId(cardWrapper.getId());
         }
-        newCard.setNumber(card.getNumber());
-        newCard.setOwner(ownerDAO.findByID(card.getOwner()).get());
-        newCard.setShop(shopDAO.findById(card.getShop()).get());
-        repository.save(newCard);
+        newCard.setNumber(cardWrapper.getNumber());
+        newCard.setOwner(ownerDAO.findByID(cardWrapper.getOwner()).get());
+        newCard.setShop(shopDAO.findById(cardWrapper.getShop()).get());
+        newCard.setActive(cardWrapper.isActive());
+        return newCard;
     }
 
     public void save(Card card) {
