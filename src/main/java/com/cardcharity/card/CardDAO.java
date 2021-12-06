@@ -1,6 +1,7 @@
 package com.cardcharity.card;
 
 import com.cardcharity.exception.QueryException;
+import com.cardcharity.owner.Owner;
 import com.cardcharity.owner.OwnerDAO;
 import com.cardcharity.shop.Shop;
 import com.cardcharity.shop.ShopDAO;
@@ -34,12 +35,16 @@ public class CardDAO {
         }else {
             card.setShop(null);
         }
-        Example<Card> historyExample = Example.of(card, ExampleMatcher.matchingAll()
+        Example<Card> cardExample = Example.of(card, ExampleMatcher.matchingAll()
                 .withIgnoreNullValues()
                 .withIgnorePaths("id")
                 .withIgnorePaths("active"));
-        List<Card> cards = repository.findAll(historyExample);
+        List<Card> cards = repository.findAll(cardExample);
         return cards;
+    }
+
+    public List<Card> findByOwner(Owner owner) {
+        return repository.findByOwner(owner);
     }
 
     public Optional<Card> findById(Long id) {

@@ -3,7 +3,6 @@ package com.cardcharity.owner;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 
-@EntityListeners(OwnerListener.class)
 @Entity
 public class Owner {
     @Id
@@ -105,5 +104,16 @@ public class Owner {
         return this.getPassportNumber().equals(((Owner) obj).getPassportNumber());
     }
 
-
+    @Override
+    public String toString() {
+        return "Owner{" +
+                "id=" + id +
+                ", active=" + active +
+                ", useCount=" + useCount +
+                ", passportNumber='" + passportNumber + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", patronymic='" + patronymic + '\'' +
+                '}';
+    }
 }

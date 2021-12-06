@@ -10,7 +10,9 @@ public class CardListener {
 
     @PreUpdate
     private void preUpdate(Card card) throws QueryException {
+        System.out.println("keb");
         if(card.isActive() && !card.getOwner().isActive()) {
+            System.out.println("Got here lolz");
             throw new QueryException("Cannot set card " +
                     card.getId() +
                     " to active: its owner(owners ID: " +

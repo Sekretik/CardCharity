@@ -1,5 +1,7 @@
 package com.cardcharity.owner;
 
+import com.cardcharity.card.Card;
+import com.cardcharity.card.CardDAO;
 import com.cardcharity.exception.QueryException;
 import com.cardcharity.exception.ServerException;
 import com.cardcharity.history.History;
@@ -15,6 +17,9 @@ import java.util.Optional;
 public class OwnerDAO {
     @Autowired
     OwnerRepository repository;
+
+    @Autowired
+    CardDAO cardDAO;
 
     public List<Owner> findByFIOP(String name, String surname, String patronymic, String passport) {
         Owner owner = new Owner(passport,name,surname,patronymic);
@@ -50,6 +55,13 @@ public class OwnerDAO {
     public void update(Owner owner) throws QueryException {
         if(repository.findById(owner.getId()).isEmpty()){
             throw new QueryException("Owner doesn't exist");
+        }
+        if(!owner.isActive()) {
+            for (Card card:cardDAO.findByOwner(owner)
+                 ) {
+                card.setActive(false);
+                cardDAO.update(card);
+            }
         }
         repository.save(owner);
     }

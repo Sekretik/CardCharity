@@ -14,7 +14,7 @@ import java.util.Optional;
 @CrossOrigin
 public class CardController {
     @Autowired
-    CardDAO cardDAO;
+    private CardDAO cardDAO;
 
     @PostMapping
     public Card postCard(@RequestBody CardWrapper cardWrapper) throws QueryException {
