@@ -18,14 +18,14 @@ public class CardController {
 
     @PostMapping
     public Card postCard(@RequestBody CardWrapper cardWrapper) throws QueryException {
-        Card newCard = cardDAO.getCardFromWrapper(cardWrapper);
+        Card newCard = cardDAO.fromWrapper(cardWrapper);
         cardDAO.save(newCard);
         return newCard;
     }
 
     @PutMapping("/put")
     public Card putCard(@RequestBody CardWrapper cardWrapper) throws QueryException {
-        Card updatedCard = cardDAO.getCardFromWrapper(cardWrapper);
+        Card updatedCard = cardDAO.fromWrapper(cardWrapper);
         cardDAO.update(updatedCard);
         return updatedCard;
     }

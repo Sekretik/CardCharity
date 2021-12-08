@@ -30,11 +30,6 @@ public class OwnerDAO implements IDao<Owner> {
                 .withIgnorePaths("active"));
         return repository.findAll(historyExample);
     }
-    public void increaseUseCount(Owner owner) {
-        int ownerUseCount = owner.getUseCount();
-        owner.setUseCount(ownerUseCount + 1);
-        repository.save(owner);
-    }
 
     public Optional<Owner> findByID(Long id){
         return repository.findById(id);
@@ -42,15 +37,6 @@ public class OwnerDAO implements IDao<Owner> {
 
     public List<Owner> findByActive(boolean active){
         return repository.findByActive(active);
-    }
-
-    public void create(Owner owner) throws QueryException {
-        if(owner.getId() != 0){
-            throw new QueryException("New owner's id is not 0");
-        } else if(!repository.findByPassportNumber(owner.getPassportNumber()).isEmpty()) {
-            throw new QueryException("Owner with this passport number already exists");
-        }
-        repository.save(owner);
     }
 
     @Override
@@ -61,6 +47,31 @@ public class OwnerDAO implements IDao<Owner> {
     @Override
     public List<Owner> findAll() {
         return repository.findAll();
+    }
+
+    public Owner fromWrapper(OwnerWrapper wrapper) {
+        Owner owner = new Owner(
+                wrapper.getPassportNumber(),
+                wrapper.getName(),
+                wrapper.getSurname(),
+                wrapper.getPatronymic());
+        owner.setActive(wrapper.isActive());
+        return owner;
+    }
+
+    public void increaseUseCount(Owner owner) {
+        int ownerUseCount = owner.getUseCount();
+        owner.setUseCount(ownerUseCount + 1);
+        repository.save(owner);
+    }
+
+    public void create(Owner owner) throws QueryException {
+        if(owner.getId() != 0){
+            throw new QueryException("New owner's id is not 0");
+        } else if(!repository.findByPassportNumber(owner.getPassportNumber()).isEmpty()) {
+            throw new QueryException("Owner with this passport number already exists");
+        }
+        repository.save(owner);
     }
 
     public void update(Owner owner) throws QueryException {

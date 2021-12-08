@@ -68,7 +68,7 @@ public class CardDAO implements IDao<Card> {
         save(card);
     }
 
-    public Card getCardFromWrapper(CardWrapper cardWrapper){
+    public Card fromWrapper(CardWrapper cardWrapper){
         Card newCard = new Card();
         if(cardWrapper.getId() != 0) {
             newCard.setId(cardWrapper.getId());
