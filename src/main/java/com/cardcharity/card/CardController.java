@@ -18,14 +18,14 @@ public class CardController {
 
     @PostMapping
     public Card postCard(@RequestBody CardWrapper cardWrapper) throws QueryException {
-        Card newCard = cardDAO.fromWrapper(cardWrapper);
+        Card newCard = cardDAO.getCardFromWrapper(cardWrapper, 0);
         cardDAO.save(newCard);
         return newCard;
     }
 
     @PutMapping("/put")
-    public Card putCard(@RequestBody CardWrapper cardWrapper) throws QueryException {
-        Card updatedCard = cardDAO.fromWrapper(cardWrapper);
+    public Card putCard(@RequestBody CardWrapper cardWrapper, @RequestParam long id) throws QueryException {
+        Card updatedCard = cardDAO.getCardFromWrapper(cardWrapper, id);
         cardDAO.update(updatedCard);
         return updatedCard;
     }
@@ -34,7 +34,7 @@ public class CardController {
     public List<Card> getOwnerWithFIOP(@RequestParam(required = false) String number,
                                        @RequestParam(required = false) Long owner,
                                        @RequestParam(required = false) Long shop){
-        return cardDAO.findAllByNumberOwnerShop(number,owner,shop);
+        return cardDAO.findAll(number,owner,shop);
     }
 
     @GetMapping("/{id}")
