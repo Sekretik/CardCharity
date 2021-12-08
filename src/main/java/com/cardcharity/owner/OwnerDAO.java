@@ -49,12 +49,13 @@ public class OwnerDAO implements IDao<Owner> {
         return repository.findAll();
     }
 
-    public Owner fromWrapper(OwnerWrapper wrapper) {
+    public Owner fromWrapper(OwnerWrapper wrapper, long id) {
         Owner owner = new Owner(
                 wrapper.getPassportNumber(),
                 wrapper.getName(),
                 wrapper.getSurname(),
                 wrapper.getPatronymic());
+        owner.setId(id);
         owner.setActive(wrapper.isActive());
         return owner;
     }
