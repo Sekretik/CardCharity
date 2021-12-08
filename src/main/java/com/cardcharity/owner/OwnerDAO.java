@@ -31,10 +31,6 @@ public class OwnerDAO implements IDao<Owner> {
         return repository.findAll(historyExample);
     }
 
-    public Optional<Owner> findByID(Long id){
-        return repository.findById(id);
-    }
-
     public List<Owner> findByActive(boolean active){
         return repository.findByActive(active);
     }
@@ -74,6 +70,7 @@ public class OwnerDAO implements IDao<Owner> {
         repository.save(owner);
     }
 
+    @Override
     public void update(Owner owner) throws QueryException {
         if(repository.findById(owner.getId()).isEmpty()){
             throw new QueryException("Owner doesn't exist");

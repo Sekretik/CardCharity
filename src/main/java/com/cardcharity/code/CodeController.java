@@ -47,9 +47,11 @@ public class CodeController {
         }
 
 
-        historyDAO.save(card, customer);
+        historyDAO.save(
+                historyDAO.fromCurrentDate(card, customer)
+        );
 
-        ownerDAO.increaseUseCount(ownerDAO.findByID(card.getOwner().getId()).get());
+        ownerDAO.increaseUseCount(ownerDAO.findById(card.getOwner().getId()).get());
         customerDAO.increaseUseCount(customer);
         BufferedImage image = Image.createQR(card.getNumber());
         try {

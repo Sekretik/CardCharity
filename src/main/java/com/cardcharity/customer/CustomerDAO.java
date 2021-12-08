@@ -1,5 +1,6 @@
 package com.cardcharity.customer;
 
+import com.cardcharity.base.IDao;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class CustomerDAO {
+public class CustomerDAO implements IDao<Customer> {
     @Autowired
     FirebaseApp firebaseApp;
 
@@ -35,14 +36,22 @@ public class CustomerDAO {
         return customer;
     }
 
+    @Override
     public void save(Customer customer){
         customerRepository.save(customer);
     }
 
-    public List<Customer> getAll() {
+    @Override
+    public List<Customer> findAll() {
         return customerRepository.findAll();
     }
 
+    @Override
+    public void update(Customer object) throws Exception {
+
+    }
+
+    @Override
     public Optional<Customer> findById(long id) {
         return customerRepository.findById(id);
     }

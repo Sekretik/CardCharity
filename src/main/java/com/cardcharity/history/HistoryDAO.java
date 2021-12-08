@@ -1,9 +1,11 @@
 package com.cardcharity.history;
 
+import com.cardcharity.base.IDao;
 import com.cardcharity.card.Card;
 import com.cardcharity.card.CardRepository;
 import com.cardcharity.customer.Customer;
 import com.cardcharity.customer.CustomerRepository;
+import com.cardcharity.exception.QueryException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -12,9 +14,10 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Component
-public class HistoryDAO {
+public class HistoryDAO implements IDao<History> {
     @Autowired
     CustomerRepository customerRepository;
 
@@ -24,15 +27,16 @@ public class HistoryDAO {
     @Autowired
     HistoryRepository historyRepository;
 
-    public void save(Card card, Customer customer) {
+    public History fromCurrentDate(Card card, Customer customer) {
         History history = new History();
         history.setCard(card);
         history.setCustomer(customer);
         history.setDate(new Date());
-        historyRepository.save(history);
+        return history;
     }
 
-    public List<HistoryWrapper> findAll(Long cardId, Long userId) {
+
+    public List<HistoryWrapper> findAllByCardUser(Long cardId, Long userId) {
         History history = new History();
         if(cardId != null){
             history.setCard(cardRepository.findById(cardId).get());
@@ -54,5 +58,26 @@ public class HistoryDAO {
             wrappers.add(new HistoryWrapper(h));
         }
         return wrappers;
+    }
+
+    @Override
+    public Optional<History> findById(long id) {
+        return historyRepository.findById(id);
+    }
+
+    @Override
+    public List<History> findAll() {
+        return historyRepository.findAll();
+    }
+
+    @Override
+    public void update(History history) throws QueryException {
+        throw new QueryException("History cannot be changed");
+    }
+
+    @Override
+    public void save(History history) throws QueryException {
+        if(!historyRepository.findById(history.getId()).isEmpty()) throw new QueryException("History with this ID already exists");
+        historyRepository.save(history);
     }
 }

@@ -17,6 +17,6 @@ public class HistoryController {
     @GetMapping
     public List<HistoryWrapper> getHistory(@RequestParam(required = false) Long cardId,
                                     @RequestParam(required = false) Long customerId){
-        return historyDAO.findAll(cardId,customerId);
+        return historyDAO.findAllByCardUser(cardId,customerId);
     }
 }
