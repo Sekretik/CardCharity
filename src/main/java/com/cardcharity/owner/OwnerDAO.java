@@ -1,5 +1,6 @@
 package com.cardcharity.owner;
 
+import com.cardcharity.base.IDao;
 import com.cardcharity.card.Card;
 import com.cardcharity.card.CardDAO;
 import com.cardcharity.exception.QueryException;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class OwnerDAO {
+public class OwnerDAO implements IDao<Owner> {
     @Autowired
     OwnerRepository repository;
 
@@ -52,6 +53,16 @@ public class OwnerDAO {
         repository.save(owner);
     }
 
+    @Override
+    public Optional<Owner> findById(long id) {
+        return repository.findById(id);
+    }
+
+    @Override
+    public List<Owner> findAll() {
+        return repository.findAll();
+    }
+
     public void update(Owner owner) throws QueryException {
         if(repository.findById(owner.getId()).isEmpty()){
             throw new QueryException("Owner doesn't exist");
@@ -63,6 +74,11 @@ public class OwnerDAO {
                 cardDAO.update(card);
             }
         }
+        repository.save(owner);
+    }
+
+    @Override
+    public void save(Owner owner) throws Exception {
         repository.save(owner);
     }
 }
