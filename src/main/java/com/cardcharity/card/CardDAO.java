@@ -1,6 +1,5 @@
 package com.cardcharity.card;
 
-import com.cardcharity.base.IDao;
 import com.cardcharity.exception.QueryException;
 import com.cardcharity.owner.Owner;
 import com.cardcharity.owner.OwnerDAO;
@@ -15,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class CardDAO implements IDao<Card> {
+public class CardDAO {
     @Autowired
     CardRepository repository;
     @Autowired
@@ -23,7 +22,7 @@ public class CardDAO implements IDao<Card> {
     @Autowired
     ShopDAO shopDAO;
 
-    public List<Card> findAllByNumberOwnerShop(String number, Long owner, Long shop) {
+    public List<Card> findAll(String number, Long owner, Long shop) {
         Card card = new Card();
         card.setNumber(number);
         if(owner != null){
@@ -48,7 +47,9 @@ public class CardDAO implements IDao<Card> {
         return repository.findByOwner(owner);
     }
 
-
+    public Optional<Card> findById(Long id) {
+        return repository.findById(id);
+    }
 
     public Card getCardWithMinUse(Shop shop) throws QueryException {
         Card card = null;
@@ -60,7 +61,6 @@ public class CardDAO implements IDao<Card> {
         return card;
     }
 
-    @Override
     public void update(Card card) throws QueryException {
         if(repository.findById(card.getId()).isEmpty()){
             throw new QueryException("Card doesn't exist");
@@ -68,10 +68,10 @@ public class CardDAO implements IDao<Card> {
         save(card);
     }
 
-    public Card fromWrapper(CardWrapper cardWrapper){
+    public Card getCardFromWrapper(CardWrapper cardWrapper, long id){
         Card newCard = new Card();
-        if(cardWrapper.getId() != 0) {
-            newCard.setId(cardWrapper.getId());
+        if(id != 0) {
+            newCard.setId(id);
         }
         newCard.setNumber(cardWrapper.getNumber());
         newCard.setOwner(ownerDAO.findByID(cardWrapper.getOwner()).get());
@@ -82,15 +82,5 @@ public class CardDAO implements IDao<Card> {
 
     public void save(Card card) {
         repository.save(card);
-    }
-
-    @Override
-    public Optional<Card> findById(long id) {
-        return repository.findById(id);
-    }
-
-    @Override
-    public List<Card> findAll() {
-        return repository.findAll();
     }
 }

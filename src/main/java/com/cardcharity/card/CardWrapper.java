@@ -1,7 +1,6 @@
 package com.cardcharity.card;
 
 public class CardWrapper {
-    private long id;
     private String number;
     private long shop;
     private long owner;
@@ -31,14 +30,6 @@ public class CardWrapper {
         this.owner = owner;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public boolean isActive() {
         return active;
     }
@@ -50,7 +41,6 @@ public class CardWrapper {
     public CardWrapper(){}
 
     public CardWrapper(Card card) {
-        this.id = card.getId();
         this.number = card.getNumber();
         this.shop = card.getShop().getId();
         this.owner = card.getOwner().getId();

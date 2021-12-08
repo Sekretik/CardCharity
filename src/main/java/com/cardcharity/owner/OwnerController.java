@@ -32,13 +32,13 @@ public class OwnerController {
     }
 
     @PostMapping
-    public Owner postOwner(@Valid @RequestBody Owner owner) throws QueryException {
+    public Owner postOwner(@Valid @RequestBody OwnerWrapper owner) throws QueryException {
         dao.create(owner);
         return owner;
     }
 
     @PutMapping
-    public Owner putOwner(@Valid @RequestBody Owner owner) throws QueryException {
+    public Owner putOwner(@Valid @RequestBody OwnerWrapper owner) throws QueryException {
         dao.update(owner);
         return owner;
     }
