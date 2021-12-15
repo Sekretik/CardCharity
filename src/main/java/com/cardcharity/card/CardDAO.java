@@ -26,7 +26,7 @@ public class CardDAO {
         Card card = new Card();
         card.setNumber(number);
         if(owner != null){
-            card.setOwner(ownerDAO.findByID(owner).get());
+            card.setOwner(ownerDAO.findById(owner).get());
         }else {
             card.setOwner(null);
         }
@@ -74,7 +74,7 @@ public class CardDAO {
             newCard.setId(id);
         }
         newCard.setNumber(cardWrapper.getNumber());
-        newCard.setOwner(ownerDAO.findByID(cardWrapper.getOwner()).get());
+        newCard.setOwner(ownerDAO.findById(cardWrapper.getOwner()).get());
         newCard.setShop(shopDAO.findById(cardWrapper.getShop()).get());
         newCard.setActive(cardWrapper.isActive());
         return newCard;

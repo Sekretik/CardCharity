@@ -23,8 +23,8 @@ public class CardController {
         return newCard;
     }
 
-    @PutMapping("/put")
-    public Card putCard(@RequestBody CardWrapper cardWrapper, @RequestParam long id) throws QueryException {
+    @PutMapping(("/{id}"))
+    public Card putCard(@RequestBody CardWrapper cardWrapper, @PathVariable  long id) throws QueryException {
         Card updatedCard = cardDAO.getCardFromWrapper(cardWrapper, id);
         cardDAO.update(updatedCard);
         return updatedCard;

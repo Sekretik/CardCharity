@@ -28,7 +28,7 @@ public class OwnerController {
 
     @GetMapping("/{id}")
     public Optional<Owner> getOwnerWithID(@PathVariable Long id){
-        return dao.findByID(id);
+        return dao.findById(id);
     }
 
     @PostMapping
@@ -38,8 +38,8 @@ public class OwnerController {
         return updatedOwner;
     }
 
-    @PutMapping
-    public Owner putOwner(@Valid @RequestBody OwnerWrapper owner, @RequestParam long id) throws QueryException {
+    @PutMapping("/{id}")
+    public Owner putOwner(@Valid @RequestBody OwnerWrapper owner, @PathVariable long id) throws QueryException {
         Owner updatedOwner = dao.fromWrapper(owner, id);
         dao.create(updatedOwner);
         return updatedOwner;
