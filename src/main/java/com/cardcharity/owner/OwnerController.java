@@ -41,7 +41,7 @@ public class OwnerController {
     @PutMapping("/{id}")
     public Owner putOwner(@Valid @RequestBody OwnerWrapper owner, @PathVariable long id) throws QueryException {
         Owner updatedOwner = dao.fromWrapper(owner, id);
-        dao.create(updatedOwner);
+        dao.update(updatedOwner);
         return updatedOwner;
     }
 }

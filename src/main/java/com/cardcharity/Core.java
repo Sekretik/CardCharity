@@ -1,5 +1,6 @@
 package com.cardcharity;
 
+import com.cardcharity.exception.QueryException;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -36,7 +37,7 @@ import java.util.Properties;
 @SecurityScheme(name = "admin", scheme = "basic", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
 public class Core {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws QueryException {
         SpringApplication.run(Core.class,args);
     }
 
