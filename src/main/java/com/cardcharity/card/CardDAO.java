@@ -36,6 +36,7 @@ public class CardDAO {
             card.setShop(null);
         }
         Example<Card> cardExample = Example.of(card, ExampleMatcher.matchingAll()
+                .withIgnoreCase()
                 .withIgnoreNullValues()
                 .withIgnorePaths("id")
                 .withIgnorePaths("active"));

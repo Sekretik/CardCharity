@@ -24,7 +24,9 @@ public class OwnerDAO implements IDao<Owner> {
 
     public List<Owner> findByFIOP(String name, String surname, String patronymic, String passport) {
         Owner owner = new Owner(passport,name,surname,patronymic);
-        Example<Owner> historyExample = Example.of(owner, ExampleMatcher.matchingAll().withIgnoreNullValues()
+        Example<Owner> historyExample = Example.of(owner, ExampleMatcher.matchingAll()
+                .withIgnoreCase()
+                .withIgnoreNullValues()
                 .withIgnorePaths("id")
                 .withIgnorePaths("useCount")
                 .withIgnorePaths("active"));
