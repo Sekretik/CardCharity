@@ -53,13 +53,9 @@ public class CardDAO {
     }
 
     public Card getCardWithMinUse(Shop shop) throws QueryException {
-        Card card = null;
-        try {
-            card = repository.findByOwnerMinUseAndShop(shop).get(0);
-        }catch (Exception e){
-            throw new QueryException("Card with this shop does not exist");
-        }
-        return card;
+        Optional<Card> optionalCard = repository.findByOwnerMinUseAndShop(shop);
+        if(optionalCard.isEmpty()) throw new QueryException("There is no card for this shop");
+        return optionalCard.get();
     }
 
     public void update(Card card) throws QueryException {

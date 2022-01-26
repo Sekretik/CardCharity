@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CardRepository extends JpaRepository<Card, Long> {
     List<Card> findByNumber(String number);
@@ -19,5 +20,5 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     List<Card> findByOwnerAndShop(Owner owner, Shop shop);
 
     @Query("SELECT c FROM Card c WHERE c.shop = :shop ORDER BY c.owner.useCount ASC")
-    List<Card> findByOwnerMinUseAndShop(@Param("shop")Shop shop);
+    Optional<Card> findByOwnerMinUseAndShop(@Param("shop")Shop shop);
 }

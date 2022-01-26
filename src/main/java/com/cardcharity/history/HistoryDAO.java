@@ -9,12 +9,17 @@ import com.cardcharity.exception.QueryException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.jpa.convert.QueryByExamplePredicateBuilder;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import static antlr.build.ANTLR.root;
 
 @Component
 public class HistoryDAO implements IDao<History> {
@@ -36,28 +41,32 @@ public class HistoryDAO implements IDao<History> {
     }
 
 
-    public List<HistoryWrapper> findAllByCardUser(Long cardId, Long userId) {
+    public List<HistoryWrapper> findAllByCardUser(Long cardId, Long userId, Date startDate, Date endDate) {
         History history = new History();
-        if(cardId != null){
-            history.setCard(cardRepository.findById(cardId).get());
-        }else {
-            history.setCard(null);
-        }
-        if (userId != null){
-            history.setCustomer(customerRepository.findById(userId).get());
-        }else {
-            history.setCustomer(null);
-        }
-        Example<History> historyExample = Example.of(history, ExampleMatcher.matchingAll().withIgnoreNullValues()
+        if(cardId != null) history.setCard(cardRepository.findById(cardId).get());
+        if (userId != null) history.setCustomer(customerRepository.findById(userId).get());
+        Example<History> historyExample = Example.of(history, ExampleMatcher
+                .matchingAll()
+                .withIgnoreNullValues()
                 .withIgnorePaths("id")
-                .withIgnorePaths("data"));
+                .withIgnorePaths("date"));
 
-        List<History> cards = historyRepository.findAll(historyExample);
+        List<History> cards = historyRepository.findAll(getSpecFromDataAndExample(startDate, endDate, historyExample));
         List<HistoryWrapper> wrappers = new ArrayList<>();
         for (History h : cards) {
             wrappers.add(new HistoryWrapper(h));
         }
         return wrappers;
+    }
+
+    public Specification<History> getSpecFromDataAndExample(Date startDate, Date endDate, Example<History> example) {
+        return (Specification<History>) (root, query, builder) -> {
+            final List<Predicate> predicates = new ArrayList<>();
+            if(startDate != null) predicates.add(builder.greaterThanOrEqualTo(root.get("date"), startDate));
+            if(endDate != null) predicates.add(builder.lessThanOrEqualTo(root.get("date"), endDate));
+            predicates.add(QueryByExamplePredicateBuilder.getPredicate(root, builder, example));
+            return builder.and(predicates.toArray(new Predicate[predicates.size()]));
+        };
     }
 
     @Override
