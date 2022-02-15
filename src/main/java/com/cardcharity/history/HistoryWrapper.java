@@ -1,10 +1,11 @@
 package com.cardcharity.history;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class HistoryWrapper {
     private long id;
-    private Date date;
+    private LocalDate date;
     private long card;
     private long customer;
 
@@ -16,11 +17,11 @@ public class HistoryWrapper {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

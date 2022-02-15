@@ -4,6 +4,8 @@ import com.cardcharity.card.Card;
 import com.cardcharity.customer.Customer;
 
 import javax.persistence.*;
+import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -13,7 +15,7 @@ public class History {
     private long id;
 
     @Column(nullable = false)
-    private Date date;
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name = "card_id",nullable = false)
@@ -27,11 +29,11 @@ public class History {
         return id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -51,7 +53,7 @@ public class History {
         this.customer = customer;
     }
 
-    public History(Date date, Card card, Customer customer) {
+    public History(LocalDate date, Card card, Customer customer) {
         this.date = date;
         this.card = card;
         this.customer = customer;

@@ -14,6 +14,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.criteria.Predicate;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,13 +37,17 @@ public class HistoryDAO implements IDao<History> {
         History history = new History();
         history.setCard(card);
         history.setCustomer(customer);
-        history.setDate(new Date());
+        history.setDate(LocalDate.now());
         return history;
     }
 
 
-    public List<HistoryWrapper> findAllByCardUser(Long cardId, Long userId, Date startDate, Date endDate) {
+    public List<HistoryWrapper> findAllByCardUserDate(Long cardId, Long userId, LocalDate startDate, LocalDate endDate) {
         History history = new History();
+
+        if(startDate == null) startDate = LocalDate.MIN;
+        if(endDate == null) endDate = LocalDate.MAX;
+
         if(cardId != null) history.setCard(cardRepository.findById(cardId).get());
         if (userId != null) history.setCustomer(customerRepository.findById(userId).get());
         Example<History> historyExample = Example.of(history, ExampleMatcher
@@ -51,22 +56,14 @@ public class HistoryDAO implements IDao<History> {
                 .withIgnorePaths("id")
                 .withIgnorePaths("date"));
 
-        List<History> cards = historyRepository.findAll(getSpecFromDataAndExample(startDate, endDate, historyExample));
+        List<History> cards = historyRepository.findAll(historyExample);
         List<HistoryWrapper> wrappers = new ArrayList<>();
         for (History h : cards) {
-            wrappers.add(new HistoryWrapper(h));
+            if(h.getDate().isAfter(startDate) && h.getDate().isBefore(endDate)) {
+                wrappers.add(new HistoryWrapper(h));
+            }
         }
         return wrappers;
-    }
-
-    public Specification<History> getSpecFromDataAndExample(Date startDate, Date endDate, Example<History> example) {
-        return (Specification<History>) (root, query, builder) -> {
-            final List<Predicate> predicates = new ArrayList<>();
-            if(startDate != null) predicates.add(builder.greaterThanOrEqualTo(root.get("date"), startDate));
-            if(endDate != null) predicates.add(builder.lessThanOrEqualTo(root.get("date"), endDate));
-            predicates.add(QueryByExamplePredicateBuilder.getPredicate(root, builder, example));
-            return builder.and(predicates.toArray(new Predicate[predicates.size()]));
-        };
     }
 
     @Override

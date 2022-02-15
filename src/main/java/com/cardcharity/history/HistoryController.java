@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +22,8 @@ public class HistoryController {
                                            @RequestParam(required = false) Long customerId,
                                            @RequestParam(required = false) String stringStartDate,
                                            @RequestParam(required = false) String stringEndDate){
-        return historyDAO.findAllByCardUser(cardId,customerId,startDate,endDate);
+        return historyDAO.findAllByCardUserDate(cardId, customerId,
+                LocalDate.parse(stringStartDate),
+                LocalDate.parse(stringEndDate));
     }
 }

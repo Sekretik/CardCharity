@@ -9,4 +9,4 @@ import org.springframework.data.repository.query.Param;
 import java.util.Date;
 import java.util.List;
 
-public interface HistoryRepository extends JpaRepository<History, Long>, JpaSpecificationExecutor<History> {}
+public interface HistoryRepository extends JpaRepository<History, Long> {}
