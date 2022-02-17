@@ -1,14 +1,20 @@
 package com.cardcharity.shop;
 
 import com.cardcharity.exception.QueryException;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
+import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Optional;
 
 @RestController
@@ -17,18 +23,22 @@ import java.util.Optional;
 public class ShopController {
     @Autowired
     ShopRepository dao;
+    @Autowired
+    Environment environment;
 
-    @GetMapping("{id}/logo")
-    public void getLogo(@PathVariable String id, HttpServletResponse response) throws QueryException {
-        String logoFileName = "shopLogo_" + id + ".jpg";
-        InputStream logoInputStream = ShopController.class.getResourceAsStream("/logos/"+logoFileName);
+    @GetMapping(value = "{id}/logo")
+    public @ResponseBody byte[] getImage(@PathVariable String id) throws IOException {
+        String logoFileName = dao.findById(Long.valueOf(id)).get().getName().toLowerCase() + "_logo.jpg";
+        InputStream in;
         try {
-            BufferedImage image = ImageIO.read(logoInputStream);
-            ImageIO.write(image,"png",response.getOutputStream());
-        } catch (IOException e) {
-            throw new QueryException("Logo not found - does this shop exist?");
+            in = Files.newInputStream(Path.of(environment.getProperty("shop.logo") + logoFileName));
+        }catch (Exception e){
+            in = Files.newInputStream(Path.of(environment.getProperty("shop.logo") + "default_logo.jpg"));
         }
+        System.out.println(in);
+        return IOUtils.toByteArray(in);
     }
+
     @GetMapping
     public Iterable<Shop> getShops(){
         return dao.findAll();
