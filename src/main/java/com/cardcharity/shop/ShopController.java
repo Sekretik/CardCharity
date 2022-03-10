@@ -33,7 +33,7 @@ public class ShopController {
         try {
             in = Files.newInputStream(Path.of(environment.getProperty("shop.logo") + logoFileName));
         }catch (Exception e){
-            in = Files.newInputStream(Path.of(environment.getProperty("shop.logo") + "default_logo.jpg"));
+            in = Files.newInputStream(Path.of("src/resources/default_logo.jpeg"));
         }
         System.out.println(in);
         return IOUtils.toByteArray(in);
@@ -50,7 +50,9 @@ public class ShopController {
     }
 
     @PostMapping
-    public void post(@RequestBody Shop shop){
+    public void post(@RequestBody String shopName){
+        Shop shop = new Shop();
+        shop.setName(shopName);
         dao.save(shop);
     }
 }

@@ -12,7 +12,6 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@PropertySource("properties/application.properties")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     Environment environment;
