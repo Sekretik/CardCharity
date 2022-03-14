@@ -16,9 +16,9 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 @RestController
-@RequestMapping("/user/shop")
 @CrossOrigin
 public class ShopController {
     @Autowired
@@ -26,7 +26,7 @@ public class ShopController {
     @Autowired
     Environment environment;
 
-    @GetMapping(value = "{id}/logo")
+    @GetMapping(value = "/user/shop/{id}/logo")
     public @ResponseBody byte[] getImage(@PathVariable String id) throws IOException {
         String logoFileName = dao.findById(Long.valueOf(id)).get().getName().toLowerCase() + "_logo.jpg";
         InputStream in;
@@ -39,20 +39,34 @@ public class ShopController {
         return IOUtils.toByteArray(in);
     }
 
-    @GetMapping
+    @GetMapping("/user/shop")
     public Iterable<Shop> getShops(){
         return dao.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/user/shop/{id}")
     public Optional<Shop> getShopWithID(@PathVariable Long id){
         return dao.findById(id);
     }
 
-    @PostMapping
-    public void post(@RequestBody String shopName){
+    @PostMapping("/admin/shop")
+    public Shop post(@RequestBody String shopName){
         Shop shop = new Shop();
         shop.setName(shopName);
         dao.save(shop);
+        return shop;
+    }
+
+    @PutMapping("/admin/shop/{id}")
+    public Shop put(@RequestBody String newShopName, @PathVariable Long id) throws Throwable {
+        Shop shopToUpdate = dao.findById(id).orElseThrow(new Supplier<Throwable>() {
+            @Override
+            public Throwable get() {
+                return new QueryException("No shop with this id");
+            }
+        });
+        shopToUpdate.setName(newShopName);
+        dao.save(shopToUpdate);
+        return shopToUpdate;
     }
 }
