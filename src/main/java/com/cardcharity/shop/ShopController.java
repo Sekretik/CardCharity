@@ -1,6 +1,7 @@
 package com.cardcharity.shop;
 
 import com.cardcharity.exception.QueryException;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -50,6 +51,7 @@ public class ShopController {
     }
 
     @PostMapping("/admin/shop")
+    @SecurityRequirement(name = "admin")
     public Shop post(@RequestBody Shop shop){
         shop.setId(null);
         dao.save(shop);
@@ -57,6 +59,7 @@ public class ShopController {
     }
 
     @PutMapping("/admin/shop/{id}")
+    @SecurityRequirement(name = "admin")
     public Shop put(@RequestBody Shop shop, @PathVariable Long id) throws Throwable {
         Shop shopToUpdate = dao.findById(id).orElseThrow(new Supplier<Throwable>() {
             @Override

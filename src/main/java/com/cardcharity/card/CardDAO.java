@@ -11,8 +11,8 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class CardDAO implements IDao<Card> {
@@ -23,18 +23,18 @@ public class CardDAO implements IDao<Card> {
     @Autowired
     ShopRepository shopDao;
 
-    public List<Card> findAll(String number, Long owner, Long shop) {
+    public List<Card> findAll(String number, Long ownerId, Long shopId) {
         Card card = new Card();
         card.setNumber(number);
-        if(owner != null){
-            card.setOwner(ownerDao.findByID(owner).get());
-        }else {
-            card.setOwner(null);
+        if(ownerId != null){
+            Owner owner = ownerDao.findByID(ownerId);
+            if(owner == null) return new ArrayList<>();
+            card.setOwner(owner);
         }
-        if (shop != null){
-            card.setShop(shopDao.findById(shop).get());
-        }else {
-            card.setShop(null);
+        if (shopId != null){
+            Shop shop = shopDao.findById(shopId).get();
+            if(shop == null) return new ArrayList<>();
+            card.setShop(shop);
         }
         Example<Card> cardExample = Example.of(card, ExampleMatcher.matchingAll()
                 .withIgnoreNullValues()
@@ -80,8 +80,8 @@ public class CardDAO implements IDao<Card> {
             newCard.setId(cardWrapper.getId());
         }
         newCard.setNumber(cardWrapper.getNumber());
-        newCard.setOwner(ownerDao.findByID(cardWrapper.getOwner()).get());
-        newCard.setShop(shopDao.findById(cardWrapper.getShop()).get());
+        newCard.setOwner(ownerDao.findByID(cardWrapper.getOwner()));
+        newCard.setShop(shopDao.findById(cardWrapper.getShop()).orElse(null));
         newCard.setActive(cardWrapper.isActive());
         return newCard;
     }

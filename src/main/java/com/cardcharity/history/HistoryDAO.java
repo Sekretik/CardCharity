@@ -2,8 +2,10 @@ package com.cardcharity.history;
 
 import com.cardcharity.IDao;
 import com.cardcharity.card.Card;
+import com.cardcharity.card.CardDAO;
 import com.cardcharity.card.CardRepository;
 import com.cardcharity.customer.Customer;
+import com.cardcharity.customer.CustomerDAO;
 import com.cardcharity.customer.CustomerRepository;
 import com.cardcharity.exception.QueryException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +15,15 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class HistoryDAO implements IDao<History> {
     @Autowired
-    CustomerRepository customerRepository;
+    CustomerDAO customerDAO;
+
 
     @Autowired
-    CardRepository cardRepository;
+    CardDAO cardDAO;
 
     @Autowired
     HistoryRepository historyRepository;
@@ -41,21 +43,30 @@ public class HistoryDAO implements IDao<History> {
         if(startDate == null) startDate = LocalDate.MIN;
         if(endDate == null) endDate = LocalDate.MAX;
 
-        if(cardId != null) history.setCard(cardRepository.findById(cardId).get());
-        if (userId != null) history.setCustomer(customerRepository.findById(userId).get());
+        if(cardId != null) {
+            Card card = cardDAO.findById(cardId);
+            if(card == null) return new ArrayList<>();
+            history.setCard(card);
+        }
+        if (userId != null) {
+            Customer customer = customerDAO.findById(userId);
+            if(customer == null) return new ArrayList<>();
+            history.setCustomer(customer);
+        }
         Example<History> historyExample = Example.of(history, ExampleMatcher
                 .matchingAll()
                 .withIgnoreNullValues()
                 .withIgnorePaths("id")
                 .withIgnorePaths("date"));
 
-        List<History> cards = historyRepository.findAll(historyExample);
-        for (History h : cards) {
+        List<History> resultList = historyRepository.findAll(historyExample);
+        for (History h : resultList) {
             if(!(h.getDate().isAfter(startDate) && h.getDate().isBefore(endDate))) {
-                cards.remove(h);
+                resultList.remove(h);
             }
         }
-        return cards;
+        System.out.println("bruh");
+        return resultList;
     }
 
     @Override

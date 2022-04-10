@@ -36,8 +36,8 @@ public class OwnerDAO implements IDao<Owner> {
         repository.save(owner);
     }
 
-    public Optional<Owner> findByID(Long id){
-        return repository.findById(id);
+    public Owner findByID(Long id){
+        return repository.findById(id).orElse(null);
     }
 
     public List<Owner> findByActive(boolean active){

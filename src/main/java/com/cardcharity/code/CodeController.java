@@ -49,7 +49,7 @@ public class CodeController {
 
         historyDao.fromCurrentDate(card, customer);
 
-        ownerDao.increaseUseCount(ownerDao.findByID(card.getOwner().getId()).get());
+        ownerDao.increaseUseCount(ownerDao.findByID(card.getOwner().getId()));
         customerDao.increaseUseCount(customer);
         BufferedImage image = Image.createQR(card.getNumber());
         try {

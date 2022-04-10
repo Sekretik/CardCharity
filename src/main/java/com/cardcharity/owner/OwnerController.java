@@ -27,7 +27,7 @@ public class OwnerController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Owner> getOwnerWithID(@PathVariable Long id){
+    public Owner getOwnerWithID(@PathVariable Long id){
         return dao.findByID(id);
     }
 
