@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,7 @@ public class CardController {
     @PostMapping
     public Card postCard(@RequestBody CardWrapper cardWrapper) throws QueryException {
         Card newCard = cardDAO.getCardFromWrapper(cardWrapper);
+        newCard.setId(null);
         cardDAO.save(newCard);
         return newCard;
     }
@@ -38,7 +40,7 @@ public class CardController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Card> getCardWithId(@PathVariable Long id){
+    public Card getCardWithId(@PathVariable Long id){
         return cardDAO.findById(id);
     }
 }

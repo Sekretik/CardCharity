@@ -6,9 +6,9 @@ import com.cardcharity.exception.QueryException;
 import com.cardcharity.history.HistoryDAO;
 import com.cardcharity.owner.OwnerDAO;
 import com.cardcharity.shop.Shop;
-import com.cardcharity.shop.ShopDAO;
 import com.cardcharity.customer.Customer;
 import com.cardcharity.customer.CustomerDAO;
+import com.cardcharity.shop.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,35 +22,35 @@ import java.io.IOException;
 @CrossOrigin
 public class CodeController {
     @Autowired
-    CardDAO cardDAO;
+    CardDAO cardDao;
     @Autowired
-    ShopDAO shopDAO;
+    ShopRepository shopDao;
     @Autowired
-    OwnerDAO ownerDAO;
+    OwnerDAO ownerDao;
     @Autowired
-    HistoryDAO historyDAO;
+    HistoryDAO historyDao;
     @Autowired
-    CustomerDAO customerDAO;
+    CustomerDAO customerDao;
 
     @GetMapping()
     public void getCode(@RequestParam Long shopId, @RequestParam String uid, HttpServletResponse response) throws QueryException {
-        Shop shop = shopDAO.findById(shopId).get();
-        Card card = cardDAO.getCardWithMinUse(shop);
+        Shop shop = shopDao.findById(shopId).get();
+        Card card = cardDao.getCardWithMinUse(shop);
         Customer customer = null;
-        boolean bool = customerDAO.findByUid(uid).isPresent();
+        boolean isInLocalDb = customerDao.findByUid(uid).isPresent();
 
-        if(!bool){
-            customer = customerDAO.getFromFirebase(uid);
-            customerDAO.save(customer);
-        }else if(bool){
-            customer = customerDAO.findByUid(uid).get();
+        if(!isInLocalDb){
+            customer = customerDao.getFromFirebase(uid);
+            customerDao.save(customer);
+        }else if(isInLocalDb){
+            customer = customerDao.findByUid(uid).get();
         }
 
 
-        historyDAO.save(card, customer);
+        historyDao.fromCurrentDate(card, customer);
 
-        ownerDAO.increaseUseCount(ownerDAO.findByID(card.getOwner().getId()).get());
-        customerDAO.increaseUseCount(customer);
+        ownerDao.increaseUseCount(ownerDao.findByID(card.getOwner().getId()).get());
+        customerDao.increaseUseCount(customer);
         BufferedImage image = Image.createQR(card.getNumber());
         try {
             ImageIO.write(image,"png",response.getOutputStream());

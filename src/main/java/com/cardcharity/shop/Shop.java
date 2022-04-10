@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class Shop {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     @UniqueElements
@@ -18,9 +18,11 @@ public class Shop {
         this.name = name;
     }
 
+    public void setId(Long id) { this.id = id; }
+
     public Shop() {}
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

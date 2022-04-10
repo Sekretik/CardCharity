@@ -33,6 +33,7 @@ public class OwnerController {
 
     @PostMapping
     public Owner postOwner(@Valid @RequestBody Owner owner) throws QueryException {
+        owner.setId(null);
         dao.create(owner);
         return owner;
     }

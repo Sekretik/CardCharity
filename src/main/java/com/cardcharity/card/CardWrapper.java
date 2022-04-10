@@ -31,7 +31,7 @@ public class CardWrapper {
         this.owner = owner;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

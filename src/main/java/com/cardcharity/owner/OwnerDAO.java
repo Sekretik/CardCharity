@@ -1,5 +1,6 @@
 package com.cardcharity.owner;
 
+import com.cardcharity.IDao;
 import com.cardcharity.card.Card;
 import com.cardcharity.card.CardDAO;
 import com.cardcharity.exception.QueryException;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class OwnerDAO {
+public class OwnerDAO implements IDao<Owner> {
     @Autowired
     OwnerRepository repository;
 
@@ -44,12 +45,13 @@ public class OwnerDAO {
     }
 
     public void create(Owner owner) throws QueryException {
-        if(owner.getId() != 0){
-            throw new QueryException("New owner's id is not 0");
-        } else if(!repository.findByPassportNumber(owner.getPassportNumber()).isEmpty()) {
-            throw new QueryException("Owner with this passport number already exists");
-        }
+        if(repository.existsById(owner.getId())) throw new QueryException("Owner with id " + owner.getId() + " already exists");
         repository.save(owner);
+    }
+
+    @Override
+    public void save(Owner owner) throws QueryException {
+
     }
 
     public void update(Owner owner) throws QueryException {
@@ -64,5 +66,15 @@ public class OwnerDAO {
             }
         }
         repository.save(owner);
+    }
+
+    @Override
+    public Owner findById(Long entityId) {
+        return repository.findById(entityId).orElse(null);
+    }
+
+    @Override
+    public List<Owner> findAll() {
+        return repository.findAll();
     }
 }

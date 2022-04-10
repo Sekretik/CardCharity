@@ -1,5 +1,7 @@
 package com.cardcharity.customer;
 
+import com.cardcharity.IDao;
+import com.cardcharity.exception.QueryException;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -11,12 +13,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class CustomerDAO {
+public class CustomerDAO implements IDao<Customer> {
     @Autowired
     FirebaseApp firebaseApp;
 
     @Autowired
-    CustomerRepository customerRepository;
+    CustomerRepository repository;
 
     public void increaseUseCount(Customer customer) {
         int useCount = customer.getUseCount();
@@ -25,7 +27,7 @@ public class CustomerDAO {
     }
 
     public Customer getFromFirebase(String uid) {
-        UserRecord userRecord = null;
+        UserRecord userRecord;
         try {
             userRecord = FirebaseAuth.getInstance(firebaseApp).getUser(uid);
         } catch (FirebaseAuthException e) {
@@ -36,22 +38,32 @@ public class CustomerDAO {
     }
 
     public void save(Customer customer){
-        customerRepository.save(customer);
+        repository.save(customer);
+    }
+
+    @Override
+    public void update(Customer customer) throws QueryException {
+
     }
 
     public List<Customer> getAll() {
-        return customerRepository.findAll();
+        return repository.findAll();
     }
 
-    public Optional<Customer> findById(long id) {
-        return customerRepository.findById(id);
+    public Customer findById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Customer> findAll() {
+        return repository.findAll();
     }
 
     public List<Customer> findByEmail(String email) {
-        return customerRepository.findByEmail(email);
+        return repository.findByEmail(email);
     }
 
     public Optional<Customer> findByUid(String uid) {
-        return customerRepository.findOneByUid(uid);
+        return repository.findOneByUid(uid);
     }
 }

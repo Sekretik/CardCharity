@@ -11,7 +11,7 @@ import javax.validation.constraints.Pattern;
 public class Card {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     @Pattern(regexp = "[a-zA-Z0-9]+")
@@ -42,7 +42,7 @@ public class Card {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

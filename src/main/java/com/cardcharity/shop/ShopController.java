@@ -50,23 +50,21 @@ public class ShopController {
     }
 
     @PostMapping("/admin/shop")
-    public Shop post(@RequestBody String shopName){
-        Shop shop = new Shop();
-        shop.setName(shopName);
+    public Shop post(@RequestBody Shop shop){
+        shop.setId(null);
         dao.save(shop);
         return shop;
     }
 
     @PutMapping("/admin/shop/{id}")
-    public Shop put(@RequestBody String newShopName, @PathVariable Long id) throws Throwable {
+    public Shop put(@RequestBody Shop shop, @PathVariable Long id) throws Throwable {
         Shop shopToUpdate = dao.findById(id).orElseThrow(new Supplier<Throwable>() {
             @Override
             public Throwable get() {
                 return new QueryException("No shop with this id");
             }
         });
-        shopToUpdate.setName(newShopName);
-        dao.save(shopToUpdate);
+        dao.save(shop);
         return shopToUpdate;
     }
 }

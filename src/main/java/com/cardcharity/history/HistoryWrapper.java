@@ -1,44 +1,46 @@
 package com.cardcharity.history;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class HistoryWrapper {
-    private long id;
-    private Date date;
-    private long card;
-    private long customer;
+    private Long id;
+    private LocalDate date;
+    private Long card;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public long getCard() {
+    public Long getCard() {
         return card;
     }
 
-    public void setCard(long card) {
+    public void setCard(Long card) {
         this.card = card;
     }
 
-    public long getCustomer() {
+    public Long getCustomer() {
         return customer;
     }
 
-    public void setCustomer(long customer) {
+    public void setCustomer(Long customer) {
         this.customer = customer;
     }
+
+    private Long customer;
 
     public HistoryWrapper(History history) {
         this.id = history.getId();

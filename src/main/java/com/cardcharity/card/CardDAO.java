@@ -1,10 +1,11 @@
 package com.cardcharity.card;
 
+import com.cardcharity.IDao;
 import com.cardcharity.exception.QueryException;
 import com.cardcharity.owner.Owner;
 import com.cardcharity.owner.OwnerDAO;
 import com.cardcharity.shop.Shop;
-import com.cardcharity.shop.ShopDAO;
+import com.cardcharity.shop.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -14,24 +15,24 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class CardDAO {
+public class CardDAO implements IDao<Card> {
     @Autowired
     CardRepository repository;
     @Autowired
-    OwnerDAO ownerDAO;
+    OwnerDAO ownerDao;
     @Autowired
-    ShopDAO shopDAO;
+    ShopRepository shopDao;
 
     public List<Card> findAll(String number, Long owner, Long shop) {
         Card card = new Card();
         card.setNumber(number);
         if(owner != null){
-            card.setOwner(ownerDAO.findByID(owner).get());
+            card.setOwner(ownerDao.findByID(owner).get());
         }else {
             card.setOwner(null);
         }
         if (shop != null){
-            card.setShop(shopDAO.findById(shop).get());
+            card.setShop(shopDao.findById(shop).get());
         }else {
             card.setShop(null);
         }
@@ -47,8 +48,13 @@ public class CardDAO {
         return repository.findByOwner(owner);
     }
 
-    public Optional<Card> findById(Long id) {
-        return repository.findById(id);
+    public Card findById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Card> findAll() {
+        return repository.findAll();
     }
 
     public Card getCardWithMinUse(Shop shop) throws QueryException {
@@ -70,17 +76,18 @@ public class CardDAO {
 
     public Card getCardFromWrapper(CardWrapper cardWrapper){
         Card newCard = new Card();
-        if(cardWrapper.getId() != 0) {
+        if(cardWrapper.getId() != null) {
             newCard.setId(cardWrapper.getId());
         }
         newCard.setNumber(cardWrapper.getNumber());
-        newCard.setOwner(ownerDAO.findByID(cardWrapper.getOwner()).get());
-        newCard.setShop(shopDAO.findById(cardWrapper.getShop()).get());
+        newCard.setOwner(ownerDao.findByID(cardWrapper.getOwner()).get());
+        newCard.setShop(shopDao.findById(cardWrapper.getShop()).get());
         newCard.setActive(cardWrapper.isActive());
         return newCard;
     }
 
-    public void save(Card card) {
+    public void save(Card card) throws QueryException {
+        if(findById(card.getId()) != null) throw new QueryException("Card with id " + card.getId() + " already exists");
         repository.save(card);
     }
 }

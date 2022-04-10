@@ -4,16 +4,21 @@ import com.cardcharity.card.Card;
 import com.cardcharity.customer.Customer;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
 public class History {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
-    private Date date;
+    private LocalDate date;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     @ManyToOne
     @JoinColumn(name = "card_id",nullable = false)
@@ -23,20 +28,20 @@ public class History {
     @JoinColumn(name = "customer_id",nullable = false)
     private Customer customer;
 
-    public long getId() {
+    public Long getId() {
         return id;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public Card getCard() {
         return card;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public void setCard(Card card) {
@@ -51,7 +56,7 @@ public class History {
         this.customer = customer;
     }
 
-    public History(Date date, Card card, Customer customer) {
+    public History(LocalDate date, Card card, Customer customer) {
         this.date = date;
         this.card = card;
         this.customer = customer;
