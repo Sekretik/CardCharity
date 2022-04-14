@@ -10,8 +10,7 @@ public class Shop {
     @GeneratedValue
     private Long id;
 
-    @Column(nullable = false)
-    @UniqueElements
+    @Column(nullable=false, unique=true)
     private String name;
 
     public void setName(String name) {

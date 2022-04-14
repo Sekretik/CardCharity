@@ -69,7 +69,7 @@ public class CardDAO implements IDao<Card> {
 
     public void update(Card card) throws QueryException {
         if(repository.findById(card.getId()).isEmpty()){
-            throw new QueryException("Card doesn't exist");
+            throw new QueryException("Card wiht id " + card.getId() + " does not exist");
         }
         save(card);
     }

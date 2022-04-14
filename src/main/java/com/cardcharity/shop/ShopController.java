@@ -4,12 +4,14 @@ import com.cardcharity.exception.QueryException;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.awt.image.BufferedImage;
 import java.io.FilterInputStream;
 import java.io.IOException;
@@ -52,7 +54,7 @@ public class ShopController {
 
     @PostMapping("/admin/shop")
     @SecurityRequirement(name = "admin")
-    public Shop post(@RequestBody Shop shop){
+    public Shop post(@RequestBody Shop shop) {
         shop.setId(null);
         dao.save(shop);
         return shop;
@@ -60,14 +62,15 @@ public class ShopController {
 
     @PutMapping("/admin/shop/{id}")
     @SecurityRequirement(name = "admin")
-    public Shop put(@RequestBody Shop shop, @PathVariable Long id) throws Throwable {
-        Shop shopToUpdate = dao.findById(id).orElseThrow(new Supplier<Throwable>() {
+    public Shop put(@RequestBody @Valid Shop shop, @PathVariable Long id) throws Throwable {
+        shop.setId(id);
+        dao.findById(id).orElseThrow(new Supplier<Throwable>() {
             @Override
             public Throwable get() {
                 return new QueryException("No shop with this id");
             }
         });
         dao.save(shop);
-        return shopToUpdate;
+        return shop;
     }
 }

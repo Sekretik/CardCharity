@@ -11,6 +11,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,16 +46,16 @@ public class OwnerDAO implements IDao<Owner> {
     }
 
     public void create(Owner owner) throws QueryException {
-        if(repository.existsById(owner.getId())) throw new QueryException("Owner with id " + owner.getId() + " already exists");
+        if(owner.getId() != null && repository.existsById(owner.getId())) throw new QueryException("Owner with id " + owner.getId() + " already exists");
         repository.save(owner);
     }
 
     @Override
-    public void save(Owner owner) throws QueryException {
-
+    public void save(@Valid Owner owner) throws QueryException {
+        repository.save(owner);
     }
 
-    public void update(Owner owner) throws QueryException {
+    public void update(@Valid  Owner owner) throws QueryException {
         if(repository.findById(owner.getId()).isEmpty()){
             throw new QueryException("Owner doesn't exist");
         }

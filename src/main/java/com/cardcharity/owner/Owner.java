@@ -19,7 +19,6 @@ public class Owner {
 
     @Column(unique=true, nullable=false)
     @Pattern(regexp = "([0-9]){10}")
-    @UniqueElements
     private String passportNumber;
 
     @Column(nullable = false)

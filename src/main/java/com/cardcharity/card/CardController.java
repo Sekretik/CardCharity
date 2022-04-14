@@ -25,9 +25,10 @@ public class CardController {
         return newCard;
     }
 
-    @PutMapping("/put")
-    public Card putCard(@RequestBody CardWrapper cardWrapper) throws QueryException {
+    @PutMapping("/{id}")
+    public Card putCard(@PathVariable Long id, @RequestBody CardWrapper cardWrapper) throws QueryException {
         Card updatedCard = cardDAO.getCardFromWrapper(cardWrapper);
+        updatedCard.setId(id);
         cardDAO.update(updatedCard);
         return updatedCard;
     }
